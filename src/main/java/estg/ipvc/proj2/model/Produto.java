@@ -14,14 +14,17 @@ public class Produto {
     @Column(name = "id_produto", nullable = false)
     private Integer id;
 
-    @Column(name = "nome", nullable = false, length = 50)
+    @Column(name = "nome", nullable = false, length = 100)
     private String nome;
 
-    @Column(name = "qtd_stock", nullable = false, precision = 6, scale = 2)
-    private BigDecimal qtdStock;
+    @Column(name = "valor", nullable = false, precision = 5, scale = 2)
+    private BigDecimal valor;
 
-    @OneToMany(mappedBy = "idProduto")
-    private Set<Aviso> avisos = new LinkedHashSet<>();
+    @Column(name = "qtdstock", nullable = false)
+    private Integer qtdstock;
+
+    @Column(name = "qtdmin")
+    private Integer qtdmin;
 
     @OneToMany(mappedBy = "idProduto")
     private Set<LinhaEnc> linhaEncs = new LinkedHashSet<>();
@@ -42,20 +45,28 @@ public class Produto {
         this.nome = nome;
     }
 
-    public BigDecimal getQtdStock() {
-        return qtdStock;
+    public BigDecimal getValor() {
+        return valor;
     }
 
-    public void setQtdStock(BigDecimal qtdStock) {
-        this.qtdStock = qtdStock;
+    public void setValor(BigDecimal valor) {
+        this.valor = valor;
     }
 
-    public Set<Aviso> getAvisos() {
-        return avisos;
+    public Integer getQtdstock() {
+        return qtdstock;
     }
 
-    public void setAvisos(Set<Aviso> avisos) {
-        this.avisos = avisos;
+    public void setQtdstock(Integer qtdstock) {
+        this.qtdstock = qtdstock;
+    }
+
+    public Integer getQtdmin() {
+        return qtdmin;
+    }
+
+    public void setQtdmin(Integer qtdmin) {
+        this.qtdmin = qtdmin;
     }
 
     public Set<LinhaEnc> getLinhaEncs() {

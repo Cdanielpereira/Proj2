@@ -1,7 +1,9 @@
 package estg.ipvc.proj2.model;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.ColumnDefault;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.LinkedHashSet;
 import java.util.Set;
@@ -14,8 +16,15 @@ public class Contrato {
     @Column(name = "id_contrato", nullable = false)
     private Integer id;
 
-    @Column(name = "dt_criacao", nullable = false)
-    private LocalDate dtCriacao;
+    @ColumnDefault("920")
+    @Column(name = "salario", nullable = false, precision = 7, scale = 2)
+    private BigDecimal salario;
+
+    @Column(name = "dt_criado", nullable = false)
+    private LocalDate dtCriado;
+
+    @Column(name = "dt_assinado")
+    private LocalDate dtAssinado;
 
     @Column(name = "dt_ini", nullable = false)
     private LocalDate dtIni;
@@ -23,14 +32,16 @@ public class Contrato {
     @Column(name = "dt_fim", nullable = false)
     private LocalDate dtFim;
 
-    @Column(name = "dt_assinatura")
-    private LocalDate dtAssinatura;
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "id_func", nullable = false)
+    private Funcionario idFunc;
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "id_estadoc", nullable = false)
+    private EstadoContract idEstadoc;
 
     @OneToMany(mappedBy = "idContrato")
-    private Set<ContratoFunc> contratoFuncs = new LinkedHashSet<>();
-
-    @OneToMany(mappedBy = "idContrato")
-    private Set<ContratoPub> contratoPubs = new LinkedHashSet<>();
+    private Set<Vencimento> vencimentos = new LinkedHashSet<>();
 
     public Integer getId() {
         return id;
@@ -40,12 +51,28 @@ public class Contrato {
         this.id = id;
     }
 
-    public LocalDate getDtCriacao() {
-        return dtCriacao;
+    public BigDecimal getSalario() {
+        return salario;
     }
 
-    public void setDtCriacao(LocalDate dtCriacao) {
-        this.dtCriacao = dtCriacao;
+    public void setSalario(BigDecimal salario) {
+        this.salario = salario;
+    }
+
+    public LocalDate getDtCriado() {
+        return dtCriado;
+    }
+
+    public void setDtCriado(LocalDate dtCriado) {
+        this.dtCriado = dtCriado;
+    }
+
+    public LocalDate getDtAssinado() {
+        return dtAssinado;
+    }
+
+    public void setDtAssinado(LocalDate dtAssinado) {
+        this.dtAssinado = dtAssinado;
     }
 
     public LocalDate getDtIni() {
@@ -64,28 +91,28 @@ public class Contrato {
         this.dtFim = dtFim;
     }
 
-    public LocalDate getDtAssinatura() {
-        return dtAssinatura;
+    public Funcionario getIdFunc() {
+        return idFunc;
     }
 
-    public void setDtAssinatura(LocalDate dtAssinatura) {
-        this.dtAssinatura = dtAssinatura;
+    public void setIdFunc(Funcionario idFunc) {
+        this.idFunc = idFunc;
     }
 
-    public Set<ContratoFunc> getContratoFuncs() {
-        return contratoFuncs;
+    public EstadoContract getIdEstadoc() {
+        return idEstadoc;
     }
 
-    public void setContratoFuncs(Set<ContratoFunc> contratoFuncs) {
-        this.contratoFuncs = contratoFuncs;
+    public void setIdEstadoc(EstadoContract idEstadoc) {
+        this.idEstadoc = idEstadoc;
     }
 
-    public Set<ContratoPub> getContratoPubs() {
-        return contratoPubs;
+    public Set<Vencimento> getVencimentos() {
+        return vencimentos;
     }
 
-    public void setContratoPubs(Set<ContratoPub> contratoPubs) {
-        this.contratoPubs = contratoPubs;
+    public void setVencimentos(Set<Vencimento> vencimentos) {
+        this.vencimentos = vencimentos;
     }
 
 }

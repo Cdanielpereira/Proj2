@@ -12,17 +12,20 @@ public class Piscina {
     @Column(name = "id_piscina", nullable = false)
     private Integer id;
 
-    @Column(name = "nivelph", precision = 4, scale = 2)
-    private BigDecimal nivelph;
+    @Column(name = "ph", precision = 10, scale = 2)
+    private BigDecimal ph;
 
-    @Column(name = "temp", precision = 4, scale = 2)
+    @Column(name = "temp", precision = 100, scale = 2)
     private BigDecimal temp;
 
-    @Column(name = "volume", precision = 8, scale = 2)
+    @Column(name = "volume", nullable = false, precision = 4, scale = 2)
     private BigDecimal volume;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "id_zona", nullable = false)
+    @Column(name = "nivel_cl", precision = 5, scale = 2)
+    private BigDecimal nivelCl;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_zona")
     private Zona idZona;
 
     public Integer getId() {
@@ -33,12 +36,12 @@ public class Piscina {
         this.id = id;
     }
 
-    public BigDecimal getNivelph() {
-        return nivelph;
+    public BigDecimal getPh() {
+        return ph;
     }
 
-    public void setNivelph(BigDecimal nivelph) {
-        this.nivelph = nivelph;
+    public void setPh(BigDecimal ph) {
+        this.ph = ph;
     }
 
     public BigDecimal getTemp() {
@@ -55,6 +58,14 @@ public class Piscina {
 
     public void setVolume(BigDecimal volume) {
         this.volume = volume;
+    }
+
+    public BigDecimal getNivelCl() {
+        return nivelCl;
+    }
+
+    public void setNivelCl(BigDecimal nivelCl) {
+        this.nivelCl = nivelCl;
     }
 
     public Zona getIdZona() {

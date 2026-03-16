@@ -11,22 +11,22 @@ import java.util.Set;
 public class Quarto {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_quarto", nullable = false)
+    @Column(name = "nquarto", nullable = false)
     private Integer id;
 
-    @Column(name = "preco", precision = 6, scale = 2)
+    @Column(name = "preco", nullable = false, precision = 5, scale = 2)
     private BigDecimal preco;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @OneToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "id_zona", nullable = false)
     private Zona idZona;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "id_tipoquarto", nullable = false)
-    private TipoQuarto idTipoquarto;
+    @JoinColumn(name = "id_tipoq", nullable = false)
+    private TipoQuarto idTipoq;
 
-    @ManyToMany(mappedBy = "quartos")
-    private Set<Marcacao> marcacaos = new LinkedHashSet<>();
+    @OneToMany(mappedBy = "nquarto")
+    private Set<Reserva> reservas = new LinkedHashSet<>();
 
     public Integer getId() {
         return id;
@@ -52,20 +52,20 @@ public class Quarto {
         this.idZona = idZona;
     }
 
-    public TipoQuarto getIdTipoquarto() {
-        return idTipoquarto;
+    public TipoQuarto getIdTipoq() {
+        return idTipoq;
     }
 
-    public void setIdTipoquarto(TipoQuarto idTipoquarto) {
-        this.idTipoquarto = idTipoquarto;
+    public void setIdTipoq(TipoQuarto idTipoq) {
+        this.idTipoq = idTipoq;
     }
 
-    public Set<Marcacao> getMarcacaos() {
-        return marcacaos;
+    public Set<Reserva> getReservas() {
+        return reservas;
     }
 
-    public void setMarcacaos(Set<Marcacao> marcacaos) {
-        this.marcacaos = marcacaos;
+    public void setReservas(Set<Reserva> reservas) {
+        this.reservas = reservas;
     }
 
 }

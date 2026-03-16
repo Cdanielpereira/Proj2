@@ -10,21 +10,21 @@ public class LinhaEnc {
     @EmbeddedId
     private LinhaEncId id;
 
-    @MapsId("idEncomenda")
+    @MapsId("idEnco")
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "id_encomenda", nullable = false)
-    private Encomenda idEncomenda;
+    @JoinColumn(name = "id_enco", nullable = false)
+    private Encomenda idEnco;
 
     @MapsId("idProduto")
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "id_produto", nullable = false)
     private Produto idProduto;
 
-    @Column(name = "qtd", nullable = false, precision = 5, scale = 2)
-    private BigDecimal qtd;
-
     @Column(name = "precoatual", nullable = false, precision = 5, scale = 2)
     private BigDecimal precoatual;
+
+    @Column(name = "qtd", nullable = false)
+    private Integer qtd;
 
     public LinhaEncId getId() {
         return id;
@@ -34,12 +34,12 @@ public class LinhaEnc {
         this.id = id;
     }
 
-    public Encomenda getIdEncomenda() {
-        return idEncomenda;
+    public Encomenda getIdEnco() {
+        return idEnco;
     }
 
-    public void setIdEncomenda(Encomenda idEncomenda) {
-        this.idEncomenda = idEncomenda;
+    public void setIdEnco(Encomenda idEnco) {
+        this.idEnco = idEnco;
     }
 
     public Produto getIdProduto() {
@@ -50,20 +50,20 @@ public class LinhaEnc {
         this.idProduto = idProduto;
     }
 
-    public BigDecimal getQtd() {
-        return qtd;
-    }
-
-    public void setQtd(BigDecimal qtd) {
-        this.qtd = qtd;
-    }
-
     public BigDecimal getPrecoatual() {
         return precoatual;
     }
 
     public void setPrecoatual(BigDecimal precoatual) {
         this.precoatual = precoatual;
+    }
+
+    public Integer getQtd() {
+        return qtd;
+    }
+
+    public void setQtd(Integer qtd) {
+        this.qtd = qtd;
     }
 
 }

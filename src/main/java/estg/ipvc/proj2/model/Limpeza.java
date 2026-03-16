@@ -2,6 +2,8 @@ package estg.ipvc.proj2.model;
 
 import jakarta.persistence.*;
 
+import java.time.LocalDate;
+
 @Entity
 @Table(name = "limpeza")
 public class Limpeza {
@@ -17,6 +19,9 @@ public class Limpeza {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "id_func", nullable = false)
     private Funcionario idFunc;
+
+    @Column(name = "dt_reali", nullable = false)
+    private LocalDate dtReali;
 
     public LimpezaId getId() {
         return id;
@@ -40,6 +45,14 @@ public class Limpeza {
 
     public void setIdFunc(Funcionario idFunc) {
         this.idFunc = idFunc;
+    }
+
+    public LocalDate getDtReali() {
+        return dtReali;
+    }
+
+    public void setDtReali(LocalDate dtReali) {
+        this.dtReali = dtReali;
     }
 
 }

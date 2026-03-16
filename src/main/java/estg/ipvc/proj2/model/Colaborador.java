@@ -2,6 +2,7 @@ package estg.ipvc.proj2.model;
 
 import jakarta.persistence.*;
 
+import java.math.BigDecimal;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
@@ -13,11 +14,12 @@ public class Colaborador {
     @Column(name = "id_colab", nullable = false)
     private Integer id;
 
-    @Column(name = "nome", nullable = false, length = 50)
-    private String nome;
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "id_tipocolab", nullable = false)
+    private TipoColab idTipocolab;
 
-    @Column(name = "nif", nullable = false)
-    private Integer nif;
+    @Column(name = "nome", nullable = false, length = 100)
+    private String nome;
 
     @Column(name = "telefone", nullable = false, length = 15)
     private String telefone;
@@ -25,31 +27,21 @@ public class Colaborador {
     @Column(name = "email", length = 50)
     private String email;
 
-    @Column(name = "iban", length = 25)
-    private String iban;
-
-    @Column(name = "rua", nullable = false, length = 25)
+    @Column(name = "rua", nullable = false, length = 50)
     private String rua;
 
     @Column(name = "nporta", nullable = false, length = 20)
     private String nporta;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "id_tipocolab", nullable = false)
-    private TipoColab idTipocolab;
+    @JoinColumn(name = "cpostal", nullable = false)
+    private Cpostal cpostal;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "cod_postal", nullable = false)
-    private CodPostal codPostal;
-
-    @OneToMany(mappedBy = "idColab")
-    private Set<Catering> caterings = new LinkedHashSet<>();
+    @Column(name = "iban", precision = 30)
+    private BigDecimal iban;
 
     @OneToMany(mappedBy = "idColab")
-    private Set<Encomenda> encomendas = new LinkedHashSet<>();
-
-    @OneToMany(mappedBy = "idColab")
-    private Set<Manutencao> manutencaos = new LinkedHashSet<>();
+    private Set<Servico> servicos = new LinkedHashSet<>();
 
     public Integer getId() {
         return id;
@@ -59,20 +51,20 @@ public class Colaborador {
         this.id = id;
     }
 
+    public TipoColab getIdTipocolab() {
+        return idTipocolab;
+    }
+
+    public void setIdTipocolab(TipoColab idTipocolab) {
+        this.idTipocolab = idTipocolab;
+    }
+
     public String getNome() {
         return nome;
     }
 
     public void setNome(String nome) {
         this.nome = nome;
-    }
-
-    public Integer getNif() {
-        return nif;
-    }
-
-    public void setNif(Integer nif) {
-        this.nif = nif;
     }
 
     public String getTelefone() {
@@ -91,14 +83,6 @@ public class Colaborador {
         this.email = email;
     }
 
-    public String getIban() {
-        return iban;
-    }
-
-    public void setIban(String iban) {
-        this.iban = iban;
-    }
-
     public String getRua() {
         return rua;
     }
@@ -115,44 +99,28 @@ public class Colaborador {
         this.nporta = nporta;
     }
 
-    public TipoColab getIdTipocolab() {
-        return idTipocolab;
+    public Cpostal getCpostal() {
+        return cpostal;
     }
 
-    public void setIdTipocolab(TipoColab idTipocolab) {
-        this.idTipocolab = idTipocolab;
+    public void setCpostal(Cpostal cpostal) {
+        this.cpostal = cpostal;
     }
 
-    public CodPostal getCodPostal() {
-        return codPostal;
+    public BigDecimal getIban() {
+        return iban;
     }
 
-    public void setCodPostal(CodPostal codPostal) {
-        this.codPostal = codPostal;
+    public void setIban(BigDecimal iban) {
+        this.iban = iban;
     }
 
-    public Set<Catering> getCaterings() {
-        return caterings;
+    public Set<Servico> getServicos() {
+        return servicos;
     }
 
-    public void setCaterings(Set<Catering> caterings) {
-        this.caterings = caterings;
-    }
-
-    public Set<Encomenda> getEncomendas() {
-        return encomendas;
-    }
-
-    public void setEncomendas(Set<Encomenda> encomendas) {
-        this.encomendas = encomendas;
-    }
-
-    public Set<Manutencao> getManutencaos() {
-        return manutencaos;
-    }
-
-    public void setManutencaos(Set<Manutencao> manutencaos) {
-        this.manutencaos = manutencaos;
+    public void setServicos(Set<Servico> servicos) {
+        this.servicos = servicos;
     }
 
 }

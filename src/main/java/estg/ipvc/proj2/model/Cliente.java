@@ -2,6 +2,7 @@ package estg.ipvc.proj2.model;
 
 import jakarta.persistence.*;
 
+import java.time.LocalDate;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
@@ -13,31 +14,38 @@ public class Cliente {
     @Column(name = "id_cliente", nullable = false)
     private Integer id;
 
-    @Column(name = "nome", nullable = false, length = 50)
-    private String nome;
-
-    @Column(name = "nif", nullable = false)
+    @Column(name = "nif")
     private Integer nif;
 
-    @Column(name = "telefone", nullable = false, length = 15)
-    private String telefone;
+    @Column(name = "nome", nullable = false, length = 100)
+    private String nome;
 
-    @Column(name = "email", length = 50)
-    private String email;
+    @Column(name = "dt_nasc")
+    private LocalDate dtNasc;
 
-    @Column(name = "rua", length = 25)
+    @Column(name = "rua", length = 50)
     private String rua;
 
-    @Column(name = "nporta", length = 20)
-    private String nporta;
+    @Column(name = "porta", length = 20)
+    private String porta;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "cod_postal")
-    private CodPostal codPostal;
+    @Column(name = "sexo", length = 15)
+    private String sexo;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "id_user", nullable = false)
-    private Utilizador idUser;
+    private User idUser;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "cpostal")
+    private Cpostal cpostal;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_nacional")
+    private Nacionalidade idNacional;
+
+    @Column(name = "email", length = 50)
+    private String email;
 
     @OneToMany(mappedBy = "idCliente")
     private Set<Marcacao> marcacaos = new LinkedHashSet<>();
@@ -50,14 +58,6 @@ public class Cliente {
         this.id = id;
     }
 
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
     public Integer getNif() {
         return nif;
     }
@@ -66,20 +66,20 @@ public class Cliente {
         this.nif = nif;
     }
 
-    public String getTelefone() {
-        return telefone;
+    public String getNome() {
+        return nome;
     }
 
-    public void setTelefone(String telefone) {
-        this.telefone = telefone;
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
-    public String getEmail() {
-        return email;
+    public LocalDate getDtNasc() {
+        return dtNasc;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setDtNasc(LocalDate dtNasc) {
+        this.dtNasc = dtNasc;
     }
 
     public String getRua() {
@@ -90,28 +90,52 @@ public class Cliente {
         this.rua = rua;
     }
 
-    public String getNporta() {
-        return nporta;
+    public String getPorta() {
+        return porta;
     }
 
-    public void setNporta(String nporta) {
-        this.nporta = nporta;
+    public void setPorta(String porta) {
+        this.porta = porta;
     }
 
-    public CodPostal getCodPostal() {
-        return codPostal;
+    public String getSexo() {
+        return sexo;
     }
 
-    public void setCodPostal(CodPostal codPostal) {
-        this.codPostal = codPostal;
+    public void setSexo(String sexo) {
+        this.sexo = sexo;
     }
 
-    public Utilizador getIdUser() {
+    public User getIdUser() {
         return idUser;
     }
 
-    public void setIdUser(Utilizador idUser) {
+    public void setIdUser(User idUser) {
         this.idUser = idUser;
+    }
+
+    public Cpostal getCpostal() {
+        return cpostal;
+    }
+
+    public void setCpostal(Cpostal cpostal) {
+        this.cpostal = cpostal;
+    }
+
+    public Nacionalidade getIdNacional() {
+        return idNacional;
+    }
+
+    public void setIdNacional(Nacionalidade idNacional) {
+        this.idNacional = idNacional;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public Set<Marcacao> getMarcacaos() {

@@ -10,11 +10,11 @@ import java.util.Set;
 public class TipoColab {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_tipocolab", nullable = false)
+    @Column(name = "id_colab", nullable = false)
     private Integer id;
 
-    @Column(name = "tipo", nullable = false, length = 20)
-    private String tipo;
+    @Column(name = "type", nullable = false, length = 20)
+    private String type;
 
     @OneToMany(mappedBy = "idTipocolab")
     private Set<Colaborador> colaboradors = new LinkedHashSet<>();
@@ -27,12 +27,12 @@ public class TipoColab {
         this.id = id;
     }
 
-    public String getTipo() {
-        return tipo;
+    public String getType() {
+        return type;
     }
 
-    public void setTipo(String tipo) {
-        this.tipo = tipo;
+    public void setType(String type) {
+        this.type = type;
     }
 
     public Set<Colaborador> getColaboradors() {

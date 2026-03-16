@@ -1,44 +1,25 @@
 package estg.ipvc.proj2.model;
 
 import jakarta.persistence.*;
-import org.hibernate.annotations.ColumnDefault;
-
-import java.math.BigDecimal;
-import java.time.LocalDate;
 
 @Entity
 @Table(name = "manutencao")
 public class Manutencao {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_manutencao", nullable = false)
+    @Column(name = "id_manu", nullable = false)
     private Integer id;
 
-    @ColumnDefault("0")
-    @Column(name = "valorpagar", precision = 6, scale = 2)
-    private BigDecimal valorpagar;
-
-    @Column(name = "dt_chegada")
-    private LocalDate dtChegada;
+    @Column(name = "descricao", length = 100)
+    private String descricao;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "id_aviso", nullable = false)
-    private Aviso idAviso;
-
-    @Column(name = "id_zona", nullable = false)
-    private Integer idZona;
+    @JoinColumn(name = "id_zona", nullable = false)
+    private Zona idZona;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "id_colab", nullable = false)
-    private Colaborador idColab;
-
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "id_func", nullable = false)
-    private Funcionario idFunc;
-
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "id_evento", nullable = false)
-    private Evento idEvento;
+    @JoinColumn(name = "id_servico", nullable = false)
+    private Servico idServico;
 
     public Integer getId() {
         return id;
@@ -48,60 +29,28 @@ public class Manutencao {
         this.id = id;
     }
 
-    public BigDecimal getValorpagar() {
-        return valorpagar;
+    public String getDescricao() {
+        return descricao;
     }
 
-    public void setValorpagar(BigDecimal valorpagar) {
-        this.valorpagar = valorpagar;
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
     }
 
-    public LocalDate getDtChegada() {
-        return dtChegada;
-    }
-
-    public void setDtChegada(LocalDate dtChegada) {
-        this.dtChegada = dtChegada;
-    }
-
-    public Aviso getIdAviso() {
-        return idAviso;
-    }
-
-    public void setIdAviso(Aviso idAviso) {
-        this.idAviso = idAviso;
-    }
-
-    public Integer getIdZona() {
+    public Zona getIdZona() {
         return idZona;
     }
 
-    public void setIdZona(Integer idZona) {
+    public void setIdZona(Zona idZona) {
         this.idZona = idZona;
     }
 
-    public Colaborador getIdColab() {
-        return idColab;
+    public Servico getIdServico() {
+        return idServico;
     }
 
-    public void setIdColab(Colaborador idColab) {
-        this.idColab = idColab;
-    }
-
-    public Funcionario getIdFunc() {
-        return idFunc;
-    }
-
-    public void setIdFunc(Funcionario idFunc) {
-        this.idFunc = idFunc;
-    }
-
-    public Evento getIdEvento() {
-        return idEvento;
-    }
-
-    public void setIdEvento(Evento idEvento) {
-        this.idEvento = idEvento;
+    public void setIdServico(Servico idServico) {
+        this.idServico = idServico;
     }
 
 }

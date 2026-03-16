@@ -1,7 +1,10 @@
 package estg.ipvc.proj2.model;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.ColumnDefault;
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
@@ -13,71 +16,58 @@ public class Funcionario {
     @Column(name = "id_func", nullable = false)
     private Integer id;
 
-    @Column(name = "nome", nullable = false, length = 50)
-    private String nome;
-
-    @Column(name = "nif", nullable = false)
-    private Integer nif;
-
-    @Column(name = "telefone", nullable = false, length = 15)
-    private String telefone;
-
-    @Column(name = "email", nullable = false, length = 50)
-    private String email;
-
-    @Column(name = "iban", length = 25)
-    private String iban;
-
-    @Column(name = "rua", nullable = false, length = 25)
-    private String rua;
-
-    @Column(name = "nporta", nullable = false, length = 20)
-    private String nporta;
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "id_user", nullable = false)
+    private User idUser;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ColumnDefault("2")
     @JoinColumn(name = "id_tipofunc", nullable = false)
     private TipoFunc idTipofunc;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "cod_postal", nullable = false)
-    private CodPostal codPostal;
+    @Column(name = "iban", nullable = false, length = 30)
+    private String iban;
+
+    @Column(name = "nif", precision = 15)
+    private BigDecimal nif;
+
+    @Column(name = "rua", nullable = false, length = 50)
+    private String rua;
+
+    @Column(name = "nporta", nullable = false, precision = 20)
+    private BigDecimal nporta;
+
+    @Column(name = "dt_nasc", nullable = false)
+    private LocalDate dtNasc;
+
+    @Column(name = "sexo", nullable = false, length = 15)
+    private String sexo;
+
+    @Column(name = "nome", nullable = false, length = 100)
+    private String nome;
+
+    @Column(name = "email", length = 50)
+    private String email;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "id_user", nullable = false)
-    private Utilizador idUser;
+    @JoinColumn(name = "cpostal", nullable = false)
+    private Cpostal cpostal;
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "id_nacional", nullable = false)
+    private Nacionalidade idNacional;
 
     @OneToMany(mappedBy = "idFunc")
-    private Set<Avaliacao> avaliacaos = new LinkedHashSet<>();
+    private Set<Contrato> contratoes = new LinkedHashSet<>();
 
     @OneToMany(mappedBy = "idFunc")
-    private Set<Carta> cartas = new LinkedHashSet<>();
-
-    @OneToMany(mappedBy = "idFunc")
-    private Set<Catering> caterings = new LinkedHashSet<>();
-
-    @OneToMany(mappedBy = "idFunc")
-    private Set<ContratoFunc> contratoFuncs = new LinkedHashSet<>();
-
-    @OneToMany(mappedBy = "idFunc")
-    private Set<ContratoPub> contratoPubs = new LinkedHashSet<>();
-
-    @OneToMany(mappedBy = "idFunc")
-    private Set<Encomenda> encomendas = new LinkedHashSet<>();
-
-    @OneToMany(mappedBy = "idFunc")
-    private Set<Entrevista> entrevistas = new LinkedHashSet<>();
+    private Set<FaturaPagamento> faturaPagamentos = new LinkedHashSet<>();
 
     @OneToMany(mappedBy = "idFunc")
     private Set<Limpeza> limpezas = new LinkedHashSet<>();
 
     @OneToMany(mappedBy = "idFunc")
-    private Set<Manutencao> manutencaos = new LinkedHashSet<>();
-
-    @OneToMany(mappedBy = "idFunc")
-    private Set<NoteEnv> noteEnvs = new LinkedHashSet<>();
-
-    @OneToMany(mappedBy = "idFunc")
-    private Set<NoteRec> noteRecs = new LinkedHashSet<>();
+    private Set<Servico> servicos = new LinkedHashSet<>();
 
     public Integer getId() {
         return id;
@@ -87,60 +77,12 @@ public class Funcionario {
         this.id = id;
     }
 
-    public String getNome() {
-        return nome;
+    public User getIdUser() {
+        return idUser;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    public Integer getNif() {
-        return nif;
-    }
-
-    public void setNif(Integer nif) {
-        this.nif = nif;
-    }
-
-    public String getTelefone() {
-        return telefone;
-    }
-
-    public void setTelefone(String telefone) {
-        this.telefone = telefone;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getIban() {
-        return iban;
-    }
-
-    public void setIban(String iban) {
-        this.iban = iban;
-    }
-
-    public String getRua() {
-        return rua;
-    }
-
-    public void setRua(String rua) {
-        this.rua = rua;
-    }
-
-    public String getNporta() {
-        return nporta;
-    }
-
-    public void setNporta(String nporta) {
-        this.nporta = nporta;
+    public void setIdUser(User idUser) {
+        this.idUser = idUser;
     }
 
     public TipoFunc getIdTipofunc() {
@@ -151,76 +93,100 @@ public class Funcionario {
         this.idTipofunc = idTipofunc;
     }
 
-    public CodPostal getCodPostal() {
-        return codPostal;
+    public String getIban() {
+        return iban;
     }
 
-    public void setCodPostal(CodPostal codPostal) {
-        this.codPostal = codPostal;
+    public void setIban(String iban) {
+        this.iban = iban;
     }
 
-    public Utilizador getIdUser() {
-        return idUser;
+    public BigDecimal getNif() {
+        return nif;
     }
 
-    public void setIdUser(Utilizador idUser) {
-        this.idUser = idUser;
+    public void setNif(BigDecimal nif) {
+        this.nif = nif;
     }
 
-    public Set<Avaliacao> getAvaliacaos() {
-        return avaliacaos;
+    public String getRua() {
+        return rua;
     }
 
-    public void setAvaliacaos(Set<Avaliacao> avaliacaos) {
-        this.avaliacaos = avaliacaos;
+    public void setRua(String rua) {
+        this.rua = rua;
     }
 
-    public Set<Carta> getCartas() {
-        return cartas;
+    public BigDecimal getNporta() {
+        return nporta;
     }
 
-    public void setCartas(Set<Carta> cartas) {
-        this.cartas = cartas;
+    public void setNporta(BigDecimal nporta) {
+        this.nporta = nporta;
     }
 
-    public Set<Catering> getCaterings() {
-        return caterings;
+    public LocalDate getDtNasc() {
+        return dtNasc;
     }
 
-    public void setCaterings(Set<Catering> caterings) {
-        this.caterings = caterings;
+    public void setDtNasc(LocalDate dtNasc) {
+        this.dtNasc = dtNasc;
     }
 
-    public Set<ContratoFunc> getContratoFuncs() {
-        return contratoFuncs;
+    public String getSexo() {
+        return sexo;
     }
 
-    public void setContratoFuncs(Set<ContratoFunc> contratoFuncs) {
-        this.contratoFuncs = contratoFuncs;
+    public void setSexo(String sexo) {
+        this.sexo = sexo;
     }
 
-    public Set<ContratoPub> getContratoPubs() {
-        return contratoPubs;
+    public String getNome() {
+        return nome;
     }
 
-    public void setContratoPubs(Set<ContratoPub> contratoPubs) {
-        this.contratoPubs = contratoPubs;
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
-    public Set<Encomenda> getEncomendas() {
-        return encomendas;
+    public String getEmail() {
+        return email;
     }
 
-    public void setEncomendas(Set<Encomenda> encomendas) {
-        this.encomendas = encomendas;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
-    public Set<Entrevista> getEntrevistas() {
-        return entrevistas;
+    public Cpostal getCpostal() {
+        return cpostal;
     }
 
-    public void setEntrevistas(Set<Entrevista> entrevistas) {
-        this.entrevistas = entrevistas;
+    public void setCpostal(Cpostal cpostal) {
+        this.cpostal = cpostal;
+    }
+
+    public Nacionalidade getIdNacional() {
+        return idNacional;
+    }
+
+    public void setIdNacional(Nacionalidade idNacional) {
+        this.idNacional = idNacional;
+    }
+
+    public Set<Contrato> getContratoes() {
+        return contratoes;
+    }
+
+    public void setContratoes(Set<Contrato> contratoes) {
+        this.contratoes = contratoes;
+    }
+
+    public Set<FaturaPagamento> getFaturaPagamentos() {
+        return faturaPagamentos;
+    }
+
+    public void setFaturaPagamentos(Set<FaturaPagamento> faturaPagamentos) {
+        this.faturaPagamentos = faturaPagamentos;
     }
 
     public Set<Limpeza> getLimpezas() {
@@ -231,28 +197,12 @@ public class Funcionario {
         this.limpezas = limpezas;
     }
 
-    public Set<Manutencao> getManutencaos() {
-        return manutencaos;
+    public Set<Servico> getServicos() {
+        return servicos;
     }
 
-    public void setManutencaos(Set<Manutencao> manutencaos) {
-        this.manutencaos = manutencaos;
-    }
-
-    public Set<NoteEnv> getNoteEnvs() {
-        return noteEnvs;
-    }
-
-    public void setNoteEnvs(Set<NoteEnv> noteEnvs) {
-        this.noteEnvs = noteEnvs;
-    }
-
-    public Set<NoteRec> getNoteRecs() {
-        return noteRecs;
-    }
-
-    public void setNoteRecs(Set<NoteRec> noteRecs) {
-        this.noteRecs = noteRecs;
+    public void setServicos(Set<Servico> servicos) {
+        this.servicos = servicos;
     }
 
 }

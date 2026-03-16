@@ -6,25 +6,22 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "cod_postal")
-public class CodPostal {
+@Table(name = "cpostal")
+public class Cpostal {
     @Id
     @Column(name = "cod_postal", nullable = false, length = 10)
     private String codPostal;
 
-    @Column(name = "localidade", nullable = false, length = 20)
+    @Column(name = "localidade", nullable = false, length = 100)
     private String localidade;
 
-    @OneToMany(mappedBy = "codPostal")
-    private Set<Candidato> candidatoes = new LinkedHashSet<>();
-
-    @OneToMany(mappedBy = "codPostal")
+    @OneToMany(mappedBy = "cpostal")
     private Set<Cliente> clientes = new LinkedHashSet<>();
 
-    @OneToMany(mappedBy = "codPostal")
+    @OneToMany(mappedBy = "cpostal")
     private Set<Colaborador> colaboradors = new LinkedHashSet<>();
 
-    @OneToMany(mappedBy = "codPostal")
+    @OneToMany(mappedBy = "cpostal")
     private Set<Funcionario> funcionarios = new LinkedHashSet<>();
 
     public String getCodPostal() {
@@ -41,14 +38,6 @@ public class CodPostal {
 
     public void setLocalidade(String localidade) {
         this.localidade = localidade;
-    }
-
-    public Set<Candidato> getCandidatoes() {
-        return candidatoes;
-    }
-
-    public void setCandidatoes(Set<Candidato> candidatoes) {
-        this.candidatoes = candidatoes;
     }
 
     public Set<Cliente> getClientes() {

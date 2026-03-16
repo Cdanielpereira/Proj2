@@ -3,7 +3,7 @@ package estg.ipvc.proj2.model;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
-import java.time.OffsetDateTime;
+import java.time.LocalDate;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
@@ -15,16 +15,20 @@ public class FaturaRecibo {
     @Column(name = "id_faturar", nullable = false)
     private Integer id;
 
-    @Column(name = "nif")
-    private Integer nif;
-
-    @Column(name = "valor", nullable = false, precision = 8, scale = 2)
+    @Column(name = "valor", nullable = false, precision = 1000, scale = 2)
     private BigDecimal valor;
 
-    @Column(name = "dt_pag", nullable = false)
-    private OffsetDateTime dtPag;
+    @Column(name = "dt_pagamento", nullable = false)
+    private LocalDate dtPagamento;
 
-    @OneToMany(mappedBy = "idFaturar")
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "id_metodo", nullable = false)
+    private MetodoPagamento idMetodo;
+
+    @Column(name = "nif", precision = 15, scale = 2)
+    private BigDecimal nif;
+
+    @OneToMany(mappedBy = "ifFaturar")
     private Set<Marcacao> marcacaos = new LinkedHashSet<>();
 
     public Integer getId() {
@@ -35,14 +39,6 @@ public class FaturaRecibo {
         this.id = id;
     }
 
-    public Integer getNif() {
-        return nif;
-    }
-
-    public void setNif(Integer nif) {
-        this.nif = nif;
-    }
-
     public BigDecimal getValor() {
         return valor;
     }
@@ -51,12 +47,28 @@ public class FaturaRecibo {
         this.valor = valor;
     }
 
-    public OffsetDateTime getDtPag() {
-        return dtPag;
+    public LocalDate getDtPagamento() {
+        return dtPagamento;
     }
 
-    public void setDtPag(OffsetDateTime dtPag) {
-        this.dtPag = dtPag;
+    public void setDtPagamento(LocalDate dtPagamento) {
+        this.dtPagamento = dtPagamento;
+    }
+
+    public MetodoPagamento getIdMetodo() {
+        return idMetodo;
+    }
+
+    public void setIdMetodo(MetodoPagamento idMetodo) {
+        this.idMetodo = idMetodo;
+    }
+
+    public BigDecimal getNif() {
+        return nif;
+    }
+
+    public void setNif(BigDecimal nif) {
+        this.nif = nif;
     }
 
     public Set<Marcacao> getMarcacaos() {

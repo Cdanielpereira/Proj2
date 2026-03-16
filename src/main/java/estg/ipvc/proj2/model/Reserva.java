@@ -2,21 +2,26 @@ package estg.ipvc.proj2.model;
 
 import jakarta.persistence.*;
 
+import java.math.BigDecimal;
+
 @Entity
 @Table(name = "reserva")
 public class Reserva {
     @EmbeddedId
     private ReservaId id;
 
-    @MapsId("idMarcacao")
+    @MapsId("idMarc")
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "id_marcacao", nullable = false)
-    private Marcacao idMarcacao;
+    @JoinColumn(name = "id_marc", nullable = false)
+    private Marcacao idMarc;
 
-    @MapsId("idQuarto")
+    @MapsId("nquarto")
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "id_quarto", nullable = false)
-    private Quarto idQuarto;
+    @JoinColumn(name = "nquarto", nullable = false)
+    private Quarto nquarto;
+
+    @Column(name = "precoatual", nullable = false, precision = 5, scale = 2)
+    private BigDecimal precoatual;
 
     public ReservaId getId() {
         return id;
@@ -26,20 +31,28 @@ public class Reserva {
         this.id = id;
     }
 
-    public Marcacao getIdMarcacao() {
-        return idMarcacao;
+    public Marcacao getIdMarc() {
+        return idMarc;
     }
 
-    public void setIdMarcacao(Marcacao idMarcacao) {
-        this.idMarcacao = idMarcacao;
+    public void setIdMarc(Marcacao idMarc) {
+        this.idMarc = idMarc;
     }
 
-    public Quarto getIdQuarto() {
-        return idQuarto;
+    public Quarto getNquarto() {
+        return nquarto;
     }
 
-    public void setIdQuarto(Quarto idQuarto) {
-        this.idQuarto = idQuarto;
+    public void setNquarto(Quarto nquarto) {
+        this.nquarto = nquarto;
+    }
+
+    public BigDecimal getPrecoatual() {
+        return precoatual;
+    }
+
+    public void setPrecoatual(BigDecimal precoatual) {
+        this.precoatual = precoatual;
     }
 
 }

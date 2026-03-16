@@ -13,8 +13,8 @@ public class TipoFunc {
     @Column(name = "id_tipofunc", nullable = false)
     private Integer id;
 
-    @Column(name = "tipo", nullable = false, length = 20)
-    private String tipo;
+    @Column(name = "type", nullable = false, length = 20)
+    private String type;
 
     @OneToMany(mappedBy = "idTipofunc")
     private Set<Funcionario> funcionarios = new LinkedHashSet<>();
@@ -27,12 +27,12 @@ public class TipoFunc {
         this.id = id;
     }
 
-    public String getTipo() {
-        return tipo;
+    public String getType() {
+        return type;
     }
 
-    public void setTipo(String tipo) {
-        this.tipo = tipo;
+    public void setType(String type) {
+        this.type = type;
     }
 
     public Set<Funcionario> getFuncionarios() {

@@ -10,13 +10,13 @@ import java.util.Set;
 public class TipoZona {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_tipozona", nullable = false)
+    @Column(name = "id_tipoz", nullable = false)
     private Integer id;
 
-    @Column(name = "tipo", nullable = false, length = 30)
-    private String tipo;
+    @Column(name = "type", nullable = false, length = 100)
+    private String type;
 
-    @OneToMany(mappedBy = "idTipozona")
+    @OneToMany(mappedBy = "idTipoz")
     private Set<Zona> zonas = new LinkedHashSet<>();
 
     public Integer getId() {
@@ -27,12 +27,12 @@ public class TipoZona {
         this.id = id;
     }
 
-    public String getTipo() {
-        return tipo;
+    public String getType() {
+        return type;
     }
 
-    public void setTipo(String tipo) {
-        this.tipo = tipo;
+    public void setType(String type) {
+        this.type = type;
     }
 
     public Set<Zona> getZonas() {

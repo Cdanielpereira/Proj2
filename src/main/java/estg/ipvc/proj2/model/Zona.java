@@ -13,21 +13,24 @@ public class Zona {
     @Column(name = "id_zona", nullable = false)
     private Integer id;
 
-    @Column(name = "andar", nullable = false)
-    private Integer andar;
-
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "id_tipozona", nullable = false)
-    private TipoZona idTipozona;
+    @JoinColumn(name = "id_tipoz", nullable = false)
+    private TipoZona idTipoz;
+
+    @Column(name = "andar", length = 15)
+    private String andar;
 
     @OneToMany(mappedBy = "idZona")
     private Set<Limpeza> limpezas = new LinkedHashSet<>();
 
     @OneToMany(mappedBy = "idZona")
-    private Set<Piscina> piscinas = new LinkedHashSet<>();
+    private Set<Manutencao> manutencaos = new LinkedHashSet<>();
 
     @OneToMany(mappedBy = "idZona")
-    private Set<Quarto> quartos = new LinkedHashSet<>();
+    private Set<Piscina> piscinas = new LinkedHashSet<>();
+
+    @OneToOne(mappedBy = "idZona")
+    private Quarto quarto;
 
     public Integer getId() {
         return id;
@@ -37,20 +40,20 @@ public class Zona {
         this.id = id;
     }
 
-    public Integer getAndar() {
+    public TipoZona getIdTipoz() {
+        return idTipoz;
+    }
+
+    public void setIdTipoz(TipoZona idTipoz) {
+        this.idTipoz = idTipoz;
+    }
+
+    public String getAndar() {
         return andar;
     }
 
-    public void setAndar(Integer andar) {
+    public void setAndar(String andar) {
         this.andar = andar;
-    }
-
-    public TipoZona getIdTipozona() {
-        return idTipozona;
-    }
-
-    public void setIdTipozona(TipoZona idTipozona) {
-        this.idTipozona = idTipozona;
     }
 
     public Set<Limpeza> getLimpezas() {
@@ -61,6 +64,14 @@ public class Zona {
         this.limpezas = limpezas;
     }
 
+    public Set<Manutencao> getManutencaos() {
+        return manutencaos;
+    }
+
+    public void setManutencaos(Set<Manutencao> manutencaos) {
+        this.manutencaos = manutencaos;
+    }
+
     public Set<Piscina> getPiscinas() {
         return piscinas;
     }
@@ -69,12 +80,12 @@ public class Zona {
         this.piscinas = piscinas;
     }
 
-    public Set<Quarto> getQuartos() {
-        return quartos;
+    public Quarto getQuarto() {
+        return quarto;
     }
 
-    public void setQuartos(Set<Quarto> quartos) {
-        this.quartos = quartos;
+    public void setQuarto(Quarto quarto) {
+        this.quarto = quarto;
     }
 
 }

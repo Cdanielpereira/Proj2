@@ -2,26 +2,25 @@ package estg.ipvc.proj2.model;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
-import org.hibernate.Hibernate;
 
 import java.io.Serializable;
 import java.util.Objects;
 
 @Embeddable
 public class LinhaEncId implements Serializable {
-    private static final long serialVersionUID = 2176334043762295905L;
-    @Column(name = "id_encomenda", nullable = false)
-    private Integer idEncomenda;
+    private static final long serialVersionUID = -1936886381190267140L;
+    @Column(name = "id_enco", nullable = false)
+    private Integer idEnco;
 
     @Column(name = "id_produto", nullable = false)
     private Integer idProduto;
 
-    public Integer getIdEncomenda() {
-        return idEncomenda;
+    public Integer getIdEnco() {
+        return idEnco;
     }
 
-    public void setIdEncomenda(Integer idEncomenda) {
-        this.idEncomenda = idEncomenda;
+    public void setIdEnco(Integer idEnco) {
+        this.idEnco = idEnco;
     }
 
     public Integer getIdProduto() {
@@ -35,15 +34,14 @@ public class LinhaEncId implements Serializable {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        if (o == null || getClass() != o.getClass()) return false;
         LinhaEncId entity = (LinhaEncId) o;
-        return Objects.equals(this.idEncomenda, entity.idEncomenda) &&
+        return Objects.equals(this.idEnco, entity.idEnco) &&
                 Objects.equals(this.idProduto, entity.idProduto);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(idEncomenda, idProduto);
+        return Objects.hash(idEnco, idProduto);
     }
-
 }
