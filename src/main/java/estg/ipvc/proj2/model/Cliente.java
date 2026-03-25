@@ -13,37 +13,27 @@ public class Cliente {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_cliente", nullable = false)
     private Integer id;
-
     @Column(name = "nif")
     private Integer nif;
-
     @Column(name = "nome", nullable = false, length = 100)
     private String nome;
-
     @Column(name = "dt_nasc")
     private LocalDate dtNasc;
-
     @Column(name = "rua", length = 50)
     private String rua;
-
     @Column(name = "porta", length = 20)
     private String porta;
-
     @Column(name = "sexo", length = 15)
     private String sexo;
-
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "id_user", nullable = false)
     private User idUser;
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "cpostal")
     private Cpostal cpostal;
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_nacional")
     private Nacionalidade idNacional;
-
     @Column(name = "email", length = 50)
     private String email;
 
@@ -53,7 +43,6 @@ public class Cliente {
     public Integer getId() {
         return id;
     }
-
     public void setId(Integer id) {
         this.id = id;
     }

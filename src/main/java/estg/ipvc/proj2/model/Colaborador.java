@@ -5,8 +5,8 @@ import jakarta.persistence.*;
 import java.math.BigDecimal;
 import java.util.LinkedHashSet;
 import java.util.Set;
-
 @Entity
+
 @Table(name = "colaborador")
 public class Colaborador {
     @Id
