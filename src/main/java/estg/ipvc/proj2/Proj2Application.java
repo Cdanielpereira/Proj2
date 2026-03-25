@@ -31,8 +31,5 @@ public class Proj2Application {
         userRepository.save(new User("Joao", "user", "999666555"));
         userRepository.save(new User("Mary", "user", "999666555"));
 
-
-
-
     }*/
     }
