@@ -13,12 +13,17 @@ public class TipoIva {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "idiva", nullable = false)
     private Integer id;
-
     @Column(name = "type", nullable = false, length = 20)
     private String type;
-
     @Column(name = "valor", nullable = false, precision = 7, scale = 2)
     private BigDecimal valor;
+
+
+    @OneToMany(mappedBy = "idiva")
+    private Set<Quarto> quartos = new LinkedHashSet<>();
+
+    @OneToMany(mappedBy = "idiva")
+    private Set<Produto> produtos = new LinkedHashSet<>();
 
     @OneToMany(mappedBy = "idiva")
     private Set<Catering> caterings = new LinkedHashSet<>();
@@ -26,10 +31,10 @@ public class TipoIva {
     @OneToMany(mappedBy = "idiva")
     private Set<Manutencao> manutencaos = new LinkedHashSet<>();
 
+
     public Integer getId() {
         return id;
     }
-
     public void setId(Integer id) {
         this.id = id;
     }
@@ -37,7 +42,6 @@ public class TipoIva {
     public String getType() {
         return type;
     }
-
     public void setType(String type) {
         this.type = type;
     }
@@ -45,7 +49,6 @@ public class TipoIva {
     public BigDecimal getValor() {
         return valor;
     }
-
     public void setValor(BigDecimal valor) {
         this.valor = valor;
     }
@@ -53,7 +56,6 @@ public class TipoIva {
     public Set<Catering> getCaterings() {
         return caterings;
     }
-
     public void setCaterings(Set<Catering> caterings) {
         this.caterings = caterings;
     }
@@ -61,7 +63,6 @@ public class TipoIva {
     public Set<Manutencao> getManutencaos() {
         return manutencaos;
     }
-
     public void setManutencaos(Set<Manutencao> manutencaos) {
         this.manutencaos = manutencaos;
     }
