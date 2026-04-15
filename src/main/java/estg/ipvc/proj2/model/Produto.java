@@ -36,7 +36,6 @@ public class Produto {
     public Integer getId() {
         return id;
     }
-
     public void setId(Integer id) {
         this.id = id;
     }
@@ -44,7 +43,6 @@ public class Produto {
     public String getNome() {
         return nome;
     }
-
     public void setNome(String nome) {
         this.nome = nome;
     }
@@ -52,7 +50,6 @@ public class Produto {
     public BigDecimal getValor() {
         return valor;
     }
-
     public void setValor(BigDecimal valor) {
         this.valor = valor;
     }
@@ -60,7 +57,6 @@ public class Produto {
     public Integer getQtdstock() {
         return qtdstock;
     }
-
     public void setQtdstock(Integer qtdstock) {
         this.qtdstock = qtdstock;
     }
@@ -68,7 +64,6 @@ public class Produto {
     public Integer getQtdmin() {
         return qtdmin;
     }
-
     public void setQtdmin(Integer qtdmin) {
         this.qtdmin = qtdmin;
     }
@@ -76,9 +71,10 @@ public class Produto {
     public Set<LinhaEnc> getLinhaEncs() {
         return linhaEncs;
     }
-
     public void setLinhaEncs(Set<LinhaEnc> linhaEncs) {
         this.linhaEncs = linhaEncs;
     }
 
+    public TipoIVA getTipoIVA() { return idiva; }
+    public void setTipoIVA(TipoIVA idiva) {this.idiva = idiva;}
 }

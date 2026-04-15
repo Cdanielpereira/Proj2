@@ -26,13 +26,12 @@ public class LinhaEnc {
     @Column(name = "qtd", nullable = false)
     private Integer qtd;
 
-    @Column(name = "ivaatual", nullable = false, precision = 5, scale = 2)
+    @Column(name = "ivaatual", nullable = false, precision = 3, scale = 2)
     private BigDecimal ivaatual = idProduto.getTipoIVA().getValor();
 
     public LinhaEncId getId() {
         return id;
     }
-
     public void setId(LinhaEncId id) {
         this.id = id;
     }
@@ -40,7 +39,6 @@ public class LinhaEnc {
     public Encomenda getIdEnco() {
         return idEnco;
     }
-
     public void setIdEnco(Encomenda idEnco) {
         this.idEnco = idEnco;
     }
@@ -48,7 +46,6 @@ public class LinhaEnc {
     public Produto getIdProduto() {
         return idProduto;
     }
-
     public void setIdProduto(Produto idProduto) {
         this.idProduto = idProduto;
     }
@@ -56,7 +53,6 @@ public class LinhaEnc {
     public BigDecimal getPrecoatual() {
         return precoatual;
     }
-
     public void setPrecoatual(BigDecimal precoatual) {
         this.precoatual = precoatual;
     }
@@ -64,7 +60,6 @@ public class LinhaEnc {
     public Integer getQtd() {
         return qtd;
     }
-
     public void setQtd(Integer qtd) {
         this.qtd = qtd;
     }

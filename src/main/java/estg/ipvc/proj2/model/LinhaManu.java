@@ -10,7 +10,7 @@ public class LinhaManu {
     @EmbeddedId
     private LinhaManuId id;
 
-    @MapsId("idEnco")
+    @MapsId("idManu")
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "id_manu", nullable = false)
     private Manutencao idManu;
@@ -23,7 +23,7 @@ public class LinhaManu {
     @Column(name = "precoatual", nullable = false, precision = 5, scale = 2)
     private BigDecimal precoatual;
 
-    @Column(name = "ivaatual", nullable = false, precision = 5, scale = 2)
+    @Column(name = "ivaatual", nullable = false, precision = 3, scale = 2)
     private BigDecimal ivaatual = idManu.getIdIVA().getValor();
 
     public LinhaManuId getId() {

@@ -19,13 +19,12 @@ public class Catering {
     private BigDecimal precohosp;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "id_servico", nullable = false)
-    private Servico idServico;
+    @JoinColumn(name = "idiva",  nullable = false)
+    private TipoIVA idiva;
 
     public Integer getId() {
         return id;
     }
-
     public void setId(Integer id) {
         this.id = id;
     }
@@ -33,7 +32,6 @@ public class Catering {
     public Integer getNhospedes() {
         return nhospedes;
     }
-
     public void setNhospedes(Integer nhospedes) {
         this.nhospedes = nhospedes;
     }
@@ -41,17 +39,11 @@ public class Catering {
     public BigDecimal getPrecohosp() {
         return precohosp;
     }
-
     public void setPrecohosp(BigDecimal precohosp) {
         this.precohosp = precohosp;
     }
 
-    public Servico getIdServico() {
-        return idServico;
-    }
-
-    public void setIdServico(Servico idServico) {
-        this.idServico = idServico;
-    }
+    public TipoIVA getTipoIVA() { return idiva; }
+    public void setTipoIVA(TipoIVA idiva) {this.idiva = idiva;}
 
 }

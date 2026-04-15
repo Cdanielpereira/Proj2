@@ -17,7 +17,7 @@ public class TipoIVA {
     @Column(name = "type", nullable = false, length = 20)
     private String type;
 
-    @Column(name = "valor", nullable = false, precision = 1, scale = 3 )
+    @Column(name = "valor", nullable = false, precision = 5, scale = 2 )
     private BigDecimal valor;
 
     @OneToMany(mappedBy = "idiva")
@@ -25,6 +25,12 @@ public class TipoIVA {
 
     @OneToMany(mappedBy = "idiva")
     private Set<Produto> produtos = new LinkedHashSet<>();
+
+    @OneToMany(mappedBy = "idiva")
+    private Set<Manutencao> manutencoes = new LinkedHashSet<>();
+
+    @OneToMany(mappedBy = "idiva")
+    private Set<Catering> caterings = new LinkedHashSet<>();
 
     public Integer getId() {
         return id;
@@ -48,6 +54,27 @@ public class TipoIVA {
     }
     public void setQuartos(Set<Quarto> quartos) {
         this.quartos = quartos;
+    }
+
+    public Set<Produto> getProdutos() {
+        return produtos;
+    }
+    public void setProdutos(Set<Produto> produtos) {
+        this.produtos = produtos;
+    }
+
+    public Set<Manutencao> getManutencoes() {
+        return manutencoes;
+    }
+    public void setManutencoes(Set<Manutencao> manutencoes) {
+        this.manutencoes = manutencoes;
+    }
+
+    public Set<Catering> getCaterings() {
+        return caterings;
+    }
+    public void setCaterings(Set<Catering> caterings) {
+        this.caterings = caterings;
     }
 
 }
