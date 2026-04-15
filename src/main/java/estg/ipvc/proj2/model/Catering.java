@@ -11,16 +11,14 @@ public class Catering {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_cate", nullable = false)
     private Integer id;
-
     @Column(name = "nhospedes", nullable = false)
     private Integer nhospedes;
-
     @Column(name = "precohosp", nullable = false, precision = 7, scale = 2)
     private BigDecimal precohosp;
-
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "idiva",  nullable = false)
     private TipoIVA idiva;
+
 
     public Integer getId() {
         return id;

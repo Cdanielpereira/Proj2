@@ -5,14 +5,14 @@ import jakarta.persistence.*;
 import java.math.BigDecimal;
 
 @Entity
-@Table(name = "linha_manu")
-public class LinhaManu {
+@Table(name = "linha_cate")
+public class LinhaCate {
     @EmbeddedId
-    private LinhaManuId id;
-    @MapsId("idManu")
+    private LinhaCateId id;
+    @MapsId("idCate")
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "id_manu", nullable = false)
-    private Manutencao idManu;
+    @JoinColumn(name = "id_cate", nullable = false)
+    private Catering idCate;
     @MapsId("idServico")
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "id_servico", nullable = false)
@@ -20,13 +20,13 @@ public class LinhaManu {
     @Column(name = "precoatual", nullable = false, precision = 5, scale = 2)
     private BigDecimal precoatual;
     @Column(name = "ivaatual", nullable = false, precision = 3, scale = 2)
-    private BigDecimal ivaatual = idManu.getIdIVA().getValor();
+    private BigDecimal ivaatual = idCate.getTipoIVA().getValor();
 
 
-    public LinhaManuId getId() {
+    public LinhaCateId getId() {
         return id;
     }
-    public void setId(LinhaManuId id) {
+    public void setId(LinhaCateId id) {
         this.id = id;
     }
 
@@ -37,11 +37,11 @@ public class LinhaManu {
         this.idServico = idServico;
     }
 
-    public Manutencao getIdManu() {
-        return idManu;
+    public Catering getIdCate() {
+        return idCate;
     }
-    public void setIdManu(Manutencao idManu) {
-        this.idManu = idManu;
+    public void setIdCate(Catering idCate) {
+        this.idCate = idCate;
     }
 
     public BigDecimal getPrecoatual() {

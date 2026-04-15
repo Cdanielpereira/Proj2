@@ -7,19 +7,19 @@ import java.io.Serializable;
 import java.util.Objects;
 
 @Embeddable
-public class LinhaManuId implements Serializable {
-    private static final long serialVersionUID = 6479956131203142450L;
-    @Column(name = "id_manu", nullable = false)
-    private Integer idManu;
-
+public class LinhaCateId implements Serializable {
+    private static final long serialVersionUID = -6553397947738776747L;
+    @Column(name = "id_cate", nullable = false)
+    private Integer idCate;
     @Column(name = "id_servico", nullable = false)
     private Integer idServico;
 
-    public Integer getIdManu() {
-        return idManu;
+
+    public Integer getIdCate() {
+        return idCate;
     }
-    public void setIdManu(Integer idManu) {
-        this.idManu = idManu;
+    public void setIdCate(Integer idManu) {
+        this.idCate = idManu;
     }
 
     public Integer getIdServico() {
@@ -29,17 +29,18 @@ public class LinhaManuId implements Serializable {
         this.idServico = idServico;
     }
 
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        LinhaManuId entity = (LinhaManuId) o;
-        return Objects.equals(this.idManu, entity.idManu) &&
+        LinhaCateId entity = (LinhaCateId) o;
+        return Objects.equals(this.idCate, entity.idCate) &&
                 Objects.equals(this.idServico, entity.idServico);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(idManu, idServico);
+        return Objects.hash(idCate, idServico);
     }
 }

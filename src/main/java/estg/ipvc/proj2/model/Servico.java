@@ -14,44 +14,38 @@ public class Servico {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_servico", nullable = false)
     private Integer id;
-
     @Column(name = "valorpagar", nullable = false, precision = 7, scale = 2)
     private BigDecimal valorpagar;
-
     @Column(name = "dt_marc", nullable = false)
     private LocalDate dtMarc;
-
     @Column(name = "dt_rea")
     private LocalDate dtRea;
-
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "id_estadoser", nullable = false)
     private EstadoServico idEstadoser;
-
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "id_colab", nullable = false)
     private Colaborador idColab;
-
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "id_func", nullable = false)
     private Funcionario idFunc;
-
     @Column(name = "id_faturap")
     private Integer idFaturap;
 
+
     @OneToMany(mappedBy = "idServico")
-    private Set<Catering> caterings = new LinkedHashSet<>();
+    private Set<LinhaCate> linhasCate = new LinkedHashSet<>();
 
     @OneToMany(mappedBy = "idServico")
     private Set<Encomenda> encomendas = new LinkedHashSet<>();
 
     @OneToMany(mappedBy = "idServico")
-    private Set<Manutencao> manutencaos = new LinkedHashSet<>();
+    private Set<LinhaManu> linhasManu = new LinkedHashSet<>();
+
 
     public Integer getId() {
         return id;
     }
-
     public void setId(Integer id) {
         this.id = id;
     }
@@ -59,7 +53,6 @@ public class Servico {
     public BigDecimal getValorpagar() {
         return valorpagar;
     }
-
     public void setValorpagar(BigDecimal valorpagar) {
         this.valorpagar = valorpagar;
     }
@@ -67,7 +60,6 @@ public class Servico {
     public LocalDate getDtMarc() {
         return dtMarc;
     }
-
     public void setDtMarc(LocalDate dtMarc) {
         this.dtMarc = dtMarc;
     }
@@ -75,7 +67,6 @@ public class Servico {
     public LocalDate getDtRea() {
         return dtRea;
     }
-
     public void setDtRea(LocalDate dtRea) {
         this.dtRea = dtRea;
     }
@@ -83,7 +74,6 @@ public class Servico {
     public EstadoServico getIdEstadoser() {
         return idEstadoser;
     }
-
     public void setIdEstadoser(EstadoServico idEstadoser) {
         this.idEstadoser = idEstadoser;
     }
@@ -91,7 +81,6 @@ public class Servico {
     public Colaborador getIdColab() {
         return idColab;
     }
-
     public void setIdColab(Colaborador idColab) {
         this.idColab = idColab;
     }
@@ -99,7 +88,6 @@ public class Servico {
     public Funcionario getIdFunc() {
         return idFunc;
     }
-
     public void setIdFunc(Funcionario idFunc) {
         this.idFunc = idFunc;
     }
@@ -107,33 +95,25 @@ public class Servico {
     public Integer getIdFaturap() {
         return idFaturap;
     }
-
     public void setIdFaturap(Integer idFaturap) {
         this.idFaturap = idFaturap;
     }
 
-    public Set<Catering> getCaterings() {
-        return caterings;
+    public Set<LinhaCate> getLinhasCate() {
+        return linhasCate;
     }
-
-    public void setCaterings(Set<Catering> caterings) {
-        this.caterings = caterings;
-    }
+    public void setLinhasCate(Set<LinhaCate> linhasCate) { this.linhasCate = linhasCate; }
 
     public Set<Encomenda> getEncomendas() {
         return encomendas;
     }
-
     public void setEncomendas(Set<Encomenda> encomendas) {
         this.encomendas = encomendas;
     }
 
-    public Set<Manutencao> getManutencaos() {
-        return manutencaos;
+    public Set<LinhaManu> getLinhasManu() {
+        return linhasManu;
     }
-
-    public void setManutencaos(Set<Manutencao> manutencaos) {
-        this.manutencaos = manutencaos;
-    }
+    public void setLinhasManu(Set<LinhaManu> linhasManu) { this.linhasManu = linhasManu; }
 
 }

@@ -34,8 +34,8 @@ public class Funcionario {
     @Column(name = "rua", nullable = false, length = 50)
     private String rua;
 
-    @Column(name = "nporta", nullable = false, precision = 20)
-    private BigDecimal nporta;
+    @Column(name = "porta", nullable = false, length = 20)
+    private String porta;
 
     @Column(name = "dt_nasc", nullable = false)
     private LocalDate dtNasc;
@@ -72,7 +72,6 @@ public class Funcionario {
     public Integer getId() {
         return id;
     }
-
     public void setId(Integer id) {
         this.id = id;
     }
@@ -80,7 +79,6 @@ public class Funcionario {
     public User getIdUser() {
         return idUser;
     }
-
     public void setIdUser(User idUser) {
         this.idUser = idUser;
     }
@@ -88,7 +86,6 @@ public class Funcionario {
     public TipoFunc getIdTipofunc() {
         return idTipofunc;
     }
-
     public void setIdTipofunc(TipoFunc idTipofunc) {
         this.idTipofunc = idTipofunc;
     }
@@ -96,7 +93,6 @@ public class Funcionario {
     public String getIban() {
         return iban;
     }
-
     public void setIban(String iban) {
         this.iban = iban;
     }
@@ -104,7 +100,6 @@ public class Funcionario {
     public BigDecimal getNif() {
         return nif;
     }
-
     public void setNif(BigDecimal nif) {
         this.nif = nif;
     }
@@ -112,23 +107,20 @@ public class Funcionario {
     public String getRua() {
         return rua;
     }
-
     public void setRua(String rua) {
         this.rua = rua;
     }
 
-    public BigDecimal getNporta() {
-        return nporta;
+    public String getPorta() {
+        return porta;
     }
-
-    public void setNporta(BigDecimal nporta) {
-        this.nporta = nporta;
+    public void setPorta(String nporta) {
+        this.porta = porta;
     }
 
     public LocalDate getDtNasc() {
         return dtNasc;
     }
-
     public void setDtNasc(LocalDate dtNasc) {
         this.dtNasc = dtNasc;
     }
@@ -136,7 +128,6 @@ public class Funcionario {
     public String getSexo() {
         return sexo;
     }
-
     public void setSexo(String sexo) {
         this.sexo = sexo;
     }
@@ -144,7 +135,6 @@ public class Funcionario {
     public String getNome() {
         return nome;
     }
-
     public void setNome(String nome) {
         this.nome = nome;
     }
@@ -152,7 +142,6 @@ public class Funcionario {
     public String getEmail() {
         return email;
     }
-
     public void setEmail(String email) {
         this.email = email;
     }
@@ -160,7 +149,6 @@ public class Funcionario {
     public Cpostal getCpostal() {
         return cpostal;
     }
-
     public void setCpostal(Cpostal cpostal) {
         this.cpostal = cpostal;
     }
@@ -168,7 +156,6 @@ public class Funcionario {
     public Nacionalidade getIdNacional() {
         return idNacional;
     }
-
     public void setIdNacional(Nacionalidade idNacional) {
         this.idNacional = idNacional;
     }
@@ -176,7 +163,6 @@ public class Funcionario {
     public Set<Contrato> getContratoes() {
         return contratoes;
     }
-
     public void setContratoes(Set<Contrato> contratoes) {
         this.contratoes = contratoes;
     }
@@ -184,7 +170,6 @@ public class Funcionario {
     public Set<FaturaPagamento> getFaturaPagamentos() {
         return faturaPagamentos;
     }
-
     public void setFaturaPagamentos(Set<FaturaPagamento> faturaPagamentos) {
         this.faturaPagamentos = faturaPagamentos;
     }
@@ -192,7 +177,6 @@ public class Funcionario {
     public Set<Limpeza> getLimpezas() {
         return limpezas;
     }
-
     public void setLimpezas(Set<Limpeza> limpezas) {
         this.limpezas = limpezas;
     }
@@ -200,7 +184,6 @@ public class Funcionario {
     public Set<Servico> getServicos() {
         return servicos;
     }
-
     public void setServicos(Set<Servico> servicos) {
         this.servicos = servicos;
     }

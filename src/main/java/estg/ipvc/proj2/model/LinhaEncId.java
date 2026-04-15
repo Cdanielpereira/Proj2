@@ -18,7 +18,6 @@ public class LinhaEncId implements Serializable {
     public Integer getIdEnco() {
         return idEnco;
     }
-
     public void setIdEnco(Integer idEnco) {
         this.idEnco = idEnco;
     }
@@ -26,7 +25,6 @@ public class LinhaEncId implements Serializable {
     public Integer getIdProduto() {
         return idProduto;
     }
-
     public void setIdProduto(Integer idProduto) {
         this.idProduto = idProduto;
     }

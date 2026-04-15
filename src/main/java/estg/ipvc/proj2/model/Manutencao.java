@@ -3,6 +3,8 @@ package estg.ipvc.proj2.model;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "manutencao")
@@ -11,20 +13,19 @@ public class Manutencao {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_manu", nullable = false)
     private Integer id;
-
     @Column(name = "descricao", length = 100)
     private String descricao;
-
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "id_zona", nullable = false)
     private Zona idZona;
-
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "idiva",  nullable = false)
     private TipoIVA idiva;
 
-    @OneToOne(fetch = FetchType.LAZY, optional = false)
-    private LinhaManu linhaManu;
+
+    @OneToMany(mappedBy = "idManu")
+    private Set<LinhaManu> linhasManu = new LinkedHashSet<>();
+
 
     public Integer getId() {
         return id;

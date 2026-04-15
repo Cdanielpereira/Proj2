@@ -9,25 +9,21 @@ import java.math.BigDecimal;
 public class LinhaEnc {
     @EmbeddedId
     private LinhaEncId id;
-
     @MapsId("idEnco")
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "id_enco", nullable = false)
     private Encomenda idEnco;
-
     @MapsId("idProduto")
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "id_produto", nullable = false)
     private Produto idProduto;
-
     @Column(name = "precoatual", nullable = false, precision = 5, scale = 2)
     private BigDecimal precoatual;
-
     @Column(name = "qtd", nullable = false)
     private Integer qtd;
-
     @Column(name = "ivaatual", nullable = false, precision = 3, scale = 2)
     private BigDecimal ivaatual = idProduto.getTipoIVA().getValor();
+
 
     public LinhaEncId getId() {
         return id;

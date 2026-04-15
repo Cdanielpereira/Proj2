@@ -37,8 +37,10 @@ public class Cliente {
     @Column(name = "email", length = 50)
     private String email;
 
+
     @OneToMany(mappedBy = "idCliente")
     private Set<Marcacao> marcacaos = new LinkedHashSet<>();
+
 
     public Integer getId() {
         return id;
@@ -50,7 +52,6 @@ public class Cliente {
     public Integer getNif() {
         return nif;
     }
-
     public void setNif(Integer nif) {
         this.nif = nif;
     }
@@ -58,7 +59,6 @@ public class Cliente {
     public String getNome() {
         return nome;
     }
-
     public void setNome(String nome) {
         this.nome = nome;
     }
@@ -66,7 +66,6 @@ public class Cliente {
     public LocalDate getDtNasc() {
         return dtNasc;
     }
-
     public void setDtNasc(LocalDate dtNasc) {
         this.dtNasc = dtNasc;
     }
@@ -74,7 +73,6 @@ public class Cliente {
     public String getRua() {
         return rua;
     }
-
     public void setRua(String rua) {
         this.rua = rua;
     }
@@ -82,7 +80,6 @@ public class Cliente {
     public String getPorta() {
         return porta;
     }
-
     public void setPorta(String porta) {
         this.porta = porta;
     }
@@ -90,7 +87,6 @@ public class Cliente {
     public String getSexo() {
         return sexo;
     }
-
     public void setSexo(String sexo) {
         this.sexo = sexo;
     }
@@ -98,7 +94,6 @@ public class Cliente {
     public User getIdUser() {
         return idUser;
     }
-
     public void setIdUser(User idUser) {
         this.idUser = idUser;
     }
@@ -106,7 +101,6 @@ public class Cliente {
     public Cpostal getCpostal() {
         return cpostal;
     }
-
     public void setCpostal(Cpostal cpostal) {
         this.cpostal = cpostal;
     }
@@ -114,7 +108,6 @@ public class Cliente {
     public Nacionalidade getIdNacional() {
         return idNacional;
     }
-
     public void setIdNacional(Nacionalidade idNacional) {
         this.idNacional = idNacional;
     }
@@ -122,7 +115,6 @@ public class Cliente {
     public String getEmail() {
         return email;
     }
-
     public void setEmail(String email) {
         this.email = email;
     }
@@ -130,7 +122,6 @@ public class Cliente {
     public Set<Marcacao> getMarcacaos() {
         return marcacaos;
     }
-
     public void setMarcacaos(Set<Marcacao> marcacaos) {
         this.marcacaos = marcacaos;
     }
