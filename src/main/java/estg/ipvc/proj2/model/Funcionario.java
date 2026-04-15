@@ -85,8 +85,8 @@ public class Funcionario {
         this.idUser = idUser;
     }
 
-    public TipoFunc getIdTipofunc() {
-        return idTipofunc;
+    public TipoFunc getIdTipoFunc() {
+        return idTipoFunc;
     }
 
     public void setIdTipoFunc(TipoFunc idTipoFunc) {
