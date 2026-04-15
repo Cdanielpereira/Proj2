@@ -3,7 +3,10 @@ package estg.ipvc.proj2.model;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
+@SuppressWarnings("SpellCheckingInspection")
 @Entity
 @Table(name = "catering")
 public class Catering {
@@ -12,13 +15,16 @@ public class Catering {
     @Column(name = "id_cate", nullable = false)
     private Integer id;
     @Column(name = "nhospedes", nullable = false)
-    private Integer nhospedes;
+    private Integer nHospedes;
     @Column(name = "precohosp", nullable = false, precision = 7, scale = 2)
-    private BigDecimal precohosp;
+    private BigDecimal precoHosp;
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "idiva", nullable = false)
-    private TipoIva idiva;
+    @JoinColumn(name = "idiva",  nullable = false)
+    private TipoIVA idIVA;
 
+
+    @OneToMany(mappedBy = "idCate")
+    private Set<LinhaCate> linhasCate = new LinkedHashSet<>();
 
     public Integer getId() {
         return id;
@@ -27,25 +33,27 @@ public class Catering {
         this.id = id;
     }
 
-    public Integer getNhospedes() {
-        return nhospedes;
+    public Integer getNHospedes() {
+        return nHospedes;
     }
-    public void setNhospedes(Integer nhospedes) {
-        this.nhospedes = nhospedes;
-    }
-
-    public BigDecimal getPrecohosp() {
-        return precohosp;
-    }
-    public void setPrecohosp(BigDecimal precohosp) {
-        this.precohosp = precohosp;
+    public void setNHospedes(Integer nHospedes) {
+        this.nHospedes = nHospedes;
     }
 
-    public TipoIva getIdiva() {
-        return idiva;
+    public BigDecimal getPrecoHosp() {
+        return precoHosp;
     }
-    public void setIdiva(TipoIva idiva) {
-        this.idiva = idiva;
+    public void setPrecoHosp(BigDecimal precoHosp) {
+        this.precoHosp = precoHosp;
     }
 
+    public TipoIVA getTipoIVA() { return idIVA; }
+    public void setTipoIVA(TipoIVA idIVA) {this.idIVA = idIVA;}
+
+    public Set<LinhaCate> getLinhaCate() {
+        return linhasCate;
+    }
+    public void setLinhasCate(Set<LinhaCate> linhasCate) {
+        this.linhasCate = linhasCate;
+    }
 }

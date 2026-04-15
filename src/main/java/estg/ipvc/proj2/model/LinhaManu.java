@@ -9,22 +9,19 @@ import java.math.BigDecimal;
 public class LinhaManu {
     @EmbeddedId
     private LinhaManuId id;
-
     @MapsId("idServico")
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "id_servico", nullable = false)
     private Servico idServico;
-
     @MapsId("idManu")
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "id_manu", nullable = false)
     private Manutencao idManu;
+    @Column(name = "precoatual", nullable = false, precision = 5, scale = 2)
+    private BigDecimal precoAtual;
+    @Column(name = "ivaatual", nullable = false, precision = 3, scale = 2)
+    private BigDecimal ivaAtual = idManu.getTipoIVA().getValor();
 
-    @Column(name = "precoatual", nullable = false, precision = 8, scale = 2)
-    private BigDecimal precoatual;
-
-    @Column(name = "ivaatual", nullable = false, precision = 7, scale = 2)
-    private BigDecimal ivaatual;
 
     public LinhaManuId getId() {
         return id;
@@ -47,18 +44,18 @@ public class LinhaManu {
         this.idManu = idManu;
     }
 
-    public BigDecimal getPrecoatual() {
-        return precoatual;
+    public BigDecimal getPrecoAtual() {
+        return precoAtual;
     }
-    public void setPrecoatual(BigDecimal precoatual) {
-        this.precoatual = precoatual;
+    public void setPrecoatual(BigDecimal precoAtual) {
+        this.precoAtual = precoAtual;
     }
 
-    public BigDecimal getIvaatual() {
-        return ivaatual;
+    public BigDecimal getIvaAtual() {
+        return ivaAtual;
     }
-    public void setIvaatual(BigDecimal ivaatual) {
-        this.ivaatual = ivaatual;
+    public void setIvaAtual(BigDecimal ivaAtual) {
+        this.ivaAtual = ivaAtual;
     }
 
 }

@@ -13,47 +13,43 @@ public class Encomenda {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_enco", nullable = false)
     private Integer id;
-
     @Column(name = "valortotal", nullable = false, precision = 7, scale = 2)
-    private BigDecimal valortotal;
-
+    private BigDecimal valorTotal;
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "id_servico", nullable = false)
     private Servico idServico;
 
+
     @OneToMany(mappedBy = "idEnco")
-    private Set<LinhaEnc> linhaEncs = new LinkedHashSet<>();
+    private Set<LinhaEnc> linhasEnc = new LinkedHashSet<>();
+
 
     public Integer getId() {
         return id;
     }
-
     public void setId(Integer id) {
         this.id = id;
     }
 
-    public BigDecimal getValortotal() {
-        return valortotal;
+    public BigDecimal getValorTotal() {
+        return valorTotal;
     }
-
-    public void setValortotal(BigDecimal valortotal) {
-        this.valortotal = valortotal;
+    public void setValorTotal(BigDecimal valorTotal) {
+        this.valorTotal = valorTotal;
     }
 
     public Servico getIdServico() {
         return idServico;
     }
-
     public void setIdServico(Servico idServico) {
         this.idServico = idServico;
     }
 
-    public Set<LinhaEnc> getLinhaEncs() {
-        return linhaEncs;
+    public Set<LinhaEnc> getLinhasEnc() {
+        return linhasEnc;
     }
-
-    public void setLinhaEncs(Set<LinhaEnc> linhaEncs) {
-        this.linhaEncs = linhaEncs;
+    public void setLinhasEnc(Set<LinhaEnc> linhasEnc) {
+        this.linhasEnc = linhasEnc;
     }
 
 }

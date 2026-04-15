@@ -12,17 +12,17 @@ public class TipoColab {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_colab", nullable = false)
     private Integer id;
-
     @Column(name = "type", nullable = false, length = 20)
     private String type;
 
-    @OneToMany(mappedBy = "idTipocolab")
-    private Set<Colaborador> colaboradors = new LinkedHashSet<>();
+
+    @OneToMany(mappedBy = "idTipoColab")
+    private Set<Colaborador> colaboradores = new LinkedHashSet<>();
+
 
     public Integer getId() {
         return id;
     }
-
     public void setId(Integer id) {
         this.id = id;
     }
@@ -30,17 +30,15 @@ public class TipoColab {
     public String getType() {
         return type;
     }
-
     public void setType(String type) {
         this.type = type;
     }
 
-    public Set<Colaborador> getColaboradors() {
-        return colaboradors;
+    public Set<Colaborador> getColaboradores() {
+        return colaboradores;
     }
-
-    public void setColaboradors(Set<Colaborador> colaboradors) {
-        this.colaboradors = colaboradors;
+    public void setColaboradores(Set<Colaborador> colaboradores) {
+        this.colaboradores = colaboradores;
     }
 
 }

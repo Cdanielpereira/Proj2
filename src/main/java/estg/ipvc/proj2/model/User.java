@@ -12,31 +12,16 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_user", nullable = false)
     private Integer id;
-
     @Column(name = "username", nullable = false, length = 100)
     private String username;
-
     @Column(name = "password", nullable = false, length = 20)
     private String password;
-
     @Column(name = "telefone", nullable = false, length = 15)
     private String telefone;
 
-
-    public User(String username, String password, String telefone) {
-        this.username = username;
-        this.password = password;
-        this.telefone = telefone;
-    }
-
-     public User() {
-
-     }
-    
     //Getters & Setters
     @OneToMany(mappedBy = "idUser")
     private Set<Cliente> clientes = new LinkedHashSet<>();
-
     @OneToMany(mappedBy = "idUser")
     private Set<Funcionario> funcionarios = new LinkedHashSet<>();
 
@@ -44,7 +29,6 @@ public class User {
     public Integer getId() {
         return id;
     }
-
     public void setId(Integer id) {
         this.id = id;
     }
@@ -52,7 +36,6 @@ public class User {
     public String getUsername() {
         return username;
     }
-
     public void setUsername(String username) {
         this.username = username;
     }
@@ -60,7 +43,6 @@ public class User {
     public String getPassword() {
         return password;
     }
-
     public void setPassword(String password) {
         this.password = password;
     }
@@ -68,7 +50,6 @@ public class User {
     public String getTelefone() {
         return telefone;
     }
-
     public void setTelefone(String telefone) {
         this.telefone = telefone;
     }
@@ -76,7 +57,6 @@ public class User {
     public Set<Cliente> getClientes() {
         return clientes;
     }
-
     public void setClientes(Set<Cliente> clientes) {
         this.clientes = clientes;
     }
@@ -84,10 +64,10 @@ public class User {
     public Set<Funcionario> getFuncionarios() {
         return funcionarios;
     }
-
     public void setFuncionarios(Set<Funcionario> funcionarios) {
         this.funcionarios = funcionarios;
     }
+
 
     @Override
     public String toString() {

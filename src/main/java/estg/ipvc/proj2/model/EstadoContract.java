@@ -16,8 +16,8 @@ public class EstadoContract {
     @Column(name = "state", nullable = false, length = 20)
     private String state;
 
-    @OneToMany(mappedBy = "idEstadoc")
-    private Set<Contrato> contratoes = new LinkedHashSet<>();
+    @OneToMany(mappedBy = "idEstadoC")
+    private Set<Contrato> contratos = new LinkedHashSet<>();
 
     public Integer getId() {
         return id;
@@ -35,12 +35,12 @@ public class EstadoContract {
         this.state = state;
     }
 
-    public Set<Contrato> getContratoes() {
-        return contratoes;
+    public Set<Contrato> getContratos() {
+        return contratos;
     }
 
-    public void setContratoes(Set<Contrato> contratoes) {
-        this.contratoes = contratoes;
+    public void setContratos(Set<Contrato> contratos) {
+        this.contratos = contratos;
     }
 
 }

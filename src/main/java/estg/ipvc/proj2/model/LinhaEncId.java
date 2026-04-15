@@ -3,22 +3,23 @@ package estg.ipvc.proj2.model;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.Objects;
 
 @Embeddable
 public class LinhaEncId implements Serializable {
+    @Serial
     private static final long serialVersionUID = -1936886381190267140L;
     @Column(name = "id_enco", nullable = false)
     private Integer idEnco;
-
     @Column(name = "id_produto", nullable = false)
     private Integer idProduto;
+
 
     public Integer getIdEnco() {
         return idEnco;
     }
-
     public void setIdEnco(Integer idEnco) {
         this.idEnco = idEnco;
     }
@@ -26,10 +27,10 @@ public class LinhaEncId implements Serializable {
     public Integer getIdProduto() {
         return idProduto;
     }
-
     public void setIdProduto(Integer idProduto) {
         this.idProduto = idProduto;
     }
+
 
     @Override
     public boolean equals(Object o) {

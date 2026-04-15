@@ -28,11 +28,11 @@ public class Marcacao {
     private LocalDate dtCheckout;
 
     @Column(name = "valort", nullable = false, precision = 1000, scale = 2)
-    private BigDecimal valort;
+    private BigDecimal valorT;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "id_estadom", nullable = false)
-    private EstadoMarcacao idEstadom;
+    private EstadoMarcacao idEstadoM;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "id_cliente", nullable = false)
@@ -40,7 +40,7 @@ public class Marcacao {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "if_faturar")
-    private FaturaRecibo ifFaturar;
+    private FaturaRecibo ifFaturaR;
 
     @OneToMany(mappedBy = "idMarc")
     private Set<Reserva> reservas = new LinkedHashSet<>();
@@ -48,7 +48,6 @@ public class Marcacao {
     public Integer getId() {
         return id;
     }
-
     public void setId(Integer id) {
         this.id = id;
     }
@@ -56,7 +55,6 @@ public class Marcacao {
     public LocalDate getDtMarc() {
         return dtMarc;
     }
-
     public void setDtMarc(LocalDate dtMarc) {
         this.dtMarc = dtMarc;
     }
@@ -64,7 +62,6 @@ public class Marcacao {
     public LocalDate getDtFim() {
         return dtFim;
     }
-
     public void setDtFim(LocalDate dtFim) {
         this.dtFim = dtFim;
     }
@@ -72,7 +69,6 @@ public class Marcacao {
     public LocalDate getDtCheckin() {
         return dtCheckin;
     }
-
     public void setDtCheckin(LocalDate dtCheckin) {
         this.dtCheckin = dtCheckin;
     }
@@ -80,47 +76,41 @@ public class Marcacao {
     public LocalDate getDtCheckout() {
         return dtCheckout;
     }
-
     public void setDtCheckout(LocalDate dtCheckout) {
         this.dtCheckout = dtCheckout;
     }
 
-    public BigDecimal getValort() {
-        return valort;
+    public BigDecimal getValorT() {
+        return valorT;
+    }
+    public void setValorT(BigDecimal valorT) {
+        this.valorT = valorT;
     }
 
-    public void setValort(BigDecimal valort) {
-        this.valort = valort;
+    public EstadoMarcacao getIdEstadoM() {
+        return idEstadoM;
     }
-
-    public EstadoMarcacao getIdEstadom() {
-        return idEstadom;
-    }
-
-    public void setIdEstadom(EstadoMarcacao idEstadom) {
-        this.idEstadom = idEstadom;
+    public void setIdEstadoM(EstadoMarcacao idEstadoM) {
+        this.idEstadoM = idEstadoM;
     }
 
     public Cliente getIdCliente() {
         return idCliente;
     }
-
     public void setIdCliente(Cliente idCliente) {
         this.idCliente = idCliente;
     }
 
-    public FaturaRecibo getIfFaturar() {
-        return ifFaturar;
+    public FaturaRecibo getIfFaturaR() {
+        return ifFaturaR;
     }
-
-    public void setIfFaturar(FaturaRecibo ifFaturar) {
-        this.ifFaturar = ifFaturar;
+    public void setIfFaturaR(FaturaRecibo ifFaturaR) {
+        this.ifFaturaR = ifFaturaR;
     }
 
     public Set<Reserva> getReservas() {
         return reservas;
     }
-
     public void setReservas(Set<Reserva> reservas) {
         this.reservas = reservas;
     }

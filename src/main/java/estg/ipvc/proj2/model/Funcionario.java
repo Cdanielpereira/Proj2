@@ -23,7 +23,7 @@ public class Funcionario {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @ColumnDefault("2")
     @JoinColumn(name = "id_tipofunc", nullable = false)
-    private TipoFunc idTipofunc;
+    private TipoFunc idTipoFunc;
 
     @Column(name = "iban", nullable = false, length = 30)
     private String iban;
@@ -34,8 +34,8 @@ public class Funcionario {
     @Column(name = "rua", nullable = false, length = 50)
     private String rua;
 
-    @Column(name = "nporta", nullable = false, precision = 20)
-    private BigDecimal nporta;
+    @Column(name = "porta", nullable = false, length = 20)
+    private String porta;
 
     @Column(name = "dt_nasc", nullable = false)
     private LocalDate dtNasc;
@@ -58,7 +58,7 @@ public class Funcionario {
     private Nacionalidade idNacional;
 
     @OneToMany(mappedBy = "idFunc")
-    private Set<Contrato> contratoes = new LinkedHashSet<>();
+    private Set<Contrato> contratos = new LinkedHashSet<>();
 
     @OneToMany(mappedBy = "idFunc")
     private Set<FaturaPagamento> faturaPagamentos = new LinkedHashSet<>();
@@ -89,8 +89,8 @@ public class Funcionario {
         return idTipofunc;
     }
 
-    public void setIdTipofunc(TipoFunc idTipofunc) {
-        this.idTipofunc = idTipofunc;
+    public void setIdTipoFunc(TipoFunc idTipoFunc) {
+        this.idTipoFunc = idTipoFunc;
     }
 
     public String getIban() {
@@ -117,12 +117,11 @@ public class Funcionario {
         this.rua = rua;
     }
 
-    public BigDecimal getNporta() {
-        return nporta;
+    public String getPorta() {
+        return porta;
     }
-
-    public void setNporta(BigDecimal nporta) {
-        this.nporta = nporta;
+    public void setPorta(String porta) {
+        this.porta = porta;
     }
 
     public LocalDate getDtNasc() {
@@ -173,12 +172,12 @@ public class Funcionario {
         this.idNacional = idNacional;
     }
 
-    public Set<Contrato> getContratoes() {
-        return contratoes;
+    public Set<Contrato> getContratos() {
+        return contratos;
     }
 
-    public void setContratoes(Set<Contrato> contratoes) {
-        this.contratoes = contratoes;
+    public void setContratos(Set<Contrato> contratos) {
+        this.contratos = contratos;
     }
 
     public Set<FaturaPagamento> getFaturaPagamentos() {

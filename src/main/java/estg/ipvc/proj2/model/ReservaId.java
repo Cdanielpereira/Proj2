@@ -3,33 +3,34 @@ package estg.ipvc.proj2.model;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.Objects;
 
 @Embeddable
 public class ReservaId implements Serializable {
+    @Serial
     private static final long serialVersionUID = -9131240224969471251L;
     @Column(name = "id_marc", nullable = false)
     private Integer idMarc;
-
     @Column(name = "nquarto", nullable = false)
-    private Integer nquarto;
+    private Integer nQuarto;
+
 
     public Integer getIdMarc() {
         return idMarc;
     }
-
     public void setIdMarc(Integer idMarc) {
         this.idMarc = idMarc;
     }
 
-    public Integer getNquarto() {
-        return nquarto;
+    public Integer getNQuarto() {
+        return nQuarto;
+    }
+    public void setNQuarto(Integer nQuarto) {
+        this.nQuarto = nQuarto;
     }
 
-    public void setNquarto(Integer nquarto) {
-        this.nquarto = nquarto;
-    }
 
     @Override
     public boolean equals(Object o) {
@@ -37,11 +38,11 @@ public class ReservaId implements Serializable {
         if (o == null || getClass() != o.getClass()) return false;
         ReservaId entity = (ReservaId) o;
         return Objects.equals(this.idMarc, entity.idMarc) &&
-                Objects.equals(this.nquarto, entity.nquarto);
+                Objects.equals(this.nQuarto, entity.nQuarto);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(idMarc, nquarto);
+        return Objects.hash(idMarc, nQuarto);
     }
 }

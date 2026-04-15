@@ -16,8 +16,8 @@ public class EstadoMarcacao {
     @Column(name = "state", nullable = false, length = 100)
     private String state;
 
-    @OneToMany(mappedBy = "idEstadom")
-    private Set<Marcacao> marcacaos = new LinkedHashSet<>();
+    @OneToMany(mappedBy = "idEstadoM")
+    private Set<Marcacao> marcacoes = new LinkedHashSet<>();
 
     public Integer getId() {
         return id;
@@ -35,12 +35,12 @@ public class EstadoMarcacao {
         this.state = state;
     }
 
-    public Set<Marcacao> getMarcacaos() {
-        return marcacaos;
+    public Set<Marcacao> getMarcacoes() {
+        return marcacoes;
     }
 
-    public void setMarcacaos(Set<Marcacao> marcacaos) {
-        this.marcacaos = marcacaos;
+    public void setMarcacoes(Set<Marcacao> marcacoes) {
+        this.marcacoes = marcacoes;
     }
 
 }

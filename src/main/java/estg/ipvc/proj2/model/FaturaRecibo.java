@@ -29,7 +29,7 @@ public class FaturaRecibo {
     private BigDecimal nif;
 
     @OneToMany(mappedBy = "ifFaturar")
-    private Set<Marcacao> marcacaos = new LinkedHashSet<>();
+    private Set<Marcacao> marcacoes = new LinkedHashSet<>();
 
     public Integer getId() {
         return id;
@@ -71,12 +71,12 @@ public class FaturaRecibo {
         this.nif = nif;
     }
 
-    public Set<Marcacao> getMarcacaos() {
-        return marcacaos;
+    public Set<Marcacao> getMarcacoes() {
+        return marcacoes;
     }
 
-    public void setMarcacaos(Set<Marcacao> marcacaos) {
-        this.marcacaos = marcacaos;
+    public void setMarcacoes(Set<Marcacao> marcacoes) {
+        this.marcacoes = marcacoes;
     }
 
 }

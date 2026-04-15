@@ -12,17 +12,17 @@ public class TipoFunc {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_tipofunc", nullable = false)
     private Integer id;
-
     @Column(name = "type", nullable = false, length = 20)
     private String type;
 
-    @OneToMany(mappedBy = "idTipofunc")
+
+    @OneToMany(mappedBy = "idTipoFunc")
     private Set<Funcionario> funcionarios = new LinkedHashSet<>();
+
 
     public Integer getId() {
         return id;
     }
-
     public void setId(Integer id) {
         this.id = id;
     }
@@ -30,7 +30,6 @@ public class TipoFunc {
     public String getType() {
         return type;
     }
-
     public void setType(String type) {
         this.type = type;
     }
@@ -38,7 +37,6 @@ public class TipoFunc {
     public Set<Funcionario> getFuncionarios() {
         return funcionarios;
     }
-
     public void setFuncionarios(Set<Funcionario> funcionarios) {
         this.funcionarios = funcionarios;
     }

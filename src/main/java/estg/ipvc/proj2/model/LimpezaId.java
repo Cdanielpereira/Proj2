@@ -3,11 +3,13 @@ package estg.ipvc.proj2.model;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.Objects;
 
 @Embeddable
 public class LimpezaId implements Serializable {
+    @Serial
     private static final long serialVersionUID = -6147573046042092953L;
     @Column(name = "id_zona", nullable = false)
     private Integer idZona;

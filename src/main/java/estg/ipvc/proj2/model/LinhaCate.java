@@ -19,12 +19,12 @@ public class LinhaCate {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "id_cate", nullable = false)
     private Catering idCate;
+    @Column(name = "precoatual", nullable = false, precision = 5, scale = 2)
+    private BigDecimal precoAtual;
 
-    @Column(name = "precoatual", nullable = false, precision = 8, scale = 2)
-    private BigDecimal precoatual;
+    @Column(name = "ivaatual", nullable = false, precision = 3, scale = 2)
+    private BigDecimal ivaAtual = idCate.getTipoIVA().getValor();
 
-    @Column(name = "ivaatual", nullable = false, precision = 7, scale = 2)
-    private BigDecimal ivaatual;
 
     public LinhaCateId getId() {
         return id;
@@ -47,18 +47,18 @@ public class LinhaCate {
         this.idCate = idCate;
     }
 
-    public BigDecimal getPrecoatual() {
-        return precoatual;
+    public BigDecimal getPrecoAtual() {
+        return precoAtual;
     }
-    public void setPrecoatual(BigDecimal precoatual) {
-        this.precoatual = precoatual;
+    public void setPrecoAtual(BigDecimal precoAtual) {
+        this.precoAtual = precoAtual;
     }
 
-    public BigDecimal getIvaatual() {
-        return ivaatual;
+    public BigDecimal getIVAAtual() {
+        return ivaAtual;
     }
-    public void setIvaatual(BigDecimal ivaatual) {
-        this.ivaatual = ivaatual;
+    public void setIVAAtual(BigDecimal ivaAtual) {
+        this.ivaAtual = ivaAtual;
     }
 
 }

@@ -2,6 +2,9 @@ package estg.ipvc.proj2.model;
 
 import jakarta.persistence.*;
 
+import java.util.LinkedHashSet;
+import java.util.Set;
+
 @Entity
 @Table(name = "manutencao")
 public class Manutencao {
@@ -9,25 +12,23 @@ public class Manutencao {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_manu", nullable = false)
     private Integer id;
-
     @Column(name = "descricao", length = 100)
     private String descricao;
-
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "id_zona", nullable = false)
     private Zona idZona;
-
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "id_servico", nullable = false)
-    private Servico idServico;
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "idiva", nullable = false)
-    private TipoIva idiva;
+    private TipoIVA idIVA;
+
+
+    @OneToMany(mappedBy = "idManu")
+    private Set<LinhaManu> linhasManu = new LinkedHashSet<>();
+
 
     public Integer getId() {
         return id;
     }
-
     public void setId(Integer id) {
         this.id = id;
     }
@@ -35,7 +36,6 @@ public class Manutencao {
     public String getDescricao() {
         return descricao;
     }
-
     public void setDescricao(String descricao) {
         this.descricao = descricao;
     }
@@ -43,25 +43,22 @@ public class Manutencao {
     public Zona getIdZona() {
         return idZona;
     }
-
     public void setIdZona(Zona idZona) {
         this.idZona = idZona;
     }
 
-    public Servico getIdServico() {
-        return idServico;
+    public TipoIVA getTipoIVA() {
+        return idIVA;
+    }
+    public void setTipoIVA(TipoIVA idIVA) {
+        this.idIVA = idIVA;
     }
 
-    public void setIdServico(Servico idServico) {
-        this.idServico = idServico;
+    public Set<LinhaManu> getLinhasManu() {
+        return linhasManu;
     }
-
-    public TipoIva getIdiva() {
-        return idiva;
-    }
-
-    public void setIdiva(TipoIva idiva) {
-        this.idiva = idiva;
+    public void setLinhasManu(Set<LinhaManu> linhasManu) {
+        this.linhasManu = linhasManu;
     }
 
 }

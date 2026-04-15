@@ -9,24 +9,23 @@ import java.math.BigDecimal;
 public class Reserva {
     @EmbeddedId
     private ReservaId id;
-
     @MapsId("idMarc")
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "id_marc", nullable = false)
     private Marcacao idMarc;
-
-    @MapsId("nquarto")
+    @MapsId("nQuarto")
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "nquarto", nullable = false)
-    private Quarto nquarto;
-
+    private Quarto nQuarto;
     @Column(name = "precoatual", nullable = false, precision = 5, scale = 2)
-    private BigDecimal precoatual;
+    private BigDecimal precoAtual;
+    @Column(name = "ivaatual", nullable = false, precision = 3, scale = 2)
+    private BigDecimal ivaAtual = nQuarto.getTipoIVA().getValor();
+
 
     public ReservaId getId() {
         return id;
     }
-
     public void setId(ReservaId id) {
         this.id = id;
     }
@@ -34,25 +33,22 @@ public class Reserva {
     public Marcacao getIdMarc() {
         return idMarc;
     }
-
     public void setIdMarc(Marcacao idMarc) {
         this.idMarc = idMarc;
     }
 
     public Quarto getNquarto() {
-        return nquarto;
+        return nQuarto;
+    }
+    public void setNQuarto(Quarto nQuarto) {
+        this.nQuarto = nQuarto;
     }
 
-    public void setNquarto(Quarto nquarto) {
-        this.nquarto = nquarto;
+    public BigDecimal getPrecoAtual() {
+        return precoAtual;
     }
-
-    public BigDecimal getPrecoatual() {
-        return precoatual;
-    }
-
-    public void setPrecoatual(BigDecimal precoatual) {
-        this.precoatual = precoatual;
+    public void setPrecoAtual(BigDecimal precoAtual) {
+        this.precoAtual = precoAtual;
     }
 
 }

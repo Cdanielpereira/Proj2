@@ -17,7 +17,7 @@ public class FaturaPagamento {
     private String iban;
 
     @Column(name = "valorpago", nullable = false, precision = 7, scale = 2)
-    private BigDecimal valorpago;
+    private BigDecimal valorPago;
 
     @Column(name = "dt_pag", nullable = false)
     private LocalDate dtPag;
@@ -46,12 +46,12 @@ public class FaturaPagamento {
         this.iban = iban;
     }
 
-    public BigDecimal getValorpago() {
-        return valorpago;
+    public BigDecimal getValorPago() {
+        return valorPago;
     }
 
-    public void setValorpago(BigDecimal valorpago) {
-        this.valorpago = valorpago;
+    public void setValorPago(BigDecimal valorPago) {
+        this.valorPago = valorPago;
     }
 
     public LocalDate getDtPag() {

@@ -2,7 +2,6 @@ package estg.ipvc.proj2.model;
 
 import jakarta.persistence.*;
 
-import java.math.BigDecimal;
 import java.util.LinkedHashSet;
 import java.util.Set;
 @Entity
@@ -13,56 +12,47 @@ public class Colaborador {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_colab", nullable = false)
     private Integer id;
-
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "id_tipocolab", nullable = false)
-    private TipoColab idTipocolab;
-
     @Column(name = "nome", nullable = false, length = 100)
     private String nome;
-
     @Column(name = "telefone", nullable = false, length = 15)
     private String telefone;
-
     @Column(name = "email", length = 50)
     private String email;
-
+    @Column(name = "iban", length = 30)
+    private String iban;
     @Column(name = "rua", nullable = false, length = 50)
     private String rua;
-
-    @Column(name = "nporta", nullable = false, length = 20)
-    private String nporta;
-
+    @Column(name = "porta", nullable = false, length = 20)
+    private String porta;
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "cpostal", nullable = false)
     private Cpostal cpostal;
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "id_tipocolab", nullable = false)
+    private TipoColab idTipoColab;
 
-    @Column(name = "iban", precision = 30)
-    private BigDecimal iban;
 
     @OneToMany(mappedBy = "idColab")
     private Set<Servico> servicos = new LinkedHashSet<>();
 
+
     public Integer getId() {
         return id;
     }
-
     public void setId(Integer id) {
         this.id = id;
     }
 
-    public TipoColab getIdTipocolab() {
-        return idTipocolab;
+    public TipoColab getIdTipoColab() {
+        return idTipoColab;
     }
-
-    public void setIdTipocolab(TipoColab idTipocolab) {
-        this.idTipocolab = idTipocolab;
+    public void setIdTipoColab(TipoColab idTipoColab) {
+        this.idTipoColab = idTipoColab;
     }
 
     public String getNome() {
         return nome;
     }
-
     public void setNome(String nome) {
         this.nome = nome;
     }
@@ -70,7 +60,6 @@ public class Colaborador {
     public String getTelefone() {
         return telefone;
     }
-
     public void setTelefone(String telefone) {
         this.telefone = telefone;
     }
@@ -78,7 +67,6 @@ public class Colaborador {
     public String getEmail() {
         return email;
     }
-
     public void setEmail(String email) {
         this.email = email;
     }
@@ -86,39 +74,34 @@ public class Colaborador {
     public String getRua() {
         return rua;
     }
-
     public void setRua(String rua) {
         this.rua = rua;
     }
 
-    public String getNporta() {
-        return nporta;
+    public String getPorta() {
+        return porta;
     }
-
-    public void setNporta(String nporta) {
-        this.nporta = nporta;
+    public void setPorta(String porta) {
+        this.porta = porta;
     }
 
     public Cpostal getCpostal() {
         return cpostal;
     }
-
     public void setCpostal(Cpostal cpostal) {
         this.cpostal = cpostal;
     }
 
-    public BigDecimal getIban() {
+    public String getIban() {
         return iban;
     }
-
-    public void setIban(BigDecimal iban) {
+    public void setIban(String iban) {
         this.iban = iban;
     }
 
     public Set<Servico> getServicos() {
         return servicos;
     }
-
     public void setServicos(Set<Servico> servicos) {
         this.servicos = servicos;
     }

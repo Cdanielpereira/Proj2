@@ -9,27 +9,25 @@ import java.math.BigDecimal;
 public class LinhaEnc {
     @EmbeddedId
     private LinhaEncId id;
-
     @MapsId("idEnco")
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "id_enco", nullable = false)
     private Encomenda idEnco;
-
     @MapsId("idProduto")
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "id_produto", nullable = false)
     private Produto idProduto;
-
     @Column(name = "precoatual", nullable = false, precision = 5, scale = 2)
-    private BigDecimal precoatual;
-
+    private BigDecimal precoAtual;
     @Column(name = "qtd", nullable = false)
     private Integer qtd;
+    @Column(name = "ivaatual", nullable = false, precision = 3, scale = 2)
+    private BigDecimal ivaAtual = idProduto.getTipoIVA().getValor();
+
 
     public LinhaEncId getId() {
         return id;
     }
-
     public void setId(LinhaEncId id) {
         this.id = id;
     }
@@ -48,11 +46,11 @@ public class LinhaEnc {
         this.idProduto = idProduto;
     }
 
-    public BigDecimal getPrecoatual() {
-        return precoatual;
+    public BigDecimal getPrecoAtual() {
+        return precoAtual;
     }
-    public void setPrecoatual(BigDecimal precoatual) {
-        this.precoatual = precoatual;
+    public void setPrecoAtual(BigDecimal precoAtual) {
+        this.precoAtual = precoAtual;
     }
 
     public Integer getQtd() {
@@ -61,5 +59,7 @@ public class LinhaEnc {
     public void setQtd(Integer qtd) {
         this.qtd = qtd;
     }
+
+
 
 }
