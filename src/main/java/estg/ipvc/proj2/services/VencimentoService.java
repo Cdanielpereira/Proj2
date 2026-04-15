@@ -32,7 +32,7 @@ public class VencimentoService {
 
     public Vencimento updateVencimento(Integer id, Vencimento vencimento) {
         if (vencimentoRepository.existsById(id)) {
-            vencimento.setIdVencimento(id);
+            vencimento.setId(id);
             return vencimentoRepository.save(vencimento);
         }
         return null;

@@ -13,7 +13,7 @@ public class TipoZona {
     @Column(name = "id_tipoz", nullable = false)
     private Integer id;
 
-    @Column(name = "type", nullable = false, length = 100)
+    @Column(name = "type", nullable = false, length = 20)
     private String type;
 
     @OneToMany(mappedBy = "idTipoz")

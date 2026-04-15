@@ -25,6 +25,10 @@ public class Quarto {
     @JoinColumn(name = "id_tipoq", nullable = false)
     private TipoQuarto idTipoq;
 
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "idiva", nullable = false)
+    private TipoIVA idiva;
+
     @OneToMany(mappedBy = "nquarto")
     private Set<Reserva> reservas = new LinkedHashSet<>();
 
@@ -39,7 +43,6 @@ public class Quarto {
     public BigDecimal getPreco() {
         return preco;
     }
-
     public void setPreco(BigDecimal preco) {
         this.preco = preco;
     }
@@ -47,7 +50,6 @@ public class Quarto {
     public Zona getIdZona() {
         return idZona;
     }
-
     public void setIdZona(Zona idZona) {
         this.idZona = idZona;
     }
@@ -55,15 +57,20 @@ public class Quarto {
     public TipoQuarto getIdTipoq() {
         return idTipoq;
     }
-
     public void setIdTipoq(TipoQuarto idTipoq) {
         this.idTipoq = idTipoq;
+    }
+
+    public TipoIVA getIdTipoIVA() {
+        return idiva;
+    }
+    public void setIdTipoIVA(TipoIVA idiva) {
+        this.idiva = idiva;
     }
 
     public Set<Reserva> getReservas() {
         return reservas;
     }
-
     public void setReservas(Set<Reserva> reservas) {
         this.reservas = reservas;
     }

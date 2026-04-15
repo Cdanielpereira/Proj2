@@ -23,6 +23,9 @@ public class Reserva {
     @Column(name = "precoatual", nullable = false, precision = 5, scale = 2)
     private BigDecimal precoatual;
 
+    @Column(name = "ivaatual", nullable = false, precision = 5, scale = 2)
+    private BigDecimal ivaatual = nquarto.getIdTipoIVA().getValor();
+
     public ReservaId getId() {
         return id;
     }

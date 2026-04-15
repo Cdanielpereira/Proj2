@@ -32,7 +32,7 @@ public class NacionalidadeService {
 
     public Nacionalidade updateNacionalidade(Integer id, Nacionalidade nacionalidade) {
         if (nacionalidadeRepository.existsById(id)) {
-            nacionalidade.setIdNac(id);
+            nacionalidade.setId(id);
             return nacionalidadeRepository.save(nacionalidade);
         }
         return null;

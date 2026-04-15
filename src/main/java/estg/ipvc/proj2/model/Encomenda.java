@@ -22,7 +22,7 @@ public class Encomenda {
     private Servico idServico;
 
     @OneToMany(mappedBy = "idEnco")
-    private Set<LinhaEnc> linhaEncs = new LinkedHashSet<>();
+    private Set<LinhaEnc> linhasEnc = new LinkedHashSet<>();
 
     public Integer getId() {
         return id;
@@ -43,17 +43,15 @@ public class Encomenda {
     public Servico getIdServico() {
         return idServico;
     }
-
     public void setIdServico(Servico idServico) {
         this.idServico = idServico;
     }
 
     public Set<LinhaEnc> getLinhaEncs() {
-        return linhaEncs;
+        return linhasEnc;
     }
-
     public void setLinhaEncs(Set<LinhaEnc> linhaEncs) {
-        this.linhaEncs = linhaEncs;
+        this.linhasEnc = linhaEncs;
     }
 
 }

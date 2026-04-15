@@ -37,8 +37,8 @@ public class Colaborador {
     @JoinColumn(name = "cpostal", nullable = false)
     private Cpostal cpostal;
 
-    @Column(name = "iban", precision = 30)
-    private BigDecimal iban;
+    @Column(name = "iban", length = 30)
+    private String iban;
 
     @OneToMany(mappedBy = "idColab")
     private Set<Servico> servicos = new LinkedHashSet<>();
@@ -107,11 +107,11 @@ public class Colaborador {
         this.cpostal = cpostal;
     }
 
-    public BigDecimal getIban() {
+    public String getIban() {
         return iban;
     }
 
-    public void setIban(BigDecimal iban) {
+    public void setIban(String iban) {
         this.iban = iban;
     }
 

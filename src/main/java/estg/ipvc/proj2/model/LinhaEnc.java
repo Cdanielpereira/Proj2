@@ -26,6 +26,9 @@ public class LinhaEnc {
     @Column(name = "qtd", nullable = false)
     private Integer qtd;
 
+    @Column(name = "ivaatual", nullable = false, precision = 5, scale = 2)
+    private BigDecimal ivaatual = idProduto.getTipoIVA().getValor();
+
     public LinhaEncId getId() {
         return id;
     }

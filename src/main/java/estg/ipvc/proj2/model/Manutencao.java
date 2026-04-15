@@ -2,6 +2,8 @@ package estg.ipvc.proj2.model;
 
 import jakarta.persistence.*;
 
+import java.math.BigDecimal;
+
 @Entity
 @Table(name = "manutencao")
 public class Manutencao {
@@ -18,13 +20,15 @@ public class Manutencao {
     private Zona idZona;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "id_servico", nullable = false)
-    private Servico idServico;
+    @JoinColumn(name = "idiva",  nullable = false)
+    private TipoIVA idiva;
+
+    @OneToOne(fetch = FetchType.LAZY, optional = false)
+    private LinhaManu linhaManu;
 
     public Integer getId() {
         return id;
     }
-
     public void setId(Integer id) {
         this.id = id;
     }
@@ -32,7 +36,6 @@ public class Manutencao {
     public String getDescricao() {
         return descricao;
     }
-
     public void setDescricao(String descricao) {
         this.descricao = descricao;
     }
@@ -40,17 +43,11 @@ public class Manutencao {
     public Zona getIdZona() {
         return idZona;
     }
-
     public void setIdZona(Zona idZona) {
         this.idZona = idZona;
     }
 
-    public Servico getIdServico() {
-        return idServico;
-    }
-
-    public void setIdServico(Servico idServico) {
-        this.idServico = idServico;
-    }
+    public TipoIVA getIdIVA() { return idiva; }
+    public void setIdIVA(TipoIVA idiva) {this.idiva = idiva;}
 
 }

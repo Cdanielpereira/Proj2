@@ -26,6 +26,10 @@ public class Produto {
     @Column(name = "qtdmin")
     private Integer qtdmin;
 
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "idiva", nullable = false)
+    private TipoIVA idiva;
+
     @OneToMany(mappedBy = "idProduto")
     private Set<LinhaEnc> linhaEncs = new LinkedHashSet<>();
 

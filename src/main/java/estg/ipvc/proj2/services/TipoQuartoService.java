@@ -32,7 +32,7 @@ public class TipoQuartoService {
 
     public TipoQuarto updateTipo(Integer id, TipoQuarto tipo) {
         if (tipoQuartoRepository.existsById(id)) {
-            tipo.setIdTipoQuarto(id);
+            tipo.setId(id);
             return tipoQuartoRepository.save(tipo);
         }
         return null;
