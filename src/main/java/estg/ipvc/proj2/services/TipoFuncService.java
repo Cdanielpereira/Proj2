@@ -32,7 +32,7 @@ public class TipoFuncService {
 
     public TipoFunc updateTipo(Integer id, TipoFunc tipo) {
         if (tipoFuncRepository.existsById(id)) {
-            tipo.setIdTipoFunc(id);
+            tipo.setId(id);
             return tipoFuncRepository.save(tipo);
         }
         return null;

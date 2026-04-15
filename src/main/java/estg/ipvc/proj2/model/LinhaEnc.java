@@ -37,7 +37,6 @@ public class LinhaEnc {
     public Encomenda getIdEnco() {
         return idEnco;
     }
-
     public void setIdEnco(Encomenda idEnco) {
         this.idEnco = idEnco;
     }
@@ -45,7 +44,6 @@ public class LinhaEnc {
     public Produto getIdProduto() {
         return idProduto;
     }
-
     public void setIdProduto(Produto idProduto) {
         this.idProduto = idProduto;
     }
@@ -53,7 +51,6 @@ public class LinhaEnc {
     public BigDecimal getPrecoatual() {
         return precoatual;
     }
-
     public void setPrecoatual(BigDecimal precoatual) {
         this.precoatual = precoatual;
     }
@@ -61,7 +58,6 @@ public class LinhaEnc {
     public Integer getQtd() {
         return qtd;
     }
-
     public void setQtd(Integer qtd) {
         this.qtd = qtd;
     }

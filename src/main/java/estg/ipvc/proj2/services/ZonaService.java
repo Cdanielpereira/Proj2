@@ -32,7 +32,7 @@ public class ZonaService {
 
     public Zona updateZona(Integer id, Zona zona) {
         if (zonaRepository.existsById(id)) {
-            zona.setIdZona(id);
+            zona.setId(id);
             return zonaRepository.save(zona);
         }
         return null;

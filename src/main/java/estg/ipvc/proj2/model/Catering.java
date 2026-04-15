@@ -21,6 +21,9 @@ public class Catering {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "id_servico", nullable = false)
     private Servico idServico;
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "idiva", nullable = false)
+    private TipoIva idiva;
 
     public Integer getId() {
         return id;
@@ -52,6 +55,14 @@ public class Catering {
 
     public void setIdServico(Servico idServico) {
         this.idServico = idServico;
+    }
+
+    public TipoIva getIdiva() {
+        return idiva;
+    }
+
+    public void setIdiva(TipoIva idiva) {
+        this.idiva = idiva;
     }
 
 }
