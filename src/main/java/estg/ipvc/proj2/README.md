@@ -4,7 +4,7 @@ Os Services são classes que implementam a lógica de neg�cio da aplicão, sep
 ## Estrutura de um Service
 Um service tópico em Spring Boot possui a seguinte estrutura:
     
-    java package estg.ipvc.proj2.services;
+    java package estg.ipvc.proj2.impl;
     import estg.ipvc.proj2.model.MinhaEntidade;
     import estg.ipvc.proj2.repository.MinhaEntidadeRepository;
     import org.springframework.beans.factory.annotation.Autowired;
