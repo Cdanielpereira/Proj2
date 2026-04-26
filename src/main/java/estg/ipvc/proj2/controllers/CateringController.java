@@ -33,6 +33,10 @@ public class CateringController {
 
     @GetMapping("catering/{id}")
     public Catering catcateringDetails(@PathVariable int id){
+<<<<<<< HEAD
         return CateringRepository.getCateringDtoById(id);
+=======
+        return CateringRepository.getCateringById(id);
+>>>>>>> e2fa9c896ca14d4c45e84df3a514d002fa0e0b42
     }
 }
