@@ -1,0 +1,63 @@
+package estg.ipvc.proj2.dtos;
+
+import jakarta.persistence.*;
+
+import java.math.BigDecimal;
+
+@Entity
+@Table(name = "linha_enc")
+public class LinhaEncDto {
+    @EmbeddedId
+    private LinhaEncId id;
+    @MapsId("idEnco")
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "id_enco", nullable = false)
+    private EncomendaDto idEnco;
+    @MapsId("idProduto")
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "id_produto", nullable = false)
+    private ProdutoDto idProduto;
+    @Column(name = "precoatual", nullable = false, precision = 5, scale = 2)
+    private BigDecimal precoatual;
+    @Column(name = "qtd", nullable = false)
+    private Integer qtd;
+    @Column(name = "ivaatual", nullable = false, precision = 3, scale = 2)
+    private BigDecimal ivaatual = idProduto.getTipoIVA().getValor();
+
+
+    public LinhaEncId getId() {
+        return id;
+    }
+    public void setId(LinhaEncId id) {
+        this.id = id;
+    }
+
+    public EncomendaDto getIdEnco() {
+        return idEnco;
+    }
+    public void setIdEnco(EncomendaDto idEnco) {
+        this.idEnco = idEnco;
+    }
+
+    public ProdutoDto getIdProduto() {
+        return idProduto;
+    }
+    public void setIdProduto(ProdutoDto idProduto) {
+        this.idProduto = idProduto;
+    }
+
+    public BigDecimal getPrecoatual() {
+        return precoatual;
+    }
+    public void setPrecoatual(BigDecimal precoatual) {
+        this.precoatual = precoatual;
+    }
+
+    public Integer getQtd() {
+        return qtd;
+    }
+    public void setQtd(Integer qtd) {
+        this.qtd = qtd;
+    }
+
+}
