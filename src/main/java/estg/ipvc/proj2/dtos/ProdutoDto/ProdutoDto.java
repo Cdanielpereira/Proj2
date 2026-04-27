@@ -6,9 +6,6 @@ import java.math.BigDecimal;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
-import estg.ipvc.proj2.dtos.TipoIVADto.TipoIVADto;
-import estg.ipvc.proj2.dtos.LinhaEncDto.LinhaEncDto;
-
 @Entity
 @Table(name = "produto")
 public class ProdutoDto {

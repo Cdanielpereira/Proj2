@@ -5,9 +5,6 @@ import jakarta.persistence.*;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
-import estg.ipvc.proj2.dtos.ClienteDto.ClienteDto;
-import estg.ipvc.proj2.dtos.FuncionarioDto.FuncionarioDto;
-
 @Entity
 @Table(name = "\"user\"")
 public class UserDto {

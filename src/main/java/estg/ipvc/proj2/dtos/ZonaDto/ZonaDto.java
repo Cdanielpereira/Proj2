@@ -5,12 +5,6 @@ import jakarta.persistence.*;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
-import estg.ipvc.proj2.dtos.TipoZonaDto.TipoZonaDto;
-import estg.ipvc.proj2.dtos.LimpezaDto.LimpezaDto;
-import estg.ipvc.proj2.dtos.ManutencaoDto.ManutencaoDto;
-import estg.ipvc.proj2.dtos.PiscinaDto.PiscinaDto;
-import estg.ipvc.proj2.dtos.QuartoDto.QuartoDto;
-
 @Entity
 @Table(name = "zona")
 public class ZonaDto {

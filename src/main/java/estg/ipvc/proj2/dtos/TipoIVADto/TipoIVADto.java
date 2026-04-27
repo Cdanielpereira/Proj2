@@ -1,9 +1,9 @@
 package estg.ipvc.proj2.dtos.TipoIVADto;
 
 import estg.ipvc.proj2.dtos.CateringDto.CateringDto;
-import estg.ipvc.proj2.dtos.ManutencaoDto;
+import estg.ipvc.proj2.dtos.ManutencaoDto.ManutencaoDto;
 import estg.ipvc.proj2.dtos.ProdutoDto.ProdutoDto;
-import estg.ipvc.proj2.dtos.QuartoDto;
+import estg.ipvc.proj2.dtos.QuartoDto.QuartoDto;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;

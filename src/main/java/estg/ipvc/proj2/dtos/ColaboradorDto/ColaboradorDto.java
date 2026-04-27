@@ -1,8 +1,5 @@
 package estg.ipvc.proj2.dtos.ColaboradorDto;
 
-import estg.ipvc.proj2.dtos.CpostalDto;
-import estg.ipvc.proj2.dtos.ServicoDto;
-import estg.ipvc.proj2.dtos.TipoColabDto;
 import jakarta.persistence.*;
 
 import java.util.LinkedHashSet;

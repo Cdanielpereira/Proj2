@@ -1,17 +1,12 @@
 package estg.ipvc.proj2.controllers;
 
-import estg.ipvc.proj2.model.Catering;
-import estg.ipvc.proj2.repository.CateringRepository;
+import CateringResponse;
 import estg.ipvc.proj2.services.CateringService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.List;
 
 @RestController
 @RequestMapping("/proj2/")
@@ -25,18 +20,36 @@ public class CateringController {
         this.cateringService = cateringService;
     }
 
-    @GetMapping("/catering")
-    public ResponseEntity<List<Catering>> getCaterings(){
-        List<Catering> caterings = new ArrayList<>();
-        return ResponseEntity.ok(caterings);
-    };
+    @GetMapping("catering")
+    public ResponseEntity<CateringResponse> getCatering(
+            @RequestParam(value = "pageNo", defaultValue = "0", required = false) int pageNo,
+            @RequestParam(value = "pageSize", defaultValue = "10", required = false) int pageSize
+    ) {
+        return new ResponseEntity<>(cateringService.getAllCatering(pageNo, pageSize), HttpStatus.OK);
+    }
 
     @GetMapping("catering/{id}")
-    public Catering catcateringDetails(@PathVariable int id){
-<<<<<<< HEAD
-        return CateringRepository.getCateringDtoById(id);
-=======
-        return CateringRepository.getCateringById(id);
->>>>>>> e2fa9c896ca14d4c45e84df3a514d002fa0e0b42
+    public ResponseEntity<CateringDto> pokemonDetail(@PathVariable int id) {
+        return ResponseEntity.ok(cateringService.getCateringById(id));
+
     }
+
+    @PostMapping("catering/create")
+    @ResponseStatus(HttpStatus.CREATED)
+    public ResponseEntity<CateringDto> createPokemon(@RequestBody CateringDto cateringDto) {
+        return new ResponseEntity<>(cateringService.createCatering(cateringDto), HttpStatus.CREATED);
+    }
+
+    @PutMapping("catering/{id}/update")
+    public ResponseEntity<CateringDto> updatePokemon(@RequestBody CateringDto cateringDto, @PathVariable("id") int cateringId) {
+        CateringDto response = cateringService.updateCatering(cateringDto, cateringId);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @DeleteMapping("pokemon/{id}/delete")
+    public ResponseEntity<String> deletePokemon(@PathVariable("id") int pokemonId) {
+        cateringService.deleteCateringnId(cateringId);
+        return new ResponseEntity<>("Catering delete", HttpStatus.OK);
+    }
+
 }
