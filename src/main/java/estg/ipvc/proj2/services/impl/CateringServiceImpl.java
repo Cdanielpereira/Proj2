@@ -1,9 +1,14 @@
 package estg.ipvc.proj2.services.impl;
 
 import estg.ipvc.proj2.model.Catering;
+import estg.ipvc.proj2.dtos.CateringDto.CateringDto;
+import estg.ipvc.proj2.dtos.CateringDto.CateringResponse;
 import estg.ipvc.proj2.repository.CateringRepository;
 import estg.ipvc.proj2.services.CateringService;
+import estg.ipvc.proj2.exceptions.EntityNotFoundException;
+
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -24,10 +29,10 @@ public class CateringServiceImpl implements CateringService {
     }
 
     @Override
-    public CateringDto createPokemon(CateringDto cateringDto) {
-        Catering pokemon = new Catering();
-        pokemon.setName(cateringDto.getName());
-        pokemon.setType(cateringDto.getType());
+    public CateringDto createCatering(CateringDto cateringDto) {
+        Catering catering = new Catering();
+        catering.setName(cateringDto.getName());
+        catering.setType(cateringDto.getType());
 
         Catering newCatering = cateringRepository.save(catering);
 
@@ -45,7 +50,7 @@ public class CateringServiceImpl implements CateringService {
         List<Catering> listOfCaterings = caterings.getContent();
         List<CateringDto> content = listOfCaterings.stream().map(c -> mapToDto(c)).collect(Collectors.toList());
 
-        CateringResponse pokemonResponse = new CateringResponse();
+        CateringResponse cateringResponse = new CateringResponse();
         cateringResponse.setContent(content);
         cateringResponse.setPageNo(caterings.getNumber());
         cateringResponse.setPageSize(caterings.getSize());
@@ -53,7 +58,7 @@ public class CateringServiceImpl implements CateringService {
         cateringResponse.setTotalPages(caterings.getTotalPages());
         cateringResponse.setLast(caterings.isLast());
 
-        return pokemonResponse;
+        return cateringResponse;
     }
 
     @Override
@@ -79,6 +84,7 @@ public class CateringServiceImpl implements CateringService {
         cateringRepository.delete(catering);
     }
 
+    @Override
     private CateringDto mapToDto(Catering catering) {
         CateringDto cateringDto = new CateringDto();
         cateringDto.setId(catering.getId());
