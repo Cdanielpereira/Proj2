@@ -1,33 +1,29 @@
 package estg.ipvc.proj2.dtos.ClienteDto;
 
-import jakarta.persistence.*;
+import estg.ipvc.proj2.dtos.UserDto.UserDto;
+import estg.ipvc.proj2.dtos.CpostalDto.CpostalDto;
+import estg.ipvc.proj2.dtos.NacionalidadeDto.NacionalidadeDto;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
-import java.util.LinkedHashSet;
-import java.util.Set;
 
-@Entity
-@Table(name = "cliente")
+@Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class ClienteDto {
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    @Id
-    private Long id;
-    public Integer nif;
-    public String nome;
-    public LocalDate dtNasc;
-    public String rua;
-    public String porta;
-    public String sexo;
-    public Integer idUser;
-    public Integer cpostal;
-    public Integer idNacional;
-    public String email;
+    private Integer id;
+    private Integer nif;
+    private String nome;
+    private LocalDate dtNasc;
+    private String rua;
+    private String porta;
+    private String sexo;
+    private UserDto idUser;
+    private CpostalDto cpostal;
+    private NacionalidadeDto idNacional;
+    private String email;
 }

@@ -42,7 +42,6 @@ public class Servico {
     @OneToMany(mappedBy = "idServico")
     private Set<LinhaManu> linhasManu = new LinkedHashSet<>();
 
-
     public Integer getId() {
         return id;
     }
@@ -71,7 +70,7 @@ public class Servico {
         this.dtRea = dtRea;
     }
 
-    public EstadoServico getIdEstadoser() {
+    public EstadoServico getIdEstadoSer() {
         return idEstadoser;
     }
     public void setIdEstadoser(EstadoServico idEstadoser) {
@@ -92,7 +91,7 @@ public class Servico {
         this.idFunc = idFunc;
     }
 
-    public Integer getIdFaturap() {
+    public Integer getIdFaturaP() {
         return idFaturap;
     }
     public void setIdFaturap(Integer idFaturap) {

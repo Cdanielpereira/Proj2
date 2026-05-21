@@ -19,7 +19,7 @@ public class CateringDto {
     private Integer id;
     private Integer nhospedes;
     private BigDecimal precohosp;
-      private TipoIVADto idiva;
+    private TipoIVADto idiva;
 
     public Integer getId() {
         return id;

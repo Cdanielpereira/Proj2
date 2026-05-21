@@ -1,6 +1,7 @@
 package estg.ipvc.proj2.controllers;
 
 import CateringResponse;
+import CateringDto;
 import estg.ipvc.proj2.services.CateringService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
