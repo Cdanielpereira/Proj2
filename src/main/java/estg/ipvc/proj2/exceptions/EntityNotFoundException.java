@@ -1,4 +1,8 @@
 package estg.ipvc.proj2.exceptions;
 
-public class EntityNotFoundException {
+public class EntityNotFoundException extends RuntimeException {
+
+    public EntityNotFoundException(String message) {
+        super(message);
+    }
 }

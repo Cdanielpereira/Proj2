@@ -1,14 +1,24 @@
 package estg.ipvc.proj2.model;
 
 import jakarta.persistence.*;
+import lombok.*;
 
 import java.math.BigDecimal;
 
 @Entity
 @Table(name = "linha_manu")
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class LinhaManu {
     @EmbeddedId
     private LinhaManuId id;
+    @Column(name = "precoatual", nullable = false, precision = 5, scale = 2)
+    private BigDecimal precoatual;
+    @Column(name = "ivaatual", nullable = false, precision = 3, scale = 2)
+    private BigDecimal ivaatual;
+    
     @MapsId("idManu")
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "id_manu", nullable = false)
@@ -17,45 +27,4 @@ public class LinhaManu {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "id_servico", nullable = false)
     private Servico idServico;
-    @Column(name = "precoatual", nullable = false, precision = 5, scale = 2)
-    private BigDecimal precoatual;
-    @Column(name = "ivaatual", nullable = false, precision = 3, scale = 2)
-    private BigDecimal ivaatual = idManu.getIdIVA().getValor();
-
-
-    public LinhaManuId getId() {
-        return id;
-    }
-    public void setId(LinhaManuId id) {
-        this.id = id;
-    }
-
-    public Servico getIdServico() {
-        return idServico;
-    }
-    public void setIdServico(Servico idServico) {
-        this.idServico = idServico;
-    }
-
-    public Manutencao getIdManu() {
-        return idManu;
-    }
-    public void setIdManu(Manutencao idManu) {
-        this.idManu = idManu;
-    }
-
-    public BigDecimal getPrecoatual() {
-        return precoatual;
-    }
-    public void setPrecoatual(BigDecimal precoatual) {
-        this.precoatual = precoatual;
-    }
-
-    public BigDecimal getIvaatual() {
-        return ivaatual;
-    }
-    public void setIvaatual(BigDecimal ivaatual) {
-        this.ivaatual = ivaatual;
-    }
-
 }

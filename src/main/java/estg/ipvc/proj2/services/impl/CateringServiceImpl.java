@@ -1,103 +1,116 @@
 package estg.ipvc.proj2.services.impl;
 
 import estg.ipvc.proj2.model.Catering;
-import estg.ipvc.proj2.dtos.CateringDto.CateringDto;
-import estg.ipvc.proj2.dtos.CateringDto.CateringResponse;
+import estg.ipvc.proj2.model.Servico;
+import estg.ipvc.proj2.model.TipoIVA;
+import estg.ipvc.proj2.dtos.cateringdto.CateringDto;
+import estg.ipvc.proj2.dtos.cateringdto.CateringMapper;
+import estg.ipvc.proj2.dtos.common.PageMapper;
+import estg.ipvc.proj2.dtos.common.PageResponse;
 import estg.ipvc.proj2.repository.CateringRepository;
+import estg.ipvc.proj2.repository.ServicoRepository;
+import estg.ipvc.proj2.repository.TipoIVARepository;
 import estg.ipvc.proj2.services.CateringService;
 import estg.ipvc.proj2.exceptions.EntityNotFoundException;
 
 import org.springframework.beans.factory.annotation.Autowired;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
-
 @Service
 public class CateringServiceImpl implements CateringService {
-    //@Autowired
-    private CateringRepository cateringRepository;
+
+    private final CateringRepository cateringRepository;
+    private final ServicoRepository servicoRepository;
+    private final TipoIVARepository tipoIVARepository;
 
     @Autowired
-    public CateringServiceImpl(CateringRepository cateringRepository) {
+    public CateringServiceImpl(
+            CateringRepository cateringRepository,
+            ServicoRepository servicoRepository,
+            TipoIVARepository tipoIVARepository
+    ) {
         this.cateringRepository = cateringRepository;
+        this.servicoRepository = servicoRepository;
+        this.tipoIVARepository = tipoIVARepository;
     }
 
     @Override
-    public CateringDto createCatering(CateringDto cateringDto) {
-        Catering catering = new Catering();
-        catering.setName(cateringDto.getName());
-        catering.setType(cateringDto.getType());
+    public CateringDto createCatering(CateringDto dto) {
 
-        Catering newCatering = cateringRepository.save(catering);
+        Servico servico = servicoRepository.findById(dto.getIdServico())
+                .orElseThrow(() -> new EntityNotFoundException("Serviço não encontrado"));
 
-        CateringDto cateringResponse = new CateringDto();
-        cateringResponse.setId(newCatering.getId());
-        cateringResponse.setName(newCatering.getName());
-        cateringResponse.setType(newCatering.getType());
-        return cateringResponse;
+        // IVA do sistema (podes trocar por lógica configurável depois)
+        TipoIVA ivaAtual = tipoIVARepository.findById(2) // exemplo: Catering IVA default
+                .orElseThrow(() -> new EntityNotFoundException("IVA não encontrado"));
+
+        Catering catering = CateringMapper.toEntity(dto);
+
+        catering.setIdServico(servico);
+        catering.setIdiva(ivaAtual);
+        catering.setIvaAtual(ivaAtual.getValor());
+
+        Catering saved = cateringRepository.save(catering);
+
+        return CateringMapper.toDto(saved);
     }
 
     @Override
-    public CateringResponse getAllCatering(int pageNo, int pageSize) {
+    public PageResponse<CateringDto> getAllCatering(int pageNo, int pageSize) {
+
         Pageable pageable = PageRequest.of(pageNo, pageSize);
+
         Page<Catering> caterings = cateringRepository.findAll(pageable);
-        List<Catering> listOfCaterings = caterings.getContent();
-        List<CateringDto> content = listOfCaterings.stream().map(c -> mapToDto(c)).collect(Collectors.toList());
 
-        CateringResponse cateringResponse = new CateringResponse();
-        cateringResponse.setContent(content);
-        cateringResponse.setPageNo(caterings.getNumber());
-        cateringResponse.setPageSize(caterings.getSize());
-        cateringResponse.setTotalElements(caterings.getTotalElements());
-        cateringResponse.setTotalPages(caterings.getTotalPages());
-        cateringResponse.setLast(caterings.isLast());
-
-        return cateringResponse;
+        return PageMapper.toPageResponse(caterings, CateringMapper::toDto);
     }
 
     @Override
     public CateringDto getCateringById(int id) {
-        Catering catering = cateringRepository.findById(id).orElseThrow(() -> new CateringNotFoundException("Catering could not be found"));
-        return mapToDto(catering);
+
+        Catering catering = cateringRepository.findById(id)
+                .orElseThrow(() ->
+                        new EntityNotFoundException("Catering não encontrado"));
+
+        return CateringMapper.toDto(catering);
     }
 
     @Override
-    public CateringDto updateCatering(Catering cateringDto, int id) {
-        Catering catering = cateringRepository.findById(id).orElseThrow(() -> new CateringNotFoundException("Catering could not be updated"));
+    public CateringDto updateCatering(CateringDto dto, int id) {
 
-        catering.setName(cateringDto.getName());
-        catering.setType(cateringDto.getType());
+        Catering catering = cateringRepository.findById(id)
+                .orElseThrow(() ->
+                        new EntityNotFoundException("Catering não encontrado"));
 
-        Catering updatedCatering = cateringRepository.save(catering);
-        return mapToDto(updatedCatering);
+        catering.setNhospedes(dto.getNhospedes());
+        catering.setPrecohosp(dto.getPrecohosp());
+
+        // serviço só muda se permitires alteração
+        if (dto.getIdServico() != null) {
+            Servico servico = servicoRepository.findById(dto.getIdServico())
+                    .orElseThrow(() -> new EntityNotFoundException("Serviço não encontrado"));
+
+            catering.setIdServico(servico);
+        }
+
+        // IVA NÃO deve ser alterado aqui (regra de negócio)
+        // só muda globalmente no sistema
+
+        Catering updated = cateringRepository.save(catering);
+
+        return CateringMapper.toDto(updated);
     }
 
     @Override
     public void deleteCateringId(int id) {
-        Catering catering = cateringRepository.findById(id).orElseThrow(() -> new CateringNotFoundException("Catering could not be delete"));
+
+        Catering catering = cateringRepository.findById(id)
+                .orElseThrow(() ->
+                        new EntityNotFoundException("Catering não encontrado"));
+
         cateringRepository.delete(catering);
     }
-
-    @Override
-    private CateringDto mapToDto(Catering catering) {
-        CateringDto cateringDto = new CateringDto();
-        cateringDto.setId(catering.getId());
-        cateringDto.setName(catering.getName());
-        cateringDto.setType(catering.getType());
-        return cateringDto;
-    }
-
-    private Catering mapToEntity(CateringDto cateringDto) {
-        Catering catering = new Catering();
-        catering.setName(cateringDto.getName());
-        catering.setType(cateringDto.getType());
-        return catering;
-    }
 }
-

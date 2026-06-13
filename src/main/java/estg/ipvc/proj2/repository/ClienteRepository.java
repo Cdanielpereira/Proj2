@@ -1,7 +1,7 @@
 package estg.ipvc.proj2.repository;
 
 import estg.ipvc.proj2.model.Cliente;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface ClienteRepository extends CrudRepository<Cliente, Integer> {
+public interface ClienteRepository extends JpaRepository<Cliente, Integer> {
 }

@@ -1,45 +1,32 @@
 package estg.ipvc.proj2.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Embeddable;
+import jakarta.persistence.*;
+import lombok.*;
 
 import java.io.Serializable;
 import java.util.Objects;
 
 @Embeddable
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class LinhaManuId implements Serializable {
-    private static final long serialVersionUID = 6479956131203142450L;
     @Column(name = "id_manu", nullable = false)
     private Integer idManu;
-
     @Column(name = "id_servico", nullable = false)
     private Integer idServico;
 
-    public Integer getIdManu() {
-        return idManu;
-    }
-    public void setIdManu(Integer idManu) {
-        this.idManu = idManu;
-    }
-
-    public Integer getIdServico() {
-        return idServico;
-    }
-    public void setIdServico(Integer idServico) {
-        this.idServico = idServico;
-    }
-
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(Object o)
+    {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        LinhaManuId entity = (LinhaManuId) o;
-        return Objects.equals(this.idManu, entity.idManu) &&
-                Objects.equals(this.idServico, entity.idServico);
+        if (!(o instanceof LinhaManuId)) return false;
+        LinhaManuId that = (LinhaManuId) o;
+        return Objects.equals(idManu, that.idManu) &&
+                Objects.equals(idServico, that.idServico);
     }
 
     @Override
-    public int hashCode() {
-        return Objects.hash(idManu, idServico);
-    }
+    public int hashCode() {return Objects.hash(idManu, idServico);}
 }

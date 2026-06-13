@@ -1,48 +1,105 @@
 package estg.ipvc.proj2.services.impl;
 
+import estg.ipvc.proj2.dtos.common.PageMapper;
+import estg.ipvc.proj2.dtos.common.PageResponse;
+import estg.ipvc.proj2.dtos.encomendadto.EncomendaDto;
+import estg.ipvc.proj2.dtos.encomendadto.EncomendaMapper;
+import estg.ipvc.proj2.exceptions.EntityNotFoundException;
 import estg.ipvc.proj2.model.Encomenda;
+import estg.ipvc.proj2.model.Servico;
 import estg.ipvc.proj2.repository.EncomendaRepository;
+import estg.ipvc.proj2.repository.ServicoRepository;
 import estg.ipvc.proj2.services.EncomendaService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
 
 @Service
 public class EncomendaServiceImpl implements EncomendaService {
 
+    private final EncomendaRepository encomendaRepository;
+    private final ServicoRepository servicoRepository;
+
     @Autowired
-    private EncomendaRepository encomendaRepository;
-
-    public List<Encomenda> getAllEncomendas() {
-        List<Encomenda> list = new ArrayList<>();
-        encomendaRepository.findAll().forEach(list::add);
-        return list;
+    public EncomendaServiceImpl(
+            EncomendaRepository encomendaRepository,
+            ServicoRepository servicoRepository
+    ) {
+        this.encomendaRepository = encomendaRepository;
+        this.servicoRepository = servicoRepository;
     }
 
-    public Optional<Encomenda> getEncomendaById(Integer id) {
-        return encomendaRepository.findById(id);
+    @Override
+    public EncomendaDto createEncomenda(EncomendaDto dto) {
+
+        Servico servico = servicoRepository.findById(dto.getIdServico())
+                .orElseThrow(() ->
+                        new EntityNotFoundException("Serviço não encontrado"));
+
+        Encomenda encomenda = EncomendaMapper.toEntity(dto);
+
+        encomenda.setIdServico(servico);
+
+        Encomenda saved = encomendaRepository.save(encomenda);
+
+        return EncomendaMapper.toDto(saved);
     }
 
-    public Encomenda createEncomenda(Encomenda encomenda) {
-        return encomendaRepository.save(encomenda);
+    @Override
+    public PageResponse<EncomendaDto> getAllEncomendas(int pageNo, int pageSize) {
+
+        Pageable pageable = PageRequest.of(pageNo, pageSize);
+
+        Page<Encomenda> encomendas = encomendaRepository.findAll(pageable);
+
+        return PageMapper.toPageResponse(
+                encomendas,
+                EncomendaMapper::toDto
+        );
     }
 
-    public Encomenda updateEncomenda(Integer id, Encomenda encomenda) {
-        if (encomendaRepository.existsById(id)) {
-            encomenda.setId(id);
-            return encomendaRepository.save(encomenda);
+    @Override
+    public EncomendaDto getEncomendaById(int id) {
+
+        Encomenda encomenda = encomendaRepository.findById(id)
+                .orElseThrow(() ->
+                        new EntityNotFoundException("Encomenda não encontrada"));
+
+        return EncomendaMapper.toDto(encomenda);
+    }
+
+    @Override
+    public EncomendaDto updateEncomenda(EncomendaDto dto, int id) {
+
+        Encomenda encomenda = encomendaRepository.findById(id)
+                .orElseThrow(() ->
+                        new EntityNotFoundException("Encomenda não encontrada"));
+
+        encomenda.setValortotal(dto.getValortotal());
+
+        if (dto.getIdServico() != null) {
+
+            Servico servico = servicoRepository.findById(dto.getIdServico())
+                    .orElseThrow(() ->
+                            new EntityNotFoundException("Serviço não encontrado"));
+
+            encomenda.setIdServico(servico);
         }
-        return null;
+
+        Encomenda updated = encomendaRepository.save(encomenda);
+
+        return EncomendaMapper.toDto(updated);
     }
 
-    public void deleteEncomenda(Integer id) {
-        encomendaRepository.deleteById(id);
-    }
+    @Override
+    public void deleteEncomenda(int id) {
 
-    public boolean encomendaExists(Integer id) {
-        return encomendaRepository.existsById(id);
+        Encomenda encomenda = encomendaRepository.findById(id)
+                .orElseThrow(() ->
+                        new EntityNotFoundException("Encomenda não encontrada"));
+
+        encomendaRepository.delete(encomenda);
     }
 }
-

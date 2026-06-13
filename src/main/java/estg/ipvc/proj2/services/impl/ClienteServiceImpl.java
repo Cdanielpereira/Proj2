@@ -1,43 +1,116 @@
 package estg.ipvc.proj2.services.impl;
 
+import estg.ipvc.proj2.dtos.clientedto.ClienteDto;
+import estg.ipvc.proj2.dtos.clientedto.ClienteMapper;
+import estg.ipvc.proj2.dtos.common.PageMapper;
+import estg.ipvc.proj2.dtos.common.PageResponse;
+import estg.ipvc.proj2.exceptions.EntityNotFoundException;
 import estg.ipvc.proj2.model.Cliente;
+import estg.ipvc.proj2.model.Cpostal;
+import estg.ipvc.proj2.model.Nacionalidade;
+import estg.ipvc.proj2.model.User;
 import estg.ipvc.proj2.repository.ClienteRepository;
+import estg.ipvc.proj2.repository.CpostalRepository;
+import estg.ipvc.proj2.repository.NacionalidadeRepository;
+import estg.ipvc.proj2.repository.UserRepository;
 import estg.ipvc.proj2.services.ClienteService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
 
 @Service
 public class ClienteServiceImpl implements ClienteService {
+
+    private final ClienteRepository clienteRepository;
+    private final UserRepository userRepository;
+    private final NacionalidadeRepository nacionalidadeRepository;
+    private final CpostalRepository cpostalRepository;
+
     @Autowired
-    private ClienteRepository clienteRepository;
-
-    @Override
-    public List<Cliente> getAllClientes() {
-        List<Cliente> list = new ArrayList<>();
-        clienteRepository.findAll().forEach(list::add);
-        return list;
+    public ClienteServiceImpl(
+            ClienteRepository clienteRepository,
+            UserRepository userRepository,
+            NacionalidadeRepository nacionalidadeRepository,
+            CpostalRepository cpostalRepository
+    ) {
+        this.clienteRepository = clienteRepository;
+        this.userRepository = userRepository;
+        this.nacionalidadeRepository = nacionalidadeRepository;
+        this.cpostalRepository = cpostalRepository;
     }
-    @Override
-    public Optional<Cliente> getClienteById(Integer id) {return clienteRepository.findById(id);}
 
     @Override
-    public Cliente createCliente(Cliente cliente) {return clienteRepository.save(cliente);}
-    @Override
-    public Cliente updateCliente(Integer id, Cliente cliente)
-    {
-        if (clienteRepository.existsById(id))
-        {
-            cliente.setId(id);
-            return clienteRepository.save(cliente);
-        }
-        return null;
+    public ClienteDto createCliente(ClienteDto dto) {
+
+        Cliente cliente = ClienteMapper.toEntity(dto);
+
+        cliente.setIdUser(
+                userRepository.findById(dto.getIdUser())
+                        .orElseThrow(() -> new EntityNotFoundException("User não encontrado"))
+        );
+
+        cliente.setIdNacional(
+                nacionalidadeRepository.findById(dto.getIdNacional())
+                        .orElseThrow(() -> new EntityNotFoundException("Nacionalidade não encontrada"))
+        );
+
+        cliente.setCodPostal(
+                cpostalRepository.findById(dto.getCodPostal())
+                        .orElseThrow(() -> new EntityNotFoundException("Código Postal não encontrado"))
+        );
+
+        return ClienteMapper.toDto(
+                clienteRepository.save(cliente)
+        );
     }
-    @Override
-    public void deleteCliente(Integer id) {clienteRepository.deleteById(id);}
 
     @Override
-    public boolean clienteExists(Integer id) {return clienteRepository.existsById(id);}
+    public PageResponse<ClienteDto> getAllClientes(int pageNo, int pageSize) {
+
+        Pageable pageable = PageRequest.of(pageNo, pageSize);
+
+        Page<Cliente> clientes = clienteRepository.findAll(pageable);
+
+        return PageMapper.toPageResponse(clientes, ClienteMapper::toDto);
+    }
+
+    @Override
+    public ClienteDto getClienteById(int id) {
+
+        Cliente cliente = clienteRepository.findById(id)
+                .orElseThrow(() ->
+                        new EntityNotFoundException("Cliente não encontrado"));
+
+        return ClienteMapper.toDto(cliente);
+    }
+
+    @Override
+    public ClienteDto updateCliente(ClienteDto dto, int id) {
+
+        Cliente cliente = clienteRepository.findById(id)
+                .orElseThrow(() ->
+                        new EntityNotFoundException("Cliente não encontrado"));
+
+        cliente.setNome(dto.getNome());
+        cliente.setEmail(dto.getEmail());
+        cliente.setRua(dto.getRua());
+        cliente.setPorta(dto.getPorta());
+        cliente.setSexo(dto.getSexo());
+        cliente.setDtNasc(dto.getDtNasc());
+        cliente.setNif(dto.getNif());
+
+        return ClienteMapper.toDto(
+                clienteRepository.save(cliente)
+        );
+    }
+
+    @Override
+    public void deleteCliente(int id) {
+
+        Cliente cliente = clienteRepository.findById(id)
+                .orElseThrow(() ->
+                        new EntityNotFoundException("Cliente não encontrado"));
+
+        clienteRepository.delete(cliente);
+    }
 }

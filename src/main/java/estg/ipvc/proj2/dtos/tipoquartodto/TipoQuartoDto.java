@@ -1,0 +1,12 @@
+package estg.ipvc.proj2.dtos.tipoquartodto;
+
+import lombok.*;
+
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+public class TipoQuartoDto {
+    private Integer id;
+    private String type;
+}

@@ -1,23 +1,60 @@
 package estg.ipvc.proj2.controllers;
 
-import estg.ipvc.proj2.model.Cliente;
+import estg.ipvc.proj2.dtos.clientedto.ClienteDto;
+import estg.ipvc.proj2.dtos.common.PageResponse;
+import estg.ipvc.proj2.services.ClienteService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import java.util.ArrayList;
-import java.util.List;
-
+import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/proj2/")
-
+@RequestMapping("/proj2")
 public class ClienteController {
 
+    private final ClienteService clienteService;
+
+    @Autowired
+    public ClienteController(ClienteService clienteService) {
+        this.clienteService = clienteService;
+    }
+
     @GetMapping("/cliente")
-    public ResponseEntity<List<Cliente>> getClientes(){
-        List<Cliente> clientes = new ArrayList<>();
-        return ResponseEntity.ok(clientes);
+    public ResponseEntity<PageResponse<ClienteDto>> getClientes(
+            @RequestParam(value = "pageNo", defaultValue = "0") int pageNo,
+            @RequestParam(value = "pageSize", defaultValue = "10") int pageSize
+    ) {
+        return ResponseEntity.ok(
+                clienteService.getAllClientes(pageNo, pageSize)
+        );
+    }
+
+    @GetMapping("/cliente/{id}")
+    public ResponseEntity<ClienteDto> getClienteById(@PathVariable Integer id) {
+        return ResponseEntity.ok(
+                clienteService.getClienteById(id)
+        );
+    }
+
+    @PostMapping("/cliente")
+    public ResponseEntity<ClienteDto> createCliente(@RequestBody ClienteDto clienteDto) {
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(clienteService.createCliente(clienteDto));
+    }
+
+    @PutMapping("/cliente/{id}")
+    public ResponseEntity<ClienteDto> updateCliente(
+            @RequestBody ClienteDto clienteDto,
+            @PathVariable Integer id
+    ) {
+        return ResponseEntity.ok(
+                clienteService.updateCliente(clienteDto, id)
+        );
+    }
+
+    @DeleteMapping("/cliente/{id}")
+    public ResponseEntity<Void> deleteCliente(@PathVariable Integer id) {
+        clienteService.deleteCliente(id);
+        return ResponseEntity.noContent().build();
     }
 }

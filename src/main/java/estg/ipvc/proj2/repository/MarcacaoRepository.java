@@ -1,7 +1,7 @@
 package estg.ipvc.proj2.repository;
 
 import estg.ipvc.proj2.model.Marcacao;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface MarcacaoRepository extends CrudRepository<Marcacao, Integer> {
+public interface MarcacaoRepository extends JpaRepository<Marcacao, Integer> {
 }

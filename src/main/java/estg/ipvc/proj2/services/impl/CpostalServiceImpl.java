@@ -1,50 +1,80 @@
 package estg.ipvc.proj2.services.impl;
 
+import estg.ipvc.proj2.dtos.common.PageMapper;
+import estg.ipvc.proj2.dtos.common.PageResponse;
+import estg.ipvc.proj2.dtos.cpostaldto.CpostalDto;
+import estg.ipvc.proj2.dtos.cpostaldto.CpostalMapper;
+import estg.ipvc.proj2.exceptions.EntityNotFoundException;
 import estg.ipvc.proj2.model.Cpostal;
 import estg.ipvc.proj2.repository.CpostalRepository;
 import estg.ipvc.proj2.services.CpostalService;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
 
 @Service
 public class CpostalServiceImpl implements CpostalService {
+
+    private final CpostalRepository cpostalRepository;
+
     @Autowired
-    private CpostalRepository cpostalRepository;
-
-    public List<Cpostal> getAllCpostais()
-    {
-        List<Cpostal> list = new ArrayList<>();
-        for (Cpostal cpostal : cpostalRepository.findAll())
-        {
-            list.add(cpostal);
-        }
-        return list;
-    }
-    public Optional<Cpostal> getCpostalByCodPostal(String codPostal)
-    {
-        return cpostalRepository.findByCodPostal(codPostal);
+    public CpostalServiceImpl(CpostalRepository cpostalRepository) {
+        this.cpostalRepository = cpostalRepository;
     }
 
-    public Cpostal createCpostal(Cpostal cpostal) {return cpostalRepository.save(cpostal);}
+    @Override
+    public CpostalDto createCpostal(CpostalDto dto) {
 
-    public Cpostal updateCpostal(String codPostal, Cpostal cpostal)
-    {
-        if (cpostalRepository.existsByCodPostal(codPostal))
-        {
-            cpostal.setCodPostal(codPostal);
-            return cpostalRepository.save(cpostal);
-        }
-        return null;
+        Cpostal cpostal = CpostalMapper.toEntity(dto);
+
+        return CpostalMapper.toDto(
+                cpostalRepository.save(cpostal)
+        );
     }
 
-    public void deleteCpostal(String codPostal) {cpostalRepository.deleteById(codPostal);}
+    @Override
+    public PageResponse<CpostalDto> getAllCpostal(int pageNo, int pageSize) {
 
-    public boolean cpostalExists(String codPostal)
-    {
-        return cpostalRepository.existsByCodPostal(codPostal);
+        Pageable pageable = PageRequest.of(pageNo, pageSize);
+
+        Page<Cpostal> cpostais =
+                cpostalRepository.findAll(pageable);
+
+        return PageMapper.toPageResponse(cpostais, CpostalMapper::toDto);
+    }
+
+    @Override
+    public CpostalDto getCpostalById(String codPostal) {
+
+        Cpostal cpostal = cpostalRepository.findById(codPostal)
+                .orElseThrow(() ->
+                        new EntityNotFoundException("Código postal não encontrado"));
+
+        return CpostalMapper.toDto(cpostal);
+    }
+
+    @Override
+    public CpostalDto updateCpostal(CpostalDto dto, String codPostal) {
+
+        Cpostal cpostal = cpostalRepository.findById(codPostal)
+                .orElseThrow(() ->
+                        new EntityNotFoundException("Código postal não encontrado"));
+
+        cpostal.setLocalidade(dto.getLocalidade());
+
+        Cpostal updated = cpostalRepository.save(cpostal);
+
+        return CpostalMapper.toDto(updated);
+    }
+
+    @Override
+    public void deleteCpostalId(String codPostal) {
+
+        Cpostal cpostal = cpostalRepository.findById(codPostal)
+                .orElseThrow(() ->
+                        new EntityNotFoundException("Código postal não encontrado"));
+
+        cpostalRepository.delete(cpostal);
     }
 }
-
