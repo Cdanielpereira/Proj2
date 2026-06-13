@@ -1,4 +1,4 @@
-﻿package estg.ipvc.proj2.dtos.userdto;
+package estg.ipvc.proj2.dtos.userdto;
 
 import estg.ipvc.proj2.model.User;
 

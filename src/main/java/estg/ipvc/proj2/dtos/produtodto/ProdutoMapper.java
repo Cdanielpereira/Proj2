@@ -1,4 +1,4 @@
-﻿package estg.ipvc.proj2.dtos.produtodto;
+package estg.ipvc.proj2.dtos.produtodto;
 
 import estg.ipvc.proj2.model.*;
 

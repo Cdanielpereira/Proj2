@@ -1,4 +1,4 @@
-﻿package estg.ipvc.proj2.dtos.reservadto;
+package estg.ipvc.proj2.dtos.reservadto;
 
 import estg.ipvc.proj2.model.Reserva;
 

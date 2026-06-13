@@ -1,4 +1,4 @@
-﻿package estg.ipvc.proj2.dtos.estadocontractdto;
+package estg.ipvc.proj2.dtos.estadocontractdto;
 
 import estg.ipvc.proj2.model.EstadoContract;
 

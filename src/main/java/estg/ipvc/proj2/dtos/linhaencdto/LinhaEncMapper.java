@@ -1,4 +1,4 @@
-﻿package estg.ipvc.proj2.dtos.linhaencdto;
+package estg.ipvc.proj2.dtos.linhaencdto;
 
 import estg.ipvc.proj2.model.LinhaEnc;
 import estg.ipvc.proj2.model.LinhaEncId;

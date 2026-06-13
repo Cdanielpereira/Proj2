@@ -1,4 +1,4 @@
-﻿package estg.ipvc.proj2.dtos.metodopagamentodto;
+package estg.ipvc.proj2.dtos.metodopagamentodto;
 
 import estg.ipvc.proj2.model.MetodoPagamento;
 

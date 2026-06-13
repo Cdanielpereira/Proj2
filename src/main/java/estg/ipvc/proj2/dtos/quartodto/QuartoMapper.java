@@ -1,4 +1,4 @@
-﻿package estg.ipvc.proj2.dtos.quartodto;
+package estg.ipvc.proj2.dtos.quartodto;
 
 import estg.ipvc.proj2.model.*;
 

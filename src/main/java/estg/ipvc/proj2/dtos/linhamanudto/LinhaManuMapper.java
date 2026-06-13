@@ -1,4 +1,4 @@
-﻿package estg.ipvc.proj2.dtos.linhamanudto;
+package estg.ipvc.proj2.dtos.linhamanudto;
 
 import estg.ipvc.proj2.model.LinhaManu;
 import estg.ipvc.proj2.model.LinhaManuId;

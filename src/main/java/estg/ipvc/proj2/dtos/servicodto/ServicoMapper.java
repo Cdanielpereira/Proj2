@@ -1,4 +1,4 @@
-﻿package estg.ipvc.proj2.dtos.servicodto;
+package estg.ipvc.proj2.dtos.servicodto;
 
 import estg.ipvc.proj2.model.*;
 

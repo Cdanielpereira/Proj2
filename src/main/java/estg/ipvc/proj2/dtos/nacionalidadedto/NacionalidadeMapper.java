@@ -1,4 +1,4 @@
-﻿package estg.ipvc.proj2.dtos.nacionalidadedto;
+package estg.ipvc.proj2.dtos.nacionalidadedto;
 
 import estg.ipvc.proj2.model.Nacionalidade;
 

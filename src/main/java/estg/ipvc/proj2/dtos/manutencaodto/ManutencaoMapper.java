@@ -1,4 +1,4 @@
-﻿package estg.ipvc.proj2.dtos.manutencaodto;
+package estg.ipvc.proj2.dtos.manutencaodto;
 
 import estg.ipvc.proj2.model.Manutencao;
 

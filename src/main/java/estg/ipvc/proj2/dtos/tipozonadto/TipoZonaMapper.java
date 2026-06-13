@@ -1,4 +1,4 @@
-﻿package estg.ipvc.proj2.dtos.tipozonadto;
+package estg.ipvc.proj2.dtos.tipozonadto;
 
 import estg.ipvc.proj2.model.TipoZona;
 

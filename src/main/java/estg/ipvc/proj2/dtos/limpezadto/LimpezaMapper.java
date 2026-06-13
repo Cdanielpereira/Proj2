@@ -1,4 +1,4 @@
-﻿package estg.ipvc.proj2.dtos.limpezadto;
+package estg.ipvc.proj2.dtos.limpezadto;
 
 import estg.ipvc.proj2.model.Limpeza;
 import estg.ipvc.proj2.model.LimpezaId;

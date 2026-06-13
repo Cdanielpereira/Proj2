@@ -1,4 +1,4 @@
-﻿package estg.ipvc.proj2.dtos.clientedto;
+package estg.ipvc.proj2.dtos.clientedto;
 
 import estg.ipvc.proj2.model.Cliente;
 

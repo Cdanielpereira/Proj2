@@ -1,4 +1,4 @@
-﻿package estg.ipvc.proj2.dtos.tipocolabdto;
+package estg.ipvc.proj2.dtos.tipocolabdto;
 
 import estg.ipvc.proj2.model.TipoColab;
 

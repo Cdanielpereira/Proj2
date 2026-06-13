@@ -1,4 +1,4 @@
-﻿package estg.ipvc.proj2.dtos.funcionariodto;
+package estg.ipvc.proj2.dtos.funcionariodto;
 
 import estg.ipvc.proj2.model.*;
 

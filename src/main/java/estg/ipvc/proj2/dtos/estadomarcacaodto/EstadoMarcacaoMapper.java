@@ -1,4 +1,4 @@
-﻿package estg.ipvc.proj2.dtos.estadomarcacaodto;
+package estg.ipvc.proj2.dtos.estadomarcacaodto;
 
 import estg.ipvc.proj2.model.EstadoMarcacao;
 

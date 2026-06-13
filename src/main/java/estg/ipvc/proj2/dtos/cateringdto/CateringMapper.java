@@ -1,4 +1,4 @@
-﻿package estg.ipvc.proj2.dtos.cateringdto;
+package estg.ipvc.proj2.dtos.cateringdto;
 
 import estg.ipvc.proj2.model.Catering;
 

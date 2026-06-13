@@ -1,4 +1,4 @@
-﻿package estg.ipvc.proj2.dtos.faturapagamentodto;
+package estg.ipvc.proj2.dtos.faturapagamentodto;
 
 import estg.ipvc.proj2.model.*;
 

@@ -1,4 +1,4 @@
-﻿package estg.ipvc.proj2.dtos.marcacaodto;
+package estg.ipvc.proj2.dtos.marcacaodto;
 
 import estg.ipvc.proj2.model.Marcacao;
 

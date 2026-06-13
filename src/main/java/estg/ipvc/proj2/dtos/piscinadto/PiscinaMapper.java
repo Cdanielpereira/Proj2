@@ -1,4 +1,4 @@
-﻿package estg.ipvc.proj2.dtos.piscinadto;
+package estg.ipvc.proj2.dtos.piscinadto;
 
 import estg.ipvc.proj2.model.Piscina;
 

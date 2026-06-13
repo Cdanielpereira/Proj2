@@ -1,4 +1,4 @@
-﻿package estg.ipvc.proj2.dtos.contratodto;
+package estg.ipvc.proj2.dtos.contratodto;
 
 import estg.ipvc.proj2.model.Contrato;
 

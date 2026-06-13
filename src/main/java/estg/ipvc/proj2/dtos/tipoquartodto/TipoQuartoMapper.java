@@ -1,4 +1,4 @@
-﻿package estg.ipvc.proj2.dtos.tipoquartodto;
+package estg.ipvc.proj2.dtos.tipoquartodto;
 
 import estg.ipvc.proj2.model.TipoQuarto;
 

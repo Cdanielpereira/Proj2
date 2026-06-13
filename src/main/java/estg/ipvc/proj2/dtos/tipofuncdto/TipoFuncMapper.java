@@ -1,4 +1,4 @@
-﻿package estg.ipvc.proj2.dtos.tipofuncdto;
+package estg.ipvc.proj2.dtos.tipofuncdto;
 
 import estg.ipvc.proj2.model.TipoFunc;
 

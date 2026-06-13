@@ -1,4 +1,4 @@
-﻿package estg.ipvc.proj2.dtos.estadoservicodto;
+package estg.ipvc.proj2.dtos.estadoservicodto;
 
 import estg.ipvc.proj2.model.EstadoServico;
 

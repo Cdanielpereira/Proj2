@@ -1,4 +1,4 @@
-﻿package estg.ipvc.proj2.dtos.cpostaldto;
+package estg.ipvc.proj2.dtos.cpostaldto;
 
 import estg.ipvc.proj2.model.Cpostal;
 

@@ -1,4 +1,4 @@
-﻿package estg.ipvc.proj2.dtos.vencimentodto;
+package estg.ipvc.proj2.dtos.vencimentodto;
 
 import estg.ipvc.proj2.model.*;
 

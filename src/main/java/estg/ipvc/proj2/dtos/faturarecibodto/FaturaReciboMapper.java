@@ -1,4 +1,4 @@
-﻿package estg.ipvc.proj2.dtos.faturarecibodto;
+package estg.ipvc.proj2.dtos.faturarecibodto;
 
 import estg.ipvc.proj2.model.FaturaRecibo;
 import estg.ipvc.proj2.model.MetodoPagamento;

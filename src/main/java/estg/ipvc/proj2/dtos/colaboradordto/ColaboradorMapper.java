@@ -1,4 +1,4 @@
-﻿package estg.ipvc.proj2.dtos.colaboradordto;
+package estg.ipvc.proj2.dtos.colaboradordto;
 
 import estg.ipvc.proj2.model.Colaborador;
 

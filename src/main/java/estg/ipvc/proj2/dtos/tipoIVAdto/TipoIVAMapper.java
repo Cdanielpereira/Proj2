@@ -1,4 +1,4 @@
-﻿package estg.ipvc.proj2.dtos.tipoIVAdto;
+package estg.ipvc.proj2.dtos.tipoIVAdto;
 
 import estg.ipvc.proj2.model.TipoIVA;
 

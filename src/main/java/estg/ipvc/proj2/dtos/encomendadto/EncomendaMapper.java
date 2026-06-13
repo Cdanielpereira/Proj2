@@ -1,4 +1,4 @@
-﻿package estg.ipvc.proj2.dtos.encomendadto;
+package estg.ipvc.proj2.dtos.encomendadto;
 
 import estg.ipvc.proj2.model.Encomenda;
 
