@@ -1,41 +1,78 @@
 package estg.ipvc.proj2.services.impl;
+
+import estg.ipvc.proj2.dtos.common.PageMapper;
+import estg.ipvc.proj2.dtos.common.PageResponse;
+import estg.ipvc.proj2.dtos.tipocolabdto.TipoColabDto;
+import estg.ipvc.proj2.dtos.tipocolabdto.TipoColabMapper;
+import estg.ipvc.proj2.exceptions.EntityNotFoundException;
 import estg.ipvc.proj2.model.TipoColab;
 import estg.ipvc.proj2.repository.TipoColabRepository;
 import estg.ipvc.proj2.services.TipoColabService;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+
 @Service
 public class TipoColabServiceImpl implements TipoColabService {
+
+    private final TipoColabRepository repository;
+
     @Autowired
-    private TipoColabRepository tipoColabRepository;
-    public List<TipoColab> getAllTipos() {
-        List<TipoColab> list = new ArrayList<>();
-        for (TipoColab tipo : tipoColabRepository.findAll()) {
-            list.add(tipo);
-        }
-        return list;
-    }
-    public Optional<TipoColab> getTipoById(Integer id)
-    {
-        return tipoColabRepository.findById(id);
+    public TipoColabServiceImpl(TipoColabRepository repository) {
+        this.repository = repository;
     }
 
-    public TipoColab createTipo(TipoColab tipo)
-    {
-        return tipoColabRepository.save(tipo);
-    }
-    public TipoColab updateTipo(Integer id, TipoColab tipo)
-    {
-        if (tipoColabRepository.existsById(id)) {
-            tipo.setId(id);
-            return tipoColabRepository.save(tipo);
-        }
-        return null;
-    }
-    public void deleteTipo(Integer id) {tipoColabRepository.deleteById(id);}
+    @Override
+    public TipoColabDto createTipoColab(TipoColabDto dto) {
 
-    public boolean tipoExists(Integer id) {return tipoColabRepository.existsById(id);}
+        TipoColab entity = TipoColabMapper.toEntity(dto);
+
+        return TipoColabMapper.toDto(
+                repository.save(entity)
+        );
+    }
+
+    @Override
+    public PageResponse<TipoColabDto> getAllTipoColab(int pageNo, int pageSize) {
+
+        Pageable pageable = PageRequest.of(pageNo, pageSize);
+
+        Page<TipoColab> page = repository.findAll(pageable);
+
+        return PageMapper.toPageResponse(page, TipoColabMapper::toDto);
+    }
+
+    @Override
+    public TipoColabDto getTipoColabById(int id) {
+
+        TipoColab entity = repository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Tipo Colaborador não encontrado"));
+
+        return TipoColabMapper.toDto(entity);
+    }
+
+    @Override
+    public TipoColabDto updateTipoColab(TipoColabDto dto, int id) {
+
+        TipoColab entity = repository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Tipo Colaborador não encontrado"));
+
+        entity.setType(dto.getType());
+
+        return TipoColabMapper.toDto(
+                repository.save(entity)
+        );
+    }
+
+    @Override
+    public void deleteTipoColab(int id) {
+
+        TipoColab entity = repository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Tipo Colaborador não encontrado"));
+
+        repository.delete(entity);
+    }
 }

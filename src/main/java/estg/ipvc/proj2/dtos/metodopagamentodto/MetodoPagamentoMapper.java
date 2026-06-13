@@ -12,4 +12,13 @@ public class MetodoPagamentoMapper {
         dto.setMetodo(entity.getMetodo());
         return dto;
     }
+
+    public static MetodoPagamento toEntity(MetodoPagamentoDto dto) {
+        if (dto == null) return null;
+
+        MetodoPagamento entity = new MetodoPagamento();
+        entity.setMetodo(dto.getMetodo());
+
+        return entity;
+    }
 }

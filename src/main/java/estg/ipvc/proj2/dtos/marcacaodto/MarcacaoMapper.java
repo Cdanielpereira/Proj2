@@ -8,6 +8,7 @@ public class MarcacaoMapper {
         if (entity == null) return null;
 
         MarcacaoDto dto = new MarcacaoDto();
+
         dto.setId(entity.getId());
         dto.setDtMarc(entity.getDtMarc());
         dto.setDtFim(entity.getDtFim());
@@ -23,5 +24,20 @@ public class MarcacaoMapper {
         }
 
         return dto;
+    }
+
+    public static Marcacao toEntity(MarcacaoDto dto) {
+
+        if (dto == null) return null;
+
+        Marcacao entity = new Marcacao();
+
+        entity.setDtMarc(dto.getDtMarc());
+        entity.setDtFim(dto.getDtFim());
+        entity.setDtCheckin(dto.getDtCheckin());
+        entity.setDtCheckout(dto.getDtCheckout());
+        entity.setValort(dto.getValort());
+
+        return entity;
     }
 }

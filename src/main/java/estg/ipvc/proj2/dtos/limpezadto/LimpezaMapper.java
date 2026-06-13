@@ -1,6 +1,7 @@
 ﻿package estg.ipvc.proj2.dtos.limpezadto;
 
 import estg.ipvc.proj2.model.Limpeza;
+import estg.ipvc.proj2.model.LimpezaId;
 
 public class LimpezaMapper {
 
@@ -24,8 +25,15 @@ public class LimpezaMapper {
     public static Limpeza toEntity(LimpezaDto dto) {
         if (dto == null) return null;
 
-        Limpeza l = new Limpeza();
+        Limpeza limpeza = new Limpeza();
 
-        return l;
+        LimpezaId id = new LimpezaId();
+        id.setIdZona(dto.getIdZona());
+        id.setIdFunc(dto.getIdFunc());
+
+        limpeza.setId(id);
+        limpeza.setDtReali(dto.getDtReali());
+
+        return limpeza;
     }
 }

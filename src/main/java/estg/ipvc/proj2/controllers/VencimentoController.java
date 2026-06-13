@@ -1,23 +1,52 @@
 package estg.ipvc.proj2.controllers;
 
-import estg.ipvc.proj2.model.Vencimento;
+import estg.ipvc.proj2.dtos.common.PageResponse;
+import estg.ipvc.proj2.dtos.vencimentodto.VencimentoDto;
+import estg.ipvc.proj2.services.VencimentoService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import java.util.ArrayList;
-import java.util.List;
-
+import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/proj2/")
-
+@RequestMapping("/proj2")
 public class VencimentoController {
 
-    @GetMapping("/vencimento")
-    public ResponseEntity<List<Vencimento>> getVencimentos(){
-        List<Vencimento> vencimentos = new ArrayList<>();
-        return ResponseEntity.ok(vencimentos);
+    private final VencimentoService service;
+
+    public VencimentoController(VencimentoService service) {
+        this.service = service;
+    }
+
+    @GetMapping("/vencimentos")
+    public ResponseEntity<PageResponse<VencimentoDto>> getAll(
+            @RequestParam(defaultValue = "0") int pageNo,
+            @RequestParam(defaultValue = "10") int pageSize
+    ) {
+        return ResponseEntity.ok(service.getAllVencimentos(pageNo, pageSize));
+    }
+
+    @GetMapping("/vencimentos/{id}")
+    public ResponseEntity<VencimentoDto> getById(@PathVariable int id) {
+        return ResponseEntity.ok(service.getVencimentoById(id));
+    }
+
+    @PostMapping("/vencimentos")
+    public ResponseEntity<VencimentoDto> create(@RequestBody VencimentoDto dto) {
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(service.createVencimento(dto));
+    }
+
+    @PutMapping("/vencimentos/{id}")
+    public ResponseEntity<VencimentoDto> update(
+            @RequestBody VencimentoDto dto,
+            @PathVariable int id
+    ) {
+        return ResponseEntity.ok(service.updateVencimento(dto, id));
+    }
+
+    @DeleteMapping("/vencimentos/{id}")
+    public ResponseEntity<Void> delete(@PathVariable int id) {
+        service.deleteVencimento(id);
+        return ResponseEntity.noContent().build();
     }
 }

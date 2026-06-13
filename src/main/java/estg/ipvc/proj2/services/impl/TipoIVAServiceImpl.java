@@ -1,50 +1,80 @@
 package estg.ipvc.proj2.services.impl;
 
+import estg.ipvc.proj2.dtos.common.PageMapper;
+import estg.ipvc.proj2.dtos.common.PageResponse;
+import estg.ipvc.proj2.dtos.tipoIVAdto.TipoIVADto;
+import estg.ipvc.proj2.dtos.tipoIVAdto.TipoIVAMapper;
+import estg.ipvc.proj2.exceptions.EntityNotFoundException;
 import estg.ipvc.proj2.model.TipoIVA;
 import estg.ipvc.proj2.repository.TipoIVARepository;
 import estg.ipvc.proj2.services.TipoIVAService;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
 
 @Service
 public class TipoIVAServiceImpl implements TipoIVAService {
 
+    private final TipoIVARepository repository;
+
     @Autowired
-    private TipoIVARepository tipoIVARepository;
-
-    public List<TipoIVA> getAllTipos() {
-        List<TipoIVA> list = new ArrayList<>();
-        for (TipoIVA tipo : tipoIVARepository.findAll()) {
-            list.add(tipo);
-        }
-        return list;
+    public TipoIVAServiceImpl(TipoIVARepository repository) {
+        this.repository = repository;
     }
 
-    public Optional<TipoIVA> getTipoById(Integer id) {
-        return tipoIVARepository.findById(id);
+    @Override
+    public TipoIVADto createTipoIVA(TipoIVADto dto) {
+
+        TipoIVA entity = TipoIVAMapper.toEntity(dto);
+
+        return TipoIVAMapper.toDto(
+                repository.save(entity)
+        );
     }
 
-    public TipoIVA createTipo(TipoIVA tipo) {
-        return tipoIVARepository.save(tipo);
+    @Override
+    public PageResponse<TipoIVADto> getAllTipoIVA(int pageNo, int pageSize) {
+
+        Pageable pageable = PageRequest.of(pageNo, pageSize);
+
+        Page<TipoIVA> page = repository.findAll(pageable);
+
+        return PageMapper.toPageResponse(page, TipoIVAMapper::toDto);
     }
 
-    public TipoIVA updateTipo(Integer id, TipoIVA tipo) {
-        if (tipoIVARepository.existsById(id)) {
-            tipo.setId(id);
-            return tipoIVARepository.save(tipo);
-        }
-        return null;
+    @Override
+    public TipoIVADto getTipoIVAById(int id) {
+
+        TipoIVA entity = repository.findById(id)
+                .orElseThrow(() ->
+                        new EntityNotFoundException("IVA não encontrado"));
+
+        return TipoIVAMapper.toDto(entity);
     }
 
-    public void deleteTipo(Integer id) {
-        tipoIVARepository.deleteById(id);
+    @Override
+    public TipoIVADto updateTipoIVA(TipoIVADto dto, int id) {
+
+        TipoIVA entity = repository.findById(id)
+                .orElseThrow(() ->
+                        new EntityNotFoundException("IVA não encontrado"));
+
+        entity.setType(dto.getDescricao());
+        entity.setValor(dto.getValor());
+
+        return TipoIVAMapper.toDto(
+                repository.save(entity)
+        );
     }
 
-    public boolean tipoExists(Integer id) {
-        return tipoIVARepository.existsById(id);
+    @Override
+    public void deleteTipoIVA(int id) {
+
+        TipoIVA entity = repository.findById(id)
+                .orElseThrow(() ->
+                        new EntityNotFoundException("IVA não encontrado"));
+
+        repository.delete(entity);
     }
 }
-

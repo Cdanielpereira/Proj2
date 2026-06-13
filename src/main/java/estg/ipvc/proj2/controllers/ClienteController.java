@@ -30,14 +30,16 @@ public class ClienteController {
     }
 
     @GetMapping("/cliente/{id}")
-    public ResponseEntity<ClienteDto> getClienteById(@PathVariable Integer id) {
+    public ResponseEntity<ClienteDto> getClienteById(@PathVariable int id) {
         return ResponseEntity.ok(
                 clienteService.getClienteById(id)
         );
     }
 
     @PostMapping("/cliente")
-    public ResponseEntity<ClienteDto> createCliente(@RequestBody ClienteDto clienteDto) {
+    public ResponseEntity<ClienteDto> createCliente(
+            @RequestBody ClienteDto clienteDto
+    ) {
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(clienteService.createCliente(clienteDto));
     }
@@ -45,7 +47,7 @@ public class ClienteController {
     @PutMapping("/cliente/{id}")
     public ResponseEntity<ClienteDto> updateCliente(
             @RequestBody ClienteDto clienteDto,
-            @PathVariable Integer id
+            @PathVariable int id
     ) {
         return ResponseEntity.ok(
                 clienteService.updateCliente(clienteDto, id)
@@ -53,7 +55,7 @@ public class ClienteController {
     }
 
     @DeleteMapping("/cliente/{id}")
-    public ResponseEntity<Void> deleteCliente(@PathVariable Integer id) {
+    public ResponseEntity<Void> deleteCliente(@PathVariable int id) {
         clienteService.deleteCliente(id);
         return ResponseEntity.noContent().build();
     }

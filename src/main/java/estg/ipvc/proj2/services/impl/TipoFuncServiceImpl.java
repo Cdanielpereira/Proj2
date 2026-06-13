@@ -1,50 +1,79 @@
 package estg.ipvc.proj2.services.impl;
 
+import estg.ipvc.proj2.dtos.common.PageMapper;
+import estg.ipvc.proj2.dtos.common.PageResponse;
+import estg.ipvc.proj2.dtos.tipofuncdto.TipoFuncDto;
+import estg.ipvc.proj2.dtos.tipofuncdto.TipoFuncMapper;
+import estg.ipvc.proj2.exceptions.EntityNotFoundException;
 import estg.ipvc.proj2.model.TipoFunc;
 import estg.ipvc.proj2.repository.TipoFuncRepository;
 import estg.ipvc.proj2.services.TipoFuncService;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
 
 @Service
 public class TipoFuncServiceImpl implements TipoFuncService {
 
+    private final TipoFuncRepository repository;
+
     @Autowired
-    private TipoFuncRepository tipoFuncRepository;
-
-    public List<TipoFunc> getAllTipos() {
-        List<TipoFunc> list = new ArrayList<>();
-        for (TipoFunc tipo : tipoFuncRepository.findAll()) {
-            list.add(tipo);
-        }
-        return list;
+    public TipoFuncServiceImpl(TipoFuncRepository repository) {
+        this.repository = repository;
     }
 
-    public Optional<TipoFunc> getTipoById(Integer id) {
-        return tipoFuncRepository.findById(id);
+    @Override
+    public TipoFuncDto createTipoFunc(TipoFuncDto dto) {
+
+        TipoFunc entity = TipoFuncMapper.toEntity(dto);
+
+        return TipoFuncMapper.toDto(
+                repository.save(entity)
+        );
     }
 
-    public TipoFunc createTipo(TipoFunc tipo) {
-        return tipoFuncRepository.save(tipo);
+    @Override
+    public PageResponse<TipoFuncDto> getAllTipoFunc(int pageNo, int pageSize) {
+
+        Pageable pageable = PageRequest.of(pageNo, pageSize);
+
+        Page<TipoFunc> page = repository.findAll(pageable);
+
+        return PageMapper.toPageResponse(page, TipoFuncMapper::toDto);
     }
 
-    public TipoFunc updateTipo(Integer id, TipoFunc tipo) {
-        if (tipoFuncRepository.existsById(id)) {
-            tipo.setId(id);
-            return tipoFuncRepository.save(tipo);
-        }
-        return null;
+    @Override
+    public TipoFuncDto getTipoFuncById(int id) {
+
+        TipoFunc entity = repository.findById(id)
+                .orElseThrow(() ->
+                        new EntityNotFoundException("TipoFunc não encontrado"));
+
+        return TipoFuncMapper.toDto(entity);
     }
 
-    public void deleteTipo(Integer id) {
-        tipoFuncRepository.deleteById(id);
+    @Override
+    public TipoFuncDto updateTipoFunc(TipoFuncDto dto, int id) {
+
+        TipoFunc entity = repository.findById(id)
+                .orElseThrow(() ->
+                        new EntityNotFoundException("TipoFunc não encontrado"));
+
+        entity.setType(dto.getType());
+
+        return TipoFuncMapper.toDto(
+                repository.save(entity)
+        );
     }
 
-    public boolean tipoExists(Integer id) {
-        return tipoFuncRepository.existsById(id);
+    @Override
+    public void deleteTipoFunc(int id) {
+
+        TipoFunc entity = repository.findById(id)
+                .orElseThrow(() ->
+                        new EntityNotFoundException("TipoFunc não encontrado"));
+
+        repository.delete(entity);
     }
 }
-

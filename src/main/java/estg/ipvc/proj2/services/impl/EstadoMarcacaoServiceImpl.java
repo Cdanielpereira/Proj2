@@ -1,50 +1,86 @@
 package estg.ipvc.proj2.services.impl;
 
+import estg.ipvc.proj2.dtos.common.PageMapper;
+import estg.ipvc.proj2.dtos.common.PageResponse;
+import estg.ipvc.proj2.dtos.estadomarcacaodto.EstadoMarcacaoDto;
+import estg.ipvc.proj2.dtos.estadomarcacaodto.EstadoMarcacaoMapper;
+import estg.ipvc.proj2.exceptions.EntityNotFoundException;
 import estg.ipvc.proj2.model.EstadoMarcacao;
 import estg.ipvc.proj2.repository.EstadoMarcacaoRepository;
 import estg.ipvc.proj2.services.EstadoMarcacaoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
 
 @Service
 public class EstadoMarcacaoServiceImpl implements EstadoMarcacaoService {
+
+    private final EstadoMarcacaoRepository estadoMarcacaoRepository;
+
     @Autowired
-    private EstadoMarcacaoRepository estadoMarcacaoRepository;
-
-    public List<EstadoMarcacao> getAllEstados()
-    {
-        List<EstadoMarcacao> list = new ArrayList<>();
-        for (EstadoMarcacao estado : estadoMarcacaoRepository.findAll())
-        {
-            list.add(estado);
-        }
-        return list;
-    }
-    public Optional<EstadoMarcacao> getEstadoById(Integer id)
-    {
-        return estadoMarcacaoRepository.findById(id);
+    public EstadoMarcacaoServiceImpl(
+            EstadoMarcacaoRepository estadoMarcacaoRepository
+    ) {
+        this.estadoMarcacaoRepository = estadoMarcacaoRepository;
     }
 
-    public EstadoMarcacao createEstado(EstadoMarcacao estado)
-    {
-        return estadoMarcacaoRepository.save(estado);
-    }
-    public EstadoMarcacao updateEstado(Integer id, EstadoMarcacao estado)
-    {
-        if (estadoMarcacaoRepository.existsById(id))
-        {
-            estado.setId(id);
-            return estadoMarcacaoRepository.save(estado);
-        }
-        return null;
-    }
-    public void deleteEstado(Integer id) {estadoMarcacaoRepository.deleteById(id);}
+    @Override
+    public EstadoMarcacaoDto createEstadoMarcacao(EstadoMarcacaoDto dto) {
 
-    public boolean estadoExists(Integer id) {
-        return estadoMarcacaoRepository.existsById(id);
+        EstadoMarcacao estado = EstadoMarcacaoMapper.toEntity(dto);
+
+        return EstadoMarcacaoMapper.toDto(
+                estadoMarcacaoRepository.save(estado)
+        );
+    }
+
+    @Override
+    public PageResponse<EstadoMarcacaoDto> getAllEstadoMarcacoes(int pageNo, int pageSize) {
+
+        Pageable pageable = PageRequest.of(pageNo, pageSize);
+
+        Page<EstadoMarcacao> page =
+                estadoMarcacaoRepository.findAll(pageable);
+
+        return PageMapper.toPageResponse(
+                page,
+                EstadoMarcacaoMapper::toDto
+        );
+    }
+
+    @Override
+    public EstadoMarcacaoDto getEstadoMarcacaoById(int id) {
+
+        EstadoMarcacao estado = estadoMarcacaoRepository.findById(id)
+                .orElseThrow(() ->
+                        new EntityNotFoundException("Estado de marcação não encontrado"));
+
+        return EstadoMarcacaoMapper.toDto(estado);
+    }
+
+    @Override
+    public EstadoMarcacaoDto updateEstadoMarcacao(EstadoMarcacaoDto dto, int id) {
+
+        EstadoMarcacao estado = estadoMarcacaoRepository.findById(id)
+                .orElseThrow(() ->
+                        new EntityNotFoundException("Estado de marcação não encontrado"));
+
+        estado.setState(dto.getState());
+
+        return EstadoMarcacaoMapper.toDto(
+                estadoMarcacaoRepository.save(estado)
+        );
+    }
+
+    @Override
+    public void deleteEstadoMarcacao(int id) {
+
+        EstadoMarcacao estado = estadoMarcacaoRepository.findById(id)
+                .orElseThrow(() ->
+                        new EntityNotFoundException("Estado de marcação não encontrado"));
+
+        estadoMarcacaoRepository.delete(estado);
     }
 }
-

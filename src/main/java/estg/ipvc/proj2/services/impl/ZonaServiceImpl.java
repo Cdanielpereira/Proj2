@@ -1,50 +1,101 @@
 package estg.ipvc.proj2.services.impl;
 
+import estg.ipvc.proj2.dtos.common.PageMapper;
+import estg.ipvc.proj2.dtos.common.PageResponse;
+import estg.ipvc.proj2.dtos.zonadto.ZonaDto;
+import estg.ipvc.proj2.dtos.zonadto.ZonaMapper;
+import estg.ipvc.proj2.exceptions.EntityNotFoundException;
+import estg.ipvc.proj2.model.TipoZona;
 import estg.ipvc.proj2.model.Zona;
+import estg.ipvc.proj2.repository.TipoZonaRepository;
 import estg.ipvc.proj2.repository.ZonaRepository;
 import estg.ipvc.proj2.services.ZonaService;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
 
 @Service
 public class ZonaServiceImpl implements ZonaService {
 
+    private final ZonaRepository zonaRepository;
+    private final TipoZonaRepository tipoZonaRepository;
+
     @Autowired
-    private ZonaRepository zonaRepository;
+    public ZonaServiceImpl(
+            ZonaRepository zonaRepository,
+            TipoZonaRepository tipoZonaRepository) {
 
-    public List<Zona> getAllZonas() {
-        List<Zona> list = new ArrayList<>();
-        for (Zona zona : zonaRepository.findAll()) {
-            list.add(zona);
+        this.zonaRepository = zonaRepository;
+        this.tipoZonaRepository = tipoZonaRepository;
+    }
+
+    @Override
+    public ZonaDto createZona(ZonaDto dto) {
+
+        TipoZona tipoZona = tipoZonaRepository.findById(dto.getIdTipoz())
+                .orElseThrow(() ->
+                        new EntityNotFoundException("TipoZona não encontrado"));
+
+        Zona zona = ZonaMapper.toEntity(dto);
+
+        zona.setIdTipoz(tipoZona);
+
+        return ZonaMapper.toDto(
+                zonaRepository.save(zona)
+        );
+    }
+
+    @Override
+    public PageResponse<ZonaDto> getAllZonas(int pageNo, int pageSize) {
+
+        Pageable pageable = PageRequest.of(pageNo, pageSize);
+
+        Page<Zona> page = zonaRepository.findAll(pageable);
+
+        return PageMapper.toPageResponse(page, ZonaMapper::toDto);
+    }
+
+    @Override
+    public ZonaDto getZonaById(int id) {
+
+        Zona zona = zonaRepository.findById(id)
+                .orElseThrow(() ->
+                        new EntityNotFoundException("Zona não encontrada"));
+
+        return ZonaMapper.toDto(zona);
+    }
+
+    @Override
+    public ZonaDto updateZona(ZonaDto dto, int id) {
+
+        Zona zona = zonaRepository.findById(id)
+                .orElseThrow(() ->
+                        new EntityNotFoundException("Zona não encontrada"));
+
+        zona.setAndar(dto.getAndar());
+
+        if (dto.getIdTipoz() != null) {
+
+            TipoZona tipoZona = tipoZonaRepository.findById(dto.getIdTipoz())
+                    .orElseThrow(() ->
+                            new EntityNotFoundException("TipoZona não encontrado"));
+
+            zona.setIdTipoz(tipoZona);
         }
-        return list;
+
+        return ZonaMapper.toDto(
+                zonaRepository.save(zona)
+        );
     }
 
-    public Optional<Zona> getZonaById(Integer id) {
-        return zonaRepository.findById(id);
-    }
+    @Override
+    public void deleteZona(int id) {
 
-    public Zona createZona(Zona zona) {
-        return zonaRepository.save(zona);
-    }
+        Zona zona = zonaRepository.findById(id)
+                .orElseThrow(() ->
+                        new EntityNotFoundException("Zona não encontrada"));
 
-    public Zona updateZona(Integer id, Zona zona) {
-        if (zonaRepository.existsById(id)) {
-            zona.setId(id);
-            return zonaRepository.save(zona);
-        }
-        return null;
-    }
-
-    public void deleteZona(Integer id) {
-        zonaRepository.deleteById(id);
-    }
-
-    public boolean zonaExists(Integer id) {
-        return zonaRepository.existsById(id);
+        zonaRepository.delete(zona);
     }
 }
-

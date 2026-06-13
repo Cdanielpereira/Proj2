@@ -22,4 +22,18 @@ public class ManutencaoMapper {
 
         return dto;
     }
+
+    /**
+     * DTO -> ENTITY
+     */
+    public static Manutencao toEntity(ManutencaoDto dto) {
+        if (dto == null) return null;
+
+        Manutencao entity = new Manutencao();
+
+        entity.setId(dto.getId());
+        entity.setDescricao(dto.getDescricao());
+
+        return entity;
+    }
 }

@@ -1,50 +1,79 @@
 package estg.ipvc.proj2.services.impl;
 
+import estg.ipvc.proj2.dtos.common.PageMapper;
+import estg.ipvc.proj2.dtos.common.PageResponse;
+import estg.ipvc.proj2.dtos.tipoquartodto.TipoQuartoDto;
+import estg.ipvc.proj2.dtos.tipoquartodto.TipoQuartoMapper;
+import estg.ipvc.proj2.exceptions.EntityNotFoundException;
 import estg.ipvc.proj2.model.TipoQuarto;
 import estg.ipvc.proj2.repository.TipoQuartoRepository;
 import estg.ipvc.proj2.services.TipoQuartoService;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
 
 @Service
 public class TipoQuartoServiceImpl implements TipoQuartoService {
 
+    private final TipoQuartoRepository repository;
+
     @Autowired
-    private TipoQuartoRepository tipoQuartoRepository;
-
-    public List<TipoQuarto> getAllTipos() {
-        List<TipoQuarto> list = new ArrayList<>();
-        for (TipoQuarto tipo : tipoQuartoRepository.findAll()) {
-            list.add(tipo);
-        }
-        return list;
+    public TipoQuartoServiceImpl(TipoQuartoRepository repository) {
+        this.repository = repository;
     }
 
-    public Optional<TipoQuarto> getTipoById(Integer id) {
-        return tipoQuartoRepository.findById(id);
+    @Override
+    public TipoQuartoDto createTipoQuarto(TipoQuartoDto dto) {
+
+        TipoQuarto entity = TipoQuartoMapper.toEntity(dto);
+
+        return TipoQuartoMapper.toDto(
+                repository.save(entity)
+        );
     }
 
-    public TipoQuarto createTipo(TipoQuarto tipo) {
-        return tipoQuartoRepository.save(tipo);
+    @Override
+    public PageResponse<TipoQuartoDto> getAllTipoQuarto(int pageNo, int pageSize) {
+
+        Pageable pageable = PageRequest.of(pageNo, pageSize);
+
+        Page<TipoQuarto> page = repository.findAll(pageable);
+
+        return PageMapper.toPageResponse(page, TipoQuartoMapper::toDto);
     }
 
-    public TipoQuarto updateTipo(Integer id, TipoQuarto tipo) {
-        if (tipoQuartoRepository.existsById(id)) {
-            tipo.setId(id);
-            return tipoQuartoRepository.save(tipo);
-        }
-        return null;
+    @Override
+    public TipoQuartoDto getTipoQuartoById(int id) {
+
+        TipoQuarto entity = repository.findById(id)
+                .orElseThrow(() ->
+                        new EntityNotFoundException("TipoQuarto não encontrado"));
+
+        return TipoQuartoMapper.toDto(entity);
     }
 
-    public void deleteTipo(Integer id) {
-        tipoQuartoRepository.deleteById(id);
+    @Override
+    public TipoQuartoDto updateTipoQuarto(TipoQuartoDto dto, int id) {
+
+        TipoQuarto entity = repository.findById(id)
+                .orElseThrow(() ->
+                        new EntityNotFoundException("TipoQuarto não encontrado"));
+
+        entity.setType(dto.getType());
+
+        return TipoQuartoMapper.toDto(
+                repository.save(entity)
+        );
     }
 
-    public boolean tipoExists(Integer id) {
-        return tipoQuartoRepository.existsById(id);
+    @Override
+    public void deleteTipoQuarto(int id) {
+
+        TipoQuarto entity = repository.findById(id)
+                .orElseThrow(() ->
+                        new EntityNotFoundException("TipoQuarto não encontrado"));
+
+        repository.delete(entity);
     }
 }
-

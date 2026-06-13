@@ -1,45 +1,91 @@
 package estg.ipvc.proj2.services.impl;
 
+import estg.ipvc.proj2.dtos.common.PageMapper;
+import estg.ipvc.proj2.dtos.common.PageResponse;
+import estg.ipvc.proj2.dtos.produtodto.ProdutoDto;
+import estg.ipvc.proj2.dtos.produtodto.ProdutoMapper;
+import estg.ipvc.proj2.exceptions.EntityNotFoundException;
 import estg.ipvc.proj2.model.Produto;
+import estg.ipvc.proj2.model.TipoIVA;
 import estg.ipvc.proj2.repository.ProdutoRepository;
+import estg.ipvc.proj2.repository.TipoIVARepository;
 import estg.ipvc.proj2.services.ProdutoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
 
 @Service
 public class ProdutoServiceImpl implements ProdutoService {
+
+    private final ProdutoRepository produtoRepository;
+    private final TipoIVARepository tipoIVARepository;
+
     @Autowired
-    private ProdutoRepository produtoRepository;
-
-    public List<Produto> getAllProdutos()
-    {
-        List<Produto> list = new ArrayList<>();
-        for (Produto produto : produtoRepository.findAll())
-        {
-            list.add(produto);
-        }
-        return list;
-    }
-    public Optional<Produto> getProdutoById(Integer id)
-    {
-        return produtoRepository.findById(id);
+    public ProdutoServiceImpl(
+            ProdutoRepository produtoRepository,
+            TipoIVARepository tipoIVARepository
+    ) {
+        this.produtoRepository = produtoRepository;
+        this.tipoIVARepository = tipoIVARepository;
     }
 
-    public Produto createProduto(Produto produto) {return produtoRepository.save(produto);}
-    public Produto updateProduto(Integer id, Produto produto)
-    {
-        if (produtoRepository.existsById(id))
-        {
-            produto.setId(id);
-            return produtoRepository.save(produto);
-        }
-        return null;
-    }
-    public void deleteProduto(Integer id) {produtoRepository.deleteById(id);}
+    @Override
+    public ProdutoDto createProduto(ProdutoDto dto) {
 
-    public boolean produtoExists(Integer id) {return produtoRepository.existsById(id);}
+        TipoIVA iva = tipoIVARepository.findById(dto.getIdIva())
+                .orElseThrow(() ->
+                        new EntityNotFoundException("IVA não encontrado"));
+
+        Produto produto = ProdutoMapper.toEntity(dto);
+        produto.setIdiva(iva);
+
+        return ProdutoMapper.toDto(
+                produtoRepository.save(produto)
+        );
+    }
+
+    @Override
+    public PageResponse<ProdutoDto> getAllProdutos(int pageNo, int pageSize) {
+
+        Pageable pageable = PageRequest.of(pageNo, pageSize);
+
+        return PageMapper.toPageResponse(
+                produtoRepository.findAll(pageable),
+                ProdutoMapper::toDto
+        );
+    }
+
+    @Override
+    public ProdutoDto getProdutoById(int id) {
+
+        Produto produto = produtoRepository.findById(id)
+                .orElseThrow(() ->
+                        new EntityNotFoundException("Produto não encontrado"));
+
+        return ProdutoMapper.toDto(produto);
+    }
+
+    @Override
+    public ProdutoDto updateProduto(ProdutoDto dto, int id) {
+
+        Produto produto = produtoRepository.findById(id)
+                .orElseThrow(() ->
+                        new EntityNotFoundException("Produto não encontrado"));
+
+        ProdutoMapper.updateEntityFromDto(dto, produto);
+
+        return ProdutoMapper.toDto(
+                produtoRepository.save(produto)
+        );
+    }
+
+    @Override
+    public void deleteProduto(int id) {
+
+        Produto produto = produtoRepository.findById(id)
+                .orElseThrow(() ->
+                        new EntityNotFoundException("Produto não encontrado"));
+
+        produtoRepository.delete(produto);
+    }
 }
-

@@ -1,45 +1,113 @@
 package estg.ipvc.proj2.services.impl;
 
+import estg.ipvc.proj2.dtos.common.PageMapper;
+import estg.ipvc.proj2.dtos.common.PageResponse;
+import estg.ipvc.proj2.dtos.quartodto.QuartoDto;
+import estg.ipvc.proj2.dtos.quartodto.QuartoMapper;
+import estg.ipvc.proj2.exceptions.EntityNotFoundException;
 import estg.ipvc.proj2.model.Quarto;
+import estg.ipvc.proj2.model.TipoIVA;
+import estg.ipvc.proj2.model.TipoQuarto;
+import estg.ipvc.proj2.model.Zona;
 import estg.ipvc.proj2.repository.QuartoRepository;
+import estg.ipvc.proj2.repository.TipoIVARepository;
+import estg.ipvc.proj2.repository.TipoQuartoRepository;
+import estg.ipvc.proj2.repository.ZonaRepository;
 import estg.ipvc.proj2.services.QuartoService;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
 
 @Service
 public class QuartoServiceImpl implements QuartoService {
+
+    private final QuartoRepository quartoRepository;
+    private final ZonaRepository zonaRepository;
+    private final TipoQuartoRepository tipoQuartoRepository;
+    private final TipoIVARepository tipoIVARepository;
+
     @Autowired
-    private QuartoRepository quartoRepository;
-
-    public List<Quarto> getAllQuartos()
-    {
-        List<Quarto> list = new ArrayList<>();
-        for (Quarto quarto : quartoRepository.findAll())
-        {
-            list.add(quarto);
-        }
-        return list;
-    }
-    public Optional<Quarto> getQuartoById(Integer id)
-    {
-        return quartoRepository.findById(id);
+    public QuartoServiceImpl(
+            QuartoRepository quartoRepository,
+            ZonaRepository zonaRepository,
+            TipoQuartoRepository tipoQuartoRepository,
+            TipoIVARepository tipoIVARepository
+    ) {
+        this.quartoRepository = quartoRepository;
+        this.zonaRepository = zonaRepository;
+        this.tipoQuartoRepository = tipoQuartoRepository;
+        this.tipoIVARepository = tipoIVARepository;
     }
 
-    public Quarto createQuarto(Quarto quarto) {return quartoRepository.save(quarto);}
-    public Quarto updateQuarto(Integer id, Quarto quarto)
-    {
-        if (quartoRepository.existsById(id))
-        {
-            quarto.setId(id);
-            return quartoRepository.save(quarto);
-        }
-        return null;
-    }
-    public void deleteQuarto(Integer id) {quartoRepository.deleteById(id);}
+    @Override
+    public QuartoDto createQuarto(QuartoDto dto) {
 
-    public boolean quartoExists(Integer id) {return quartoRepository.existsById(id);}
+        Zona zona = zonaRepository.findById(dto.getIdZona())
+                .orElseThrow(() ->
+                        new EntityNotFoundException("Zona não encontrada"));
+
+        TipoQuarto tipoQuarto = tipoQuartoRepository.findById(dto.getIdTipoq())
+                .orElseThrow(() ->
+                        new EntityNotFoundException("Tipo de quarto não encontrado"));
+
+        TipoIVA iva = tipoIVARepository.findById(dto.getIdTipoIVA())
+                .orElseThrow(() ->
+                        new EntityNotFoundException("IVA não encontrado"));
+
+        Quarto quarto = QuartoMapper.toEntity(dto);
+
+        quarto.setIdZona(zona);
+        quarto.setIdTipoq(tipoQuarto);
+        quarto.setIdiva(iva);
+
+        return QuartoMapper.toDto(
+                quartoRepository.save(quarto)
+        );
+    }
+
+    @Override
+    public PageResponse<QuartoDto> getAllQuartos(int pageNo, int pageSize) {
+
+        Pageable pageable = PageRequest.of(pageNo, pageSize);
+
+        return PageMapper.toPageResponse(
+                quartoRepository.findAll(pageable),
+                QuartoMapper::toDto
+        );
+    }
+
+    @Override
+    public QuartoDto getQuartoById(int id) {
+
+        Quarto quarto = quartoRepository.findById(id)
+                .orElseThrow(() ->
+                        new EntityNotFoundException("Quarto não encontrado"));
+
+        return QuartoMapper.toDto(quarto);
+    }
+
+    @Override
+    public QuartoDto updateQuarto(QuartoDto dto, int id) {
+
+        Quarto quarto = quartoRepository.findById(id)
+                .orElseThrow(() ->
+                        new EntityNotFoundException("Quarto não encontrado"));
+
+        QuartoMapper.updateEntityFromDto(dto, quarto);
+
+        return QuartoMapper.toDto(
+                quartoRepository.save(quarto)
+        );
+    }
+
+    @Override
+    public void deleteQuarto(int id) {
+
+        Quarto quarto = quartoRepository.findById(id)
+                .orElseThrow(() ->
+                        new EntityNotFoundException("Quarto não encontrado"));
+
+        quartoRepository.delete(quarto);
+    }
 }
-
