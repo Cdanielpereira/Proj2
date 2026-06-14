@@ -22,8 +22,8 @@ public class Cpostal {
     @Column(name = "localidade", length = 100)
     private String localidade;
 
-    @OneToMany(mappedBy = "cpostal")
+    @OneToMany(mappedBy = "codPostal")
     private Set<Cliente> clientes = new LinkedHashSet<>();
-    @OneToMany(mappedBy = "cpostal")
+    @OneToMany(mappedBy = "codPostal")
     private Set<Colaborador> colaboradores = new LinkedHashSet<>();
 }

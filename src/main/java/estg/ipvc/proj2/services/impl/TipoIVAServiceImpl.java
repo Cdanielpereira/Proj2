@@ -60,7 +60,7 @@ public class TipoIVAServiceImpl implements TipoIVAService {
                 .orElseThrow(() ->
                         new EntityNotFoundException("IVA não encontrado"));
 
-        entity.setType(dto.getDescricao());
+        entity.setType(dto.getType());
         entity.setValor(dto.getValor());
 
         return TipoIVAMapper.toDto(

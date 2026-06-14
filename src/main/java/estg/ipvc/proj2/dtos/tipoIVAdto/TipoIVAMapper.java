@@ -9,7 +9,7 @@ public class TipoIVAMapper {
 
         return TipoIVADto.builder()
                 .id(e.getId())
-                .descricao(e.getDescricao())
+                .type(e.getType())
                 .valor(e.getValor())
                 .build();
     }
@@ -18,7 +18,7 @@ public class TipoIVAMapper {
         if (dto == null) return null;
 
         TipoIVA e = new TipoIVA();
-        e.setDescricao(dto.getDescricao());
+        e.setType(dto.getType());
         e.setValor(dto.getValor());
         return e;
     }

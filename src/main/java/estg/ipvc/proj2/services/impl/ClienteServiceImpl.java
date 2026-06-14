@@ -6,13 +6,7 @@ import estg.ipvc.proj2.dtos.common.PageMapper;
 import estg.ipvc.proj2.dtos.common.PageResponse;
 import estg.ipvc.proj2.exceptions.EntityNotFoundException;
 import estg.ipvc.proj2.model.Cliente;
-import estg.ipvc.proj2.model.Cpostal;
-import estg.ipvc.proj2.model.Nacionalidade;
-import estg.ipvc.proj2.model.User;
-import estg.ipvc.proj2.repository.ClienteRepository;
-import estg.ipvc.proj2.repository.CpostalRepository;
-import estg.ipvc.proj2.repository.NacionalidadeRepository;
-import estg.ipvc.proj2.repository.UserRepository;
+import estg.ipvc.proj2.repository.*;
 import estg.ipvc.proj2.services.ClienteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.*;
@@ -44,24 +38,28 @@ public class ClienteServiceImpl implements ClienteService {
 
         Cliente cliente = ClienteMapper.toEntity(dto);
 
-        cliente.setIdUser(
-                userRepository.findById(dto.getIdUser())
-                        .orElseThrow(() -> new EntityNotFoundException("User não encontrado"))
-        );
+        if (dto.getIdUser() != null) {
+            cliente.setIdUser(
+                    userRepository.findById(dto.getIdUser())
+                            .orElseThrow(() -> new EntityNotFoundException("User não encontrado"))
+            );
+        }
 
-        cliente.setIdNacional(
-                nacionalidadeRepository.findById(dto.getIdNacional())
-                        .orElseThrow(() -> new EntityNotFoundException("Nacionalidade não encontrada"))
-        );
+        if (dto.getIdNacional() != null) {
+            cliente.setIdNacional(
+                    nacionalidadeRepository.findById(dto.getIdNacional())
+                            .orElseThrow(() -> new EntityNotFoundException("Nacionalidade não encontrada"))
+            );
+        }
 
-        cliente.setCodPostal(
-                cpostalRepository.findById(dto.getCodPostal())
-                        .orElseThrow(() -> new EntityNotFoundException("Código Postal não encontrado"))
-        );
+        if (dto.getCodPostal() != null) {
+            cliente.setCodPostal(
+                    cpostalRepository.findById(dto.getCodPostal())
+                            .orElseThrow(() -> new EntityNotFoundException("Código Postal não encontrado"))
+            );
+        }
 
-        return ClienteMapper.toDto(
-                clienteRepository.save(cliente)
-        );
+        return ClienteMapper.toDto(clienteRepository.save(cliente));
     }
 
     @Override
@@ -78,8 +76,7 @@ public class ClienteServiceImpl implements ClienteService {
     public ClienteDto getClienteById(int id) {
 
         Cliente cliente = clienteRepository.findById(id)
-                .orElseThrow(() ->
-                        new EntityNotFoundException("Cliente não encontrado"));
+                .orElseThrow(() -> new EntityNotFoundException("Cliente não encontrado"));
 
         return ClienteMapper.toDto(cliente);
     }
@@ -88,8 +85,7 @@ public class ClienteServiceImpl implements ClienteService {
     public ClienteDto updateCliente(ClienteDto dto, int id) {
 
         Cliente cliente = clienteRepository.findById(id)
-                .orElseThrow(() ->
-                        new EntityNotFoundException("Cliente não encontrado"));
+                .orElseThrow(() -> new EntityNotFoundException("Cliente não encontrado"));
 
         cliente.setNome(dto.getNome());
         cliente.setEmail(dto.getEmail());
@@ -99,18 +95,35 @@ public class ClienteServiceImpl implements ClienteService {
         cliente.setDtNasc(dto.getDtNasc());
         cliente.setNif(dto.getNif());
 
-        return ClienteMapper.toDto(
-                clienteRepository.save(cliente)
-        );
+        if (dto.getIdUser() != null) {
+            cliente.setIdUser(
+                    userRepository.findById(dto.getIdUser())
+                            .orElseThrow(() -> new EntityNotFoundException("User não encontrado"))
+            );
+        }
+
+        if (dto.getIdNacional() != null) {
+            cliente.setIdNacional(
+                    nacionalidadeRepository.findById(dto.getIdNacional())
+                            .orElseThrow(() -> new EntityNotFoundException("Nacionalidade não encontrada"))
+            );
+        }
+
+        if (dto.getCodPostal() != null) {
+            cliente.setCodPostal(
+                    cpostalRepository.findById(dto.getCodPostal())
+                            .orElseThrow(() -> new EntityNotFoundException("Código Postal não encontrado"))
+            );
+        }
+
+        return ClienteMapper.toDto(clienteRepository.save(cliente));
     }
 
     @Override
     public void deleteCliente(int id) {
-
-        Cliente cliente = clienteRepository.findById(id)
-                .orElseThrow(() ->
-                        new EntityNotFoundException("Cliente não encontrado"));
-
-        clienteRepository.delete(cliente);
+        if (!clienteRepository.existsById(id)) {
+            throw new EntityNotFoundException("Cliente não encontrado");
+        }
+        clienteRepository.deleteById(id);
     }
 }

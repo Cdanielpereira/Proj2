@@ -9,6 +9,6 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 public class TipoIVADto {
     private Integer id;
-    private String descricao;
+    private String type;
     private BigDecimal valor;
 }

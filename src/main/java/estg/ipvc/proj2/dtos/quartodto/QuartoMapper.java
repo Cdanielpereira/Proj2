@@ -6,9 +6,7 @@ public class QuartoMapper {
 
     private QuartoMapper() {}
 
-    /**
-     * ENTITY -> DTO
-     */
+    // ENTITY -> DTO
     public static QuartoDto toDto(Quarto e) {
         if (e == null) return null;
 
@@ -21,28 +19,23 @@ public class QuartoMapper {
                 .build();
     }
 
-    /**
-     * DTO -> ENTITY (criação)
-     * Nota: relações devem ser resolvidas no Service
-     */
+    // DTO -> ENTITY (CREATE)
     public static Quarto toEntity(QuartoDto dto) {
         if (dto == null) return null;
 
         Quarto e = new Quarto();
-
         e.setPreco(dto.getPreco());
 
-        // relações (apenas IDs “placeholder” — normalmente resolvidas no Service)
         if (dto.getIdZona() != null) {
-            Zona zona = new Zona();
-            zona.setId(dto.getIdZona());
-            e.setIdZona(zona);
+            Zona z = new Zona();
+            z.setId(dto.getIdZona());
+            e.setIdZona(z);
         }
 
         if (dto.getIdTipoq() != null) {
-            TipoQuarto tipoQuarto = new TipoQuarto();
-            tipoQuarto.setId(dto.getIdTipoq());
-            e.setIdTipoq(tipoQuarto);
+            TipoQuarto tq = new TipoQuarto();
+            tq.setId(dto.getIdTipoq());
+            e.setIdTipoq(tq);
         }
 
         if (dto.getIdTipoIVA() != null) {
@@ -54,9 +47,7 @@ public class QuartoMapper {
         return e;
     }
 
-    /**
-     * UPDATE parcial
-     */
+    // UPDATE parcial (agora consistente)
     public static void updateEntityFromDto(QuartoDto dto, Quarto e) {
         if (dto == null || e == null) return;
 
@@ -64,6 +55,22 @@ public class QuartoMapper {
             e.setPreco(dto.getPreco());
         }
 
-        // normalmente NÃO se atualiza FK aqui
+        if (dto.getIdZona() != null) {
+            Zona z = new Zona();
+            z.setId(dto.getIdZona());
+            e.setIdZona(z);
+        }
+
+        if (dto.getIdTipoq() != null) {
+            TipoQuarto tq = new TipoQuarto();
+            tq.setId(dto.getIdTipoq());
+            e.setIdTipoq(tq);
+        }
+
+        if (dto.getIdTipoIVA() != null) {
+            TipoIVA iva = new TipoIVA();
+            iva.setId(dto.getIdTipoIVA());
+            e.setIdiva(iva);
+        }
     }
 }

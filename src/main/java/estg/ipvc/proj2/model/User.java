@@ -31,4 +31,4 @@ public class User {
     private Set<Cliente> clientes = new LinkedHashSet<>();
     @OneToMany(mappedBy = "idUser")
     private Set<Funcionario> funcionarios = new LinkedHashSet<>();
-}
+}   
