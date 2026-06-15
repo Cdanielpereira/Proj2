@@ -1,0 +1,73 @@
+===== GUIA DE CRIACAO DE SERVICES =====
+
+O que sao Services?
+Os Services sao classes que implementam a logica de negocio da aplicacao, separando-a dos controllers e repositories.
+
+ESTRUTURA BASICA DE UM SERVICE:
+
+@Service
+public class NomeEntidadeService {
+
+    @Autowired
+    private NomeEntidadeRepository repository;
+
+    public List<NomeEntidade> getAll() {
+        return (List<NomeEntidade>) repository.findAll();
+    }
+
+    public Optional<NomeEntidade> getById(Integer id) {
+        return repository.findById(id);
+    }
+
+    public NomeEntidade create(NomeEntidade entidade) {
+        return repository.save(entidade);
+    }
+
+    public NomeEntidade update(Integer id, NomeEntidade entidade) {
+        if (repository.existsById(id)) {
+            entidade.setId(id);
+            return repository.save(entidade);
+        }
+        return null;
+    }
+
+    public void delete(Integer id) {
+        repository.deleteById(id);
+    }
+
+    public boolean exists(Integer id) {
+        return repository.existsById(id);
+    }
+}
+
+SERVICES JA CRIADOS:
+✓ UserService
+✓ ClienteService
+
+COMO CRIAR NOVOS SERVICES:
+
+1. Identifique a entidade em src/main/java/estg/ipvc/proj2/model/
+2. Verifique se existe um Repository correspondente em src/main/java/estg/ipvc/proj2/repository/
+3. Crie um novo ficheiro NomeEntidadeService.java nesta pasta
+4. Siga a estrutura basica acima
+5. Adapte o nome do metodo setId conforme a entidade (pode ser setIdCliente, setIdFuncionario, etc)
+
+ENTIDADES RECOMENDADAS PARA CRIAR SERVICES:
+- Funcionario
+- Colaborador
+- Contrato
+- Reserva
+- Encomenda
+- FaturaPagamento
+- FaturaRecibo
+- Servico
+- Produto
+- Quarto
+
+BOAS PRATICAS:
+- Sempre verificar se a entidade existe antes de atualizar ou eliminar
+- Usar Optional para retornos que podem ser null
+- Adicionar validacoes conforme necessario
+- Documentar metodos com comentarios JavaDoc quando apropriado
+- Manter consistencia de nomenclatura
+
