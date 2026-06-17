@@ -2,15 +2,9 @@ import api from "./api";
 
 const ENDPOINT = "/users";
 
-export const getAllUsers = (
-	pageNo = 0,
-	pageSize = 10
-) =>
+export const getAllUsers = (pageNo = 0, pageSize = 10) =>
 	api.get(ENDPOINT, {
-		params: {
-			pageNo,
-			pageSize
-		}
+		params: { pageNo, pageSize }
 	});
 
 export const getUserById = (id) =>
@@ -24,4 +18,3 @@ export const updateUser = (id, data) =>
 
 export const deleteUser = (id) =>
 	api.delete(`${ENDPOINT}/${id}`);
-

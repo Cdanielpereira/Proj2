@@ -1,62 +1,47 @@
 import { useEffect } from "react";
-import { useLocation, useParams } from "react-router-dom";
-import { entityConfig } from "../config/entityConfig";
-import { getSession } from "../pages/auth/session";
+import { useLocation } from "react-router-dom";
+import { appConfig } from "../config/appConfig";
 
-export default function usePageTitle(mode) {
+function pluralize(word) {
+    if (!word) return "";
+    return word.endsWith("s") ? word : `${word}s`;
+}
 
+export default function usePageTitle(setTitle) {
     const location = useLocation();
-    const { entity } = useParams();
-    const session = getSession();
 
     useEffect(() => {
+        const user = JSON.parse(localStorage.getItem("user"));
+        const role = user?.role || "GUEST";
 
-        let title = "";
+        const parts = location.pathname.split("/").filter(Boolean);
+        const path = location.pathname.toLowerCase();
 
-        // 1. HOME (guest/user)
-        if (location.pathname === "/home") {
-            title = "Bem-vindo!";
-        }
+        const isHomeScreen =
+            path === "/home" ||
+            path === "/homecliente" ||
+            path === "/homeuser";
 
-        // 2. HOME USER / USER PAGE
-        else if (location.pathname === "/home-user" || location.pathname === "/user-page") {
-            title = session?.username
-                ? `Bem-vindo ${session.username}`
-                : "Bem-vindo";
-        }
+        let title = "GoodStay";
 
-        // 3. LIST SCREEN
-        else if (entity && !location.pathname.includes("create") && !location.pathname.includes("edit")) {
+        if (isHomeScreen) {
+            const homeTitle =
+                typeof appConfig[role]?.homeTitle === "function"
+                    ? appConfig[role].homeTitle(user)
+                    : appConfig[role]?.homeTitle;
 
-            const config = entityConfig[entity];
+            title = homeTitle || "GoodStay";
+        } else {
+            const base = parts[0];
+            const mode = parts[1];
 
-            if (config) {
-                title = config.title || entity;
-
-                // pluralização simples (PT)
-                if (!title.endsWith("s")) title += "s";
+            if (base) {
+                if (mode === "create") title = `Criar ${base}`;
+                else if (mode === "edit") title = `Editar ${base}`;
+                else title = `Lista de ${pluralize(base)}`;
             }
         }
 
-        // 4. FORM SCREEN
-        else if (entity && (location.pathname.includes("create") || location.pathname.includes("edit"))) {
-
-            const config = entityConfig[entity];
-
-            const action = mode === "edit" ? "Alterar" : "Criar";
-
-            title = `${action} ${config?.title || entity}`;
-        }
-
-        // 5. LOGIN / REGISTER
-        else if (location.pathname === "/login") {
-            title = "Login";
-        }
-        else if (location.pathname === "/register") {
-            title = "Register";
-        }
-
-        document.title = title;
-
-    }, [location, entity, session, mode]);
+        setTitle?.(title);
+    }, [location.pathname, setTitle]);
 }

@@ -1,4 +1,4 @@
-/**package goodstay_api.config;
+package goodstay_api.config;
 
  import org.springframework.context.annotation.Bean;
  import org.springframework.context.annotation.Configuration;
@@ -12,11 +12,11 @@
          return new WebMvcConfigurer() {
              @Override
              public void addCorsMappings(CorsRegistry registry) {
-                 registry.addMapping("/proj2/**")
+                 registry.addMapping("/goodstay/api/**")
                      .allowedOrigins("http://localhost:5173")
                      .allowedMethods("GET","POST","PUT","DELETE");
              }
          };
      }
  }
- */
+

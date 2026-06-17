@@ -1,131 +1,190 @@
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { entityConfig } from "../config/entityConfig";
 import usePageTitle from "../hooks/usePageTitle";
 
 export default function FormScreen({ mode }) {
+    const { entity, id } = useParams();
+    const navigate = useNavigate();
+
+    const config = entityConfig?.[entity];
+    const isEdit = mode === "edit";
+
+    const [form, setForm] = useState({});
+    const [loading, setLoading] = useState(true);
 
     usePageTitle();
 
-
-    const { entity, id } = useParams();
-    const config = entityConfig[entity];
-
-    const [form, setForm] = useState({});
-    const [relations, setRelations] = useState({});
-    const navigate = useNavigate();
-
-    const isEdit = mode === "edit";
-
     useEffect(() => {
-        loadRelations();
-        if (isEdit) load();
-    }, []);
-
-    const load = async () => {
-        const res = await config.api.get(id);
-        setForm(res.data);
-    };
-
-    const loadRelations = async () => {
-
-        const relData = {};
-
-        for (const field of config.fields) {
-            if (field.type === "select") {
-                const res = await field.relation.api();
-                relData[field.name] = res.data;
+        const init = async () => {
+            if (!config) {
+                setLoading(false);
+                return;
             }
-        }
 
-        setRelations(relData);
-    };
+            if (isEdit && !id) {
+                setLoading(false);
+                return;
+            }
+
+            setLoading(true);
+
+            try {
+                if (isEdit) {
+                    const res = await config.api.get(id);
+                    setForm(res.data);
+                } else {
+                    const empty = {};
+                    config.fields.forEach((field) => {
+                        empty[field.name] = "";
+                    });
+                    setForm(empty);
+                }
+            } catch (err) {
+                console.error(err);
+                alert("Erro ao carregar formulário");
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        init();
+    }, [entity, id, isEdit, config]);
 
     const handleChange = (e) => {
-
-        const { name, value } = e.target;
-
         setForm({
             ...form,
-            [name]: value
+            [e.target.name]: e.target.value
         });
     };
 
-    const handleSubmit = async () => {
+    const handleSubmit = async (e) => {
+        e.preventDefault();
 
-        const payload = { ...form };
-
-        // 🔥 CONVERTER SELECTS EM OBJETOS (FK REAL)
-        config.fields.forEach(field => {
-
-            if (field.type === "select") {
-
-                const list = relations[field.name] || [];
-
-                const selected = list.find(
-                    x => x[field.relation.valueField].toString() === payload[field.name]
-                );
-
-                payload[field.name] = selected || null;
+        try {
+            if (isEdit) {
+                await config.api.update(id, form);
+                alert("Atualizado com sucesso");
+            } else {
+                await config.api.create(form);
+                alert("Criado com sucesso");
             }
-        });
 
-        if (isEdit) {
-            await config.api.update(id, payload);
-        } else {
-            await config.api.create(payload);
+            navigate(`/${entity}`);
+        } catch (err) {
+            console.error(err);
+            alert("Erro ao guardar dados");
         }
-
-        navigate(`/${entity}`);
     };
+
+    if (!config) {
+        return (
+            <div style={{ padding: 20 }}>
+                Entidade inválida: <b>{entity}</b>
+            </div>
+        );
+    }
+
+    if (loading) {
+        return (
+            <div style={{ textAlign: "center", marginTop: 50 }}>
+                A carregar formulário...
+            </div>
+        );
+    }
 
     return (
-        <div>
+        <div
+            style={{
+                maxWidth: "550px",
+                margin: "40px auto",
+                padding: "30px",
+                background: "#00172d",
+                borderRadius: "12px",
+                boxShadow: "0 4px 12px rgba(0,0,0,0.08)"
+            }}
+        >
+            <h1 style={{ textAlign: "center", marginBottom: "35px" }}>
+                {isEdit ? "Editar" : "Criar"} {config.title}
+            </h1>
 
-            <h2>{isEdit ? "Editar" : "Criar"} {config.title}</h2>
+            <form
+                onSubmit={handleSubmit}
+                style={{ display: "flex", flexDirection: "column", gap: "18px" }}
+            >
+                {config.fields.map((field) => (
+                    <div
+                        key={field.name}
+                        style={{ display: "flex", flexDirection: "column", gap: "6px" }}
+                    >
+                        <label style={{ fontWeight: 600, fontSize: "14px" }}>
+                            {field.label}
+                            {field.required && (
+                                <span style={{ color: "grey", marginLeft: 4 }}>
+                                    *
+                                </span>
+                            )}
+                        </label>
 
-            {config.fields.map(field => (
-
-                <div key={field.name}>
-
-                    <label>{field.label}</label>
-
-                    {/* TEXT */}
-                    {field.type === "text" && (
                         <input
                             name={field.name}
+                            type={field.type || "text"}
                             value={form[field.name] || ""}
                             onChange={handleChange}
+                            required={field.required}
+                            style={{
+                                padding: "12px",
+                                border: "1px solid #d0d7de",
+                                borderRadius: "8px",
+                                fontSize: "15px",
+                                outline: "none"
+                            }}
                         />
-                    )}
+                    </div>
+                ))}
 
-                    {/* SELECT (FK REAL) */}
-                    {field.type === "select" && (
-                        <select
-                            name={field.name}
-                            value={form[field.name]?.id || form[field.name] || ""}
-                            onChange={handleChange}
-                        >
-                            <option value="">-- selecionar --</option>
+                <div
+                    style={{
+                        display: "flex",
+                        justifyContent: "center",
+                        gap: "12px",
+                        marginTop: "10px"
+                    }}
+                >
+                    <button
+                        type="submit"
+                        style={{
+                            background: "#026001",
+                            color: "#fff",
+                            border: "none",
+                            borderRadius: "8px",
+                            padding: "12px 22px",
+                            cursor: "pointer",
+                            fontWeight: "bold",
+                            fontSize: "14px"
+                        }}
+                    >
+                        {isEdit ? "Atualizar" : "Criar"}
+                    </button>
 
-                            {(relations[field.name] || []).map(opt => (
-                                <option
-                                    key={opt[field.relation.valueField]}
-                                    value={opt[field.relation.valueField]}
-                                >
-                                    {opt[field.relation.labelField]}
-                                </option>
-                            ))}
-                        </select>
-                    )}
-
+                    <button
+                        type="button"
+                        onClick={() => navigate(`/${entity}`)}
+                        style={{
+                            background: "#870303",
+                            color: "#fff",
+                            border: "none",
+                            borderRadius: "8px",
+                            padding: "12px 22px",
+                            cursor: "pointer",
+                            fontWeight: "bold",
+                            fontSize: "14px"
+                        }}
+                    >
+                        Cancelar
+                    </button>
                 </div>
-            ))}
-
-            <button onClick={handleSubmit}>
-                Guardar
-            </button>
-
+            </form>
         </div>
     );
 }

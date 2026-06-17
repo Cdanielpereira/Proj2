@@ -1,7 +1,6 @@
 package goodstay_api.dtos.faturapagamentodto;
 
 import goodstay_api.model.*;
-import goodstay_api.model.FaturaPagamento;
 
 public class FaturaPagamentoMapper {
 
@@ -22,9 +21,24 @@ public class FaturaPagamentoMapper {
         if (dto == null) return null;
 
         FaturaPagamento e = new FaturaPagamento();
+
+        e.setId(dto.getId());
         e.setIban(dto.getIban());
         e.setValorpago(dto.getValorpago());
         e.setDtPag(dto.getDtPag());
+
+        if (dto.getIdFunc() != null) {
+            Funcionario f = new Funcionario();
+            f.setId(dto.getIdFunc());
+            e.setIdFunc(f);
+        }
+
+        if (dto.getIdMetodo() != null) {
+            MetodoPagamento m = new MetodoPagamento();
+            m.setId(dto.getIdMetodo());
+            e.setIdMetodo(m);
+        }
+
         return e;
     }
 }

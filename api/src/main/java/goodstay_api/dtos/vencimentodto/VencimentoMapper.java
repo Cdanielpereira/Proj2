@@ -1,7 +1,8 @@
 package goodstay_api.dtos.vencimentodto;
 
-import goodstay_api.model.*;
 import goodstay_api.model.Vencimento;
+import goodstay_api.model.Contrato;
+import goodstay_api.model.MetodoPagamento;
 
 public class VencimentoMapper {
 
@@ -24,11 +25,26 @@ public class VencimentoMapper {
         if (dto == null) return null;
 
         Vencimento e = new Vencimento();
+
+        e.setId(dto.getId());
         e.setValor(dto.getValor());
         e.setDtPag(dto.getDtPag());
         e.setMes(dto.getMes());
         e.setPremio(dto.getPremio());
         e.setIban(dto.getIban());
+
+        if (dto.getIdContrato() != null) {
+            Contrato contrato = new Contrato();
+            contrato.setId(dto.getIdContrato());
+            e.setIdContrato(contrato);
+        }
+
+        if (dto.getIdMetodo() != null) {
+            MetodoPagamento metodo = new MetodoPagamento();
+            metodo.setId(dto.getIdMetodo());
+            e.setIdMetodo(metodo);
+        }
+
         return e;
     }
 }

@@ -17,6 +17,7 @@ public class TipoColabMapper {
         if (dto == null) return null;
 
         TipoColab e = new TipoColab();
+        e.setId(dto.getId());
         e.setType(dto.getType());
         return e;
     }

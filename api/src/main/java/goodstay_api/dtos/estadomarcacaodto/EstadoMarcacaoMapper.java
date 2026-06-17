@@ -10,7 +10,6 @@ public class EstadoMarcacaoMapper {
         if (e == null) return null;
 
         EstadoMarcacaoDto dto = new EstadoMarcacaoDto();
-
         dto.setId(e.getId());
         dto.setState(e.getState());
 
@@ -21,7 +20,7 @@ public class EstadoMarcacaoMapper {
         if (dto == null) return null;
 
         EstadoMarcacao e = new EstadoMarcacao();
-
+        e.setId(dto.getId());
         e.setState(dto.getState());
 
         return e;

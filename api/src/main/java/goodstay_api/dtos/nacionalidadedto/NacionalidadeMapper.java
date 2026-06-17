@@ -2,22 +2,33 @@ package goodstay_api.dtos.nacionalidadedto;
 
 import goodstay_api.model.Nacionalidade;
 
-public class NacionalidadeMapper {
+public final class NacionalidadeMapper {
+
+    private NacionalidadeMapper() {}
 
     public static NacionalidadeDto toDto(Nacionalidade e) {
         if (e == null) return null;
 
-        return NacionalidadeDto.builder()
-                .id(e.getId())
-                .state(e.getNacionalidade())
-                .build();
+        NacionalidadeDto dto = new NacionalidadeDto();
+        dto.setId(e.getId());
+        dto.setNacionalidade(e.getNacionalidade());
+        return dto;
     }
 
     public static Nacionalidade toEntity(NacionalidadeDto dto) {
         if (dto == null) return null;
 
         Nacionalidade e = new Nacionalidade();
-        e.setNacionalidade(dto.getState());
+        e.setId(dto.getId());
+        e.setNacionalidade(dto.getNacionalidade());
         return e;
+    }
+
+    public static void updateEntityFromDto(NacionalidadeDto dto, Nacionalidade e) {
+        if (dto == null || e == null) return;
+
+        if (dto.getNacionalidade() != null) {
+            e.setNacionalidade(dto.getNacionalidade());
+        }
     }
 }

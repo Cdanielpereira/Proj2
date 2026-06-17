@@ -30,16 +30,17 @@ public class AuthService {
     public LoginResponseDto login(LoginRequestDto dto) {
 
         User user = userRepository.findByUsername(dto.getUsername())
-                .orElseThrow(() ->
-                        new RuntimeException("Utilizador não encontrado"));
+                .orElseThrow(() -> new RuntimeException("Utilizador não encontrado"));
 
         if (!user.getPassword().equals(dto.getPassword())) {
             throw new RuntimeException("Password inválida");
         }
 
         LoginResponseDto response = new LoginResponseDto();
+
         response.setUserId(user.getId());
-        response.setName(user.getUsername());
+        response.setUsername(user.getUsername());
+        response.setToken("dummy-token");
 
         // =========================
         // CLIENTE
@@ -47,24 +48,32 @@ public class AuthService {
         Cliente cliente = clienteRepository.findByIdUser(user).orElse(null);
 
         if (cliente != null) {
-            response.setRole("CLIENT");
+            response.setRole("CLIENTE"); // FIX: era CLIENT
             return response;
         }
 
         // =========================
-        // FUNCIONARIO
+        // FUNCIONÁRIO
         // =========================
         Funcionario funcionario = funcionarioRepository.findByIdUser(user)
-                .orElseThrow(() ->
-                        new RuntimeException("Utilizador sem perfil associado"));
+                .orElseThrow(() -> new RuntimeException("Utilizador sem perfil associado"));
 
-        String role = funcionario.getIdTipofunc()
+        String rawRole = funcionario.getIdTipofunc()
                 .getType()
                 .toUpperCase();
 
-        response.setRole(role);
+        // 🔥 NORMALIZAÇÃO PARA FRONTEND
+        String normalizedRole = switch (rawRole) {
+            case "STAFF" -> "STAFF";
+            case "RECEP" -> "RECEP";
+            case "HR" -> "HR";
+            case "GERENTE" -> "GERENTE";
+            case "SUPERADMIN" -> "SUPERADMIN";
+            default -> "GUEST";
+        };
+
+        response.setRole(normalizedRole);
 
         return response;
     }
-
 }

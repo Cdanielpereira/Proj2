@@ -8,21 +8,15 @@ import lombok.NoArgsConstructor;
 
 @Data
 @Builder
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 public class CateringDto {
 
     private Integer id;
     private Integer nhospedes;
     private BigDecimal precohosp;
 
-    /**FK para Servico (obrigatório na tua nova modelação 1:N) */
     private Integer idServico;
-
-    /** Apenas informativo (opcional)
-     * Pode ser usado para resposta da API*/
     private Integer idiva;
-
-    //Valor real do IVA no momento (recomendado para respostas)
     private BigDecimal ivaatual;
 }

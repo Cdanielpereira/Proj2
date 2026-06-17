@@ -8,6 +8,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 
 @SpringBootApplication
 public class Proj2Application {
@@ -36,9 +37,18 @@ public class Proj2Application {
             // TIPOS FUNC
             // =========================
             if (tipoFuncRepository.count() == 0) {
-                for (String t : new String[]{"STAFF", "RECEP", "HR", "GERENTE", "SUPERADMIN"}) {
+
+                for (String t : new String[]{
+                        "STAFF",
+                        "RECEP",
+                        "HR",
+                        "GERENTE",
+                        "SUPERADMIN"
+                }) {
+
                     TipoFunc tf = new TipoFunc();
                     tf.setType(t);
+
                     tipoFuncRepository.save(tf);
                 }
             }
@@ -47,9 +57,16 @@ public class Proj2Application {
             // TIPOS COLAB
             // =========================
             if (tipoColabRepository.count() == 0) {
-                for (String t : new String[]{"Fornecedor", "Técnico", "Catering"}) {
+
+                for (String t : new String[]{
+                        "Fornecedor",
+                        "Técnico",
+                        "Catering"
+                }) {
+
                     TipoColab tc = new TipoColab();
                     tc.setType(t);
+
                     tipoColabRepository.save(tc);
                 }
             }
@@ -58,9 +75,16 @@ public class Proj2Application {
             // TIPOS QUARTO
             // =========================
             if (tipoQuartoRepository.count() == 0) {
-                for (String t : new String[]{"Single", "Double", "Suite"}) {
+
+                for (String t : new String[]{
+                        "Single",
+                        "Double",
+                        "Suite"
+                }) {
+
                     TipoQuarto tq = new TipoQuarto();
                     tq.setType(t);
+
                     tipoQuartoRepository.save(tq);
                 }
             }
@@ -69,9 +93,18 @@ public class Proj2Application {
             // TIPOS ZONA
             // =========================
             if (tipoZonaRepository.count() == 0) {
-                for (String t : new String[]{"Quarto", "Piscina", "WC", "SP", "ZE"}) {
+
+                for (String t : new String[]{
+                        "Quarto",
+                        "Piscina",
+                        "WC",
+                        "SP",
+                        "ZE"
+                }) {
+
                     TipoZona tz = new TipoZona();
                     tz.setType(t);
+
                     tipoZonaRepository.save(tz);
                 }
             }
@@ -81,142 +114,151 @@ public class Proj2Application {
             // =========================
             if (tipoIVARepository.count() == 0) {
 
-                TipoIVA a = new TipoIVA();
-                a.setType("Normal");
-                a.setValor(new BigDecimal("0.23"));
-                tipoIVARepository.save(a);
+                TipoIVA normal = new TipoIVA();
+                normal.setType("Normal");
+                normal.setValor(new BigDecimal("0.23"));
+                tipoIVARepository.save(normal);
 
-                TipoIVA b = new TipoIVA();
-                b.setType("Intermedia");
-                b.setValor(new BigDecimal("0.13"));
-                tipoIVARepository.save(b);
+                TipoIVA interm = new TipoIVA();
+                interm.setType("Intermedia");
+                interm.setValor(new BigDecimal("0.13"));
+                tipoIVARepository.save(interm);
 
-                TipoIVA c = new TipoIVA();
-                c.setType("Reduzida");
-                c.setValor(new BigDecimal("0.06"));
-                tipoIVARepository.save(c);
+                TipoIVA reduz = new TipoIVA();
+                reduz.setType("Reduzida");
+                reduz.setValor(new BigDecimal("0.06"));
+                tipoIVARepository.save(reduz);
             }
 
             // =========================
-            // CP
+            // CODIGOS POSTAIS
             // =========================
             if (cpostalRepository.count() == 0) {
 
-                createCP(cpostalRepository, "4900-001", "Viana do Castelo");
-                createCP(cpostalRepository, "4700-001", "Braga");
-                createCP(cpostalRepository, "4000-001", "Porto");
-                createCP(cpostalRepository, "1000-001", "Lisboa");
+                createCP(cpostalRepository,
+                        "4900-001",
+                        "Viana do Castelo");
+
+                createCP(cpostalRepository,
+                        "4700-001",
+                        "Braga");
+
+                createCP(cpostalRepository,
+                        "4000-001",
+                        "Porto");
+
+                createCP(cpostalRepository,
+                        "1000-001",
+                        "Lisboa");
             }
 
             // =========================
-            // NACIONALIDADE
+            // NACIONALIDADES
             // =========================
             if (nacionalidadeRepository.count() == 0) {
 
-                for (String n : new String[]{"Portuguesa", "Espanhola", "Brasileira"}) {
+                for (String n : new String[]{
+                        "Portuguesa",
+                        "Espanhola",
+                        "Brasileira"
+                }) {
+
                     Nacionalidade nat = new Nacionalidade();
                     nat.setNacionalidade(n);
+
                     nacionalidadeRepository.save(nat);
                 }
             }
 
             // =========================
-            // USERS
-            // =========================
-            if (userRepository.count() == 0) {
-
-                createUser(userRepository, "admin", "1234");
-                createUser(userRepository, "gerente", "1234");
-                createUser(userRepository, "hr", "1234");
-                createUser(userRepository, "recep", "1234");
-                createUser(userRepository, "staff", "1234");
-                createUser(userRepository, "client", "1234");
-            }
-
-            // =========================
-            // CLIENTE
-            // =========================
-            if (clienteRepository.count() == 0) {
-
-                User clientUser = userRepository.findByUsername("client").orElseThrow();
-
-                Cliente c = new Cliente();
-                c.setNome("Cliente Demo");
-                c.setEmail("client@demo.com");
-                c.setSexo("M");
-                c.setIdUser(clientUser);
-
-                clienteRepository.save(c);
-            }
-
-            // =========================
-            // FUNCIONARIOS
+            // SUPERADMIN INICIAL
             // =========================
             if (funcionarioRepository.count() == 0) {
 
-                createFuncionario(funcionarioRepository, userRepository, tipoFuncRepository,
-                        "staff", "STAFF");
+                User adminUser = userRepository
+                        .findByUsername("admin")
+                        .orElseGet(() -> {
 
-                createFuncionario(funcionarioRepository, userRepository, tipoFuncRepository,
-                        "recep", "RECEP");
+                            User u = new User();
 
-                createFuncionario(funcionarioRepository, userRepository, tipoFuncRepository,
-                        "hr", "HR");
+                            u.setUsername("admin");
+                            u.setPassword("admin123");
+                            u.setTelefone("999999999");
 
-                createFuncionario(funcionarioRepository, userRepository, tipoFuncRepository,
-                        "gerente", "GERENTE");
+                            return userRepository.save(u);
+                        });
 
-                createFuncionario(funcionarioRepository, userRepository, tipoFuncRepository,
-                        "admin", "SUPERADMIN");
+                TipoFunc superAdminTipo = tipoFuncRepository
+                        .findAll()
+                        .stream()
+                        .filter(t ->
+                                "SUPERADMIN"
+                                        .equalsIgnoreCase(
+                                                t.getType()))
+                        .findFirst()
+                        .orElseThrow(() ->
+                                new RuntimeException(
+                                        "Tipo SUPERADMIN não encontrado"));
+
+                Cpostal cp = cpostalRepository
+                        .findAll()
+                        .stream()
+                        .findFirst()
+                        .orElseThrow(() ->
+                                new RuntimeException(
+                                        "Código postal não encontrado"));
+
+                Nacionalidade nacionalidade = nacionalidadeRepository
+                        .findAll()
+                        .stream()
+                        .findFirst()
+                        .orElseThrow(() ->
+                                new RuntimeException(
+                                        "Nacionalidade não encontrada"));
+
+                Funcionario admin = new Funcionario();
+
+                admin.setNome("Administrador");
+                admin.setEmail("admin@goodstay.pt");
+                admin.setSexo("M");
+                admin.setRua("Sistema");
+                admin.setPorta("1");
+
+                admin.setDtNasc(
+                        LocalDate.of(1990, 1, 1));
+
+                admin.setIban(
+                        "PT5000000000000000000000000");
+
+                admin.setNif(
+                        new BigDecimal("999999999"));
+
+                admin.setIdUser(adminUser);
+                admin.setIdTipofunc(superAdminTipo);
+                admin.setCodPostal(cp);
+                admin.setIdNacional(nacionalidade);
+
+                funcionarioRepository.save(admin);
+
+                System.out.println(
+                        ">>> SUPERADMIN inicial criado.");
             }
 
             System.out.println(">>> BD inicial pronta.");
         };
     }
 
-    private void createUser(UserRepository repo, String username, String pass) {
-        User u = new User();
-        u.setUsername(username);
-        u.setPassword(pass);
-        u.setTelefone("900000000");
-        repo.save(u);
-    }
-
-    private void createCP(CpostalRepository repo, String cod, String loc) {
-        Cpostal cp = new Cpostal();
-        cp.setCodPostal(cod);
-        cp.setLocalidade(loc);
-        repo.save(cp);
-    }
-
-    private void createFuncionario(
-            FuncionarioRepository repo,
-            UserRepository userRepo,
-            TipoFuncRepository tipoRepo,
-            String username,
-            String tipo
+    private void createCP(
+            CpostalRepository repo,
+            String cod,
+            String loc
     ) {
 
-        User u = userRepo.findByUsername(username).orElseThrow();
-        TipoFunc tf = tipoRepo.findAll()
-                .stream()
-                .filter(x -> x.getType().equals(tipo))
-                .findFirst()
-                .orElseThrow();
+        Cpostal cp = new Cpostal();
 
-        Funcionario f = new Funcionario();
-        f.setNome(username);
-        f.setEmail(username + "@demo.com");
-        f.setSexo("M");
-        f.setIban("PT50TESTE000000000");
-        f.setRua("Rua Demo");
-        f.setPorta("1");
-        f.setDtNasc(java.time.LocalDate.of(1990, 1, 1));
-        f.setNif(new BigDecimal("123456789"));
-        f.setIdUser(u);
-        f.setIdTipofunc(tf);
+        cp.setCodPostal(cod);
+        cp.setLocalidade(loc);
 
-        repo.save(f);
+        repo.save(cp);
     }
-
 }

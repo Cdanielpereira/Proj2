@@ -68,7 +68,7 @@ public class NacionalidadeServiceImpl implements NacionalidadeService {
                         .orElseThrow(() ->
                                 new EntityNotFoundException("Nacionalidade não encontrada"));
 
-        nacionalidade.setNacionalidade(dto.getState());
+        nacionalidade.setNacionalidade(dto.getNacionalidade());
 
         return NacionalidadeMapper.toDto(
                 nacionalidadeRepository.save(nacionalidade)

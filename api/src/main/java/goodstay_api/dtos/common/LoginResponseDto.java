@@ -11,5 +11,5 @@ public class LoginResponseDto {
 
     private String role;
 
-    private String name;
+    private String username;
 }

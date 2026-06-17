@@ -1,16 +1,12 @@
 package goodstay_api.dtos.produtodto;
 
-import goodstay_api.model.*;
 import goodstay_api.model.Produto;
 import goodstay_api.model.TipoIVA;
 
-public class ProdutoMapper {
+public final class ProdutoMapper {
 
     private ProdutoMapper() {}
 
-    /**
-     * ENTITY -> DTO
-     */
     public static ProdutoDto toDto(Produto e) {
         if (e == null) return null;
 
@@ -24,20 +20,16 @@ public class ProdutoMapper {
                 .build();
     }
 
-    /**
-     * DTO -> ENTITY
-     */
     public static Produto toEntity(ProdutoDto dto) {
         if (dto == null) return null;
 
         Produto e = new Produto();
-
+        e.setId(dto.getId());
         e.setNome(dto.getNome());
         e.setValor(dto.getValor());
         e.setQtdstock(dto.getQtdstock());
         e.setQtdmin(dto.getQtdmin());
 
-        // FK (apenas ID placeholder — resolver no Service)
         if (dto.getIdIva() != null) {
             TipoIVA iva = new TipoIVA();
             iva.setId(dto.getIdIva());
@@ -47,9 +39,6 @@ public class ProdutoMapper {
         return e;
     }
 
-    /**
-     * UPDATE parcial
-     */
     public static void updateEntityFromDto(ProdutoDto dto, Produto e) {
         if (dto == null || e == null) return;
 
@@ -57,6 +46,11 @@ public class ProdutoMapper {
         if (dto.getValor() != null) e.setValor(dto.getValor());
         if (dto.getQtdstock() != null) e.setQtdstock(dto.getQtdstock());
         if (dto.getQtdmin() != null) e.setQtdmin(dto.getQtdmin());
-        // IVA normalmente não se altera aqui
+
+        if (dto.getIdIva() != null) {
+            TipoIVA iva = new TipoIVA();
+            iva.setId(dto.getIdIva());
+            e.setIdiva(iva);
+        }
     }
 }

@@ -1,7 +1,6 @@
 package goodstay_api.dtos.linhamanudto;
 
-import goodstay_api.model.LinhaManu;
-import goodstay_api.model.LinhaManuId;
+import goodstay_api.model.*;
 
 public class LinhaManuMapper {
 
@@ -10,8 +9,8 @@ public class LinhaManuMapper {
 
         LinhaManuDto dto = new LinhaManuDto();
 
-        dto.setIdManu(entity.getIdManu().getId());
-        dto.setIdServico(entity.getIdServico().getId());
+        dto.setIdManu(entity.getIdManu() != null ? entity.getIdManu().getId() : null);
+        dto.setIdServico(entity.getIdServico() != null ? entity.getIdServico().getId() : null);
         dto.setPrecoatual(entity.getPrecoatual());
         dto.setIvaatual(entity.getIvaatual());
 

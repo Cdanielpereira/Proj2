@@ -10,7 +10,6 @@ public class EstadoContractMapper {
         if (e == null) return null;
 
         EstadoContractDto dto = new EstadoContractDto();
-
         dto.setId(e.getId());
         dto.setState(e.getState());
 
@@ -21,7 +20,7 @@ public class EstadoContractMapper {
         if (dto == null) return null;
 
         EstadoContract e = new EstadoContract();
-
+        e.setId(dto.getId());
         e.setState(dto.getState());
 
         return e;

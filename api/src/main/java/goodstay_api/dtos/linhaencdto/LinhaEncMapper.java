@@ -10,8 +10,9 @@ public class LinhaEncMapper {
 
         LinhaEncDto dto = new LinhaEncDto();
 
-        dto.setIdEnco(entity.getIdEnco().getId());
-        dto.setIdProduto(entity.getIdProduto().getId());
+        dto.setIdEnco(entity.getId() != null ? entity.getId().getIdEnco() : null);
+        dto.setIdProduto(entity.getId() != null ? entity.getId().getIdProduto() : null);
+
         dto.setPrecoatual(entity.getPrecoatual());
         dto.setQtd(entity.getQtd());
         dto.setIvaatual(entity.getIvaatual());

@@ -7,16 +7,17 @@ public class TipoZonaMapper {
     public static TipoZonaDto toDto(TipoZona entity) {
         if (entity == null) return null;
 
-        return TipoZonaDto.builder()
-                .id(entity.getId())
-                .type(entity.getType())
-                .build();
+        TipoZonaDto dto = new TipoZonaDto();
+        dto.setId(entity.getId());
+        dto.setType(entity.getType());
+        return dto;
     }
 
     public static TipoZona toEntity(TipoZonaDto dto) {
         if (dto == null) return null;
 
         TipoZona entity = new TipoZona();
+        entity.setId(dto.getId());
         entity.setType(dto.getType());
         return entity;
     }

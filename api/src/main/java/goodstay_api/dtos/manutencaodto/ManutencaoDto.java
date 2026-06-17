@@ -1,6 +1,5 @@
 package goodstay_api.dtos.manutencaodto;
 
-import java.math.BigDecimal;
 import lombok.Data;
 
 @Data

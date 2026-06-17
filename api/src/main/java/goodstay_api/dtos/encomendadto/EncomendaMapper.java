@@ -10,12 +10,12 @@ public class EncomendaMapper {
         if (e == null) return null;
 
         EncomendaDto dto = new EncomendaDto();
-
         dto.setId(e.getId());
         dto.setValortotal(e.getValortotal());
 
-        if (e.getIdServico() != null)
+        if (e.getIdServico() != null) {
             dto.setIdServico(e.getIdServico().getId());
+        }
 
         return dto;
     }
@@ -24,7 +24,7 @@ public class EncomendaMapper {
         if (dto == null) return null;
 
         Encomenda e = new Encomenda();
-
+        e.setId(dto.getId());
         e.setValortotal(dto.getValortotal());
 
         return e;

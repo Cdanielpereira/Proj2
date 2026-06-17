@@ -18,6 +18,7 @@ public class TipoIVAMapper {
         if (dto == null) return null;
 
         TipoIVA e = new TipoIVA();
+        e.setId(dto.getId());
         e.setType(dto.getType());
         e.setValor(dto.getValor());
         return e;

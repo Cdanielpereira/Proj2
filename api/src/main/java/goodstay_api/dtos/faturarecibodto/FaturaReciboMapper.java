@@ -1,6 +1,7 @@
 package goodstay_api.dtos.faturarecibodto;
 
 import goodstay_api.model.FaturaRecibo;
+import goodstay_api.model.MetodoPagamento;
 
 public class FaturaReciboMapper {
 
@@ -20,9 +21,18 @@ public class FaturaReciboMapper {
         if (dto == null) return null;
 
         FaturaRecibo e = new FaturaRecibo();
+
+        e.setId(dto.getId());
         e.setValor(dto.getValor());
         e.setDtPagamento(dto.getDtPagamento());
         e.setNif(dto.getNif());
+
+        if (dto.getIdMetodo() != null) {
+            MetodoPagamento m = new MetodoPagamento();
+            m.setId(dto.getIdMetodo());
+            e.setIdMetodo(m);
+        }
+
         return e;
     }
 }

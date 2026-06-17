@@ -19,6 +19,7 @@ public class ZonaMapper {
         if (dto == null) return null;
 
         Zona entity = new Zona();
+        entity.setId(dto.getId());
         entity.setAndar(dto.getAndar());
 
         if (dto.getIdTipoz() != null) {

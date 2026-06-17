@@ -10,7 +10,6 @@ public class ContratoMapper {
         if (c == null) return null;
 
         ContratoDto dto = new ContratoDto();
-
         dto.setId(c.getId());
         dto.setSalario(c.getSalario());
         dto.setDtCriado(c.getDtCriado());
@@ -31,7 +30,7 @@ public class ContratoMapper {
         if (dto == null) return null;
 
         Contrato c = new Contrato();
-
+        c.setId(dto.getId());
         c.setSalario(dto.getSalario());
         c.setDtCriado(dto.getDtCriado());
         c.setDtAssinado(dto.getDtAssinado());

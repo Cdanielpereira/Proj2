@@ -1,16 +1,11 @@
 package goodstay_api.dtos.quartodto;
 
 import goodstay_api.model.*;
-import goodstay_api.model.Quarto;
-import goodstay_api.model.TipoIVA;
-import goodstay_api.model.TipoQuarto;
-import goodstay_api.model.Zona;
 
 public class QuartoMapper {
 
     private QuartoMapper() {}
 
-    // ENTITY -> DTO
     public static QuartoDto toDto(Quarto e) {
         if (e == null) return null;
 
@@ -23,11 +18,11 @@ public class QuartoMapper {
                 .build();
     }
 
-    // DTO -> ENTITY (CREATE)
     public static Quarto toEntity(QuartoDto dto) {
         if (dto == null) return null;
 
         Quarto e = new Quarto();
+        e.setId(dto.getId());
         e.setPreco(dto.getPreco());
 
         if (dto.getIdZona() != null) {
@@ -37,9 +32,9 @@ public class QuartoMapper {
         }
 
         if (dto.getIdTipoq() != null) {
-            TipoQuarto tq = new TipoQuarto();
-            tq.setId(dto.getIdTipoq());
-            e.setIdTipoq(tq);
+            TipoQuarto t = new TipoQuarto();
+            t.setId(dto.getIdTipoq());
+            e.setIdTipoq(t);
         }
 
         if (dto.getIdTipoIVA() != null) {
@@ -51,13 +46,10 @@ public class QuartoMapper {
         return e;
     }
 
-    // UPDATE parcial (agora consistente)
     public static void updateEntityFromDto(QuartoDto dto, Quarto e) {
         if (dto == null || e == null) return;
 
-        if (dto.getPreco() != null) {
-            e.setPreco(dto.getPreco());
-        }
+        if (dto.getPreco() != null) e.setPreco(dto.getPreco());
 
         if (dto.getIdZona() != null) {
             Zona z = new Zona();
@@ -66,9 +58,9 @@ public class QuartoMapper {
         }
 
         if (dto.getIdTipoq() != null) {
-            TipoQuarto tq = new TipoQuarto();
-            tq.setId(dto.getIdTipoq());
-            e.setIdTipoq(tq);
+            TipoQuarto t = new TipoQuarto();
+            t.setId(dto.getIdTipoq());
+            e.setIdTipoq(t);
         }
 
         if (dto.getIdTipoIVA() != null) {

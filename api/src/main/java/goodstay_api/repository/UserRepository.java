@@ -1,12 +1,12 @@
-package goodstay_api.repository;
+    package goodstay_api.repository;
 
-import goodstay_api.model.User;
-import org.springframework.data.jpa.repository.JpaRepository;
+    import goodstay_api.model.User;
+    import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.util.Optional;
+    import java.util.Optional;
 
-public interface UserRepository extends JpaRepository<User, Integer> {
+    public interface UserRepository extends JpaRepository<User, Integer> {
 
-    Optional<User> findByUsername(String username);
+        Optional<User> findByUsername(String username);
 
-}
+    }

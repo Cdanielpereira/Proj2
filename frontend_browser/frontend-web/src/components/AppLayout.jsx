@@ -1,21 +1,46 @@
+import React, { useEffect, useState } from "react";
+import { getAuthState } from "../auth/session";
+
 import TopBar from "./TopBar";
 import SecondaryBar from "./SecondaryBar";
+import Sidebar from "./Sidebar";
+
+import usePageTitle from "../hooks/usePageTitle";
 
 export default function AppLayout({ children }) {
 
-    return (
-        <div>
+    const [auth, setAuth] = useState(getAuthState());
+    const [open, setOpen] = useState(false);
 
-            {/* TOOLBAR 1 */}
+    // 👇 estado único do título
+    const [title, setTitle] = useState("GoodStay");
+
+    usePageTitle(setTitle);
+
+    useEffect(() => {
+        const sync = () => setAuth(getAuthState());
+        window.addEventListener("auth-change", sync);
+        return () => window.removeEventListener("auth-change", sync);
+    }, []);
+
+    return (
+        <>
             <TopBar />
 
-            {/* TOOLBAR 2 */}
-            <SecondaryBar />
+            <SecondaryBar
+                user={auth.user}
+                toggleSidebar={() => setOpen(v => !v)}
+                title={title}
+            />
 
-            <div style={{ display: "flex" }}>
-                {children}
-            </div>
+            {open && (
+                <Sidebar
+                    onClose={() => setOpen(false)}
+                    role={auth.role}
+                />
+            )}
 
-        </div>
+            <main>{children}</main>
+        </>
     );
 }

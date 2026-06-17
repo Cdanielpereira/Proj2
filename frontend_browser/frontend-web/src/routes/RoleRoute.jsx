@@ -1,14 +1,17 @@
 import { Navigate } from "react-router-dom";
-import { getRole } from "../pages/auth/session";
+import { getUser } from "../auth/session";
+import { resolveRole } from "../auth/roleService";
 
-export default function RoleRoute({ roles, children }) {
+export default function RoleRoute({ roles = [], children }) {
+    const user = getUser();
+    const role = resolveRole(user);
 
-    const role = getRole();
+    if (!user) {
+        return <Navigate to="/" replace />;
+    }
 
-    if (!role) return <Navigate to="/login" />;
-
-    if (!roles.includes(role)) {
-        return <Navigate to="/home" />;
+    if (!roles.includes(role) && !roles.includes("*")) {
+        return <Navigate to="/home" replace />;
     }
 
     return children;

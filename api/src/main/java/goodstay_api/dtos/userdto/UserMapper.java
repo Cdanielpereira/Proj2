@@ -10,12 +10,10 @@ public class UserMapper {
         if (u == null) return null;
 
         UserDto dto = new UserDto();
-
         dto.setId(u.getId());
         dto.setUsername(u.getUsername());
         dto.setPassword(u.getPassword());
         dto.setTelefone(u.getTelefone());
-
         return dto;
     }
 
@@ -23,11 +21,10 @@ public class UserMapper {
         if (dto == null) return null;
 
         User u = new User();
-
+        u.setId(dto.getId());
         u.setUsername(dto.getUsername());
         u.setPassword(dto.getPassword());
         u.setTelefone(dto.getTelefone());
-
         return u;
     }
 }

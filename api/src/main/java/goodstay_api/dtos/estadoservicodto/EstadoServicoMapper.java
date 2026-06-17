@@ -4,6 +4,8 @@ import goodstay_api.model.EstadoServico;
 
 public class EstadoServicoMapper {
 
+    private EstadoServicoMapper() {}
+
     public static EstadoServicoDto toDto(EstadoServico e) {
         if (e == null) return null;
 
@@ -17,7 +19,9 @@ public class EstadoServicoMapper {
         if (dto == null) return null;
 
         EstadoServico e = new EstadoServico();
+        e.setId(dto.getId());
         e.setState(dto.getState());
+
         return e;
     }
 }

@@ -8,5 +8,5 @@ import lombok.*;
 @AllArgsConstructor
 public class NacionalidadeDto {
     private Integer id;
-    private String state;
+    private String nacionalidade;
 }

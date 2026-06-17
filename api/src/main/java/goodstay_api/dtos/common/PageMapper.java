@@ -7,7 +7,9 @@ import java.util.function.Function;
 public class PageMapper {
 
     public static <E, D> PageResponse<D> toPageResponse(Page<E> page, Function<E, D> mapper) {
-        List<D> content = page.getContent().stream()
+
+        List<D> content = page.getContent()
+                .stream()
                 .map(mapper)
                 .toList();
 

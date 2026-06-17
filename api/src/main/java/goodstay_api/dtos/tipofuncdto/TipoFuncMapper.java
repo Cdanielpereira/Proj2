@@ -4,20 +4,21 @@ import goodstay_api.model.TipoFunc;
 
 public class TipoFuncMapper {
 
-    public static TipoFuncDto toDto(TipoFunc entity) {
-        if (entity == null) return null;
+    public static TipoFuncDto toDto(TipoFunc e) {
+        if (e == null) return null;
 
         return TipoFuncDto.builder()
-                .id(entity.getId())
-                .type(entity.getType())
+                .id(e.getId())
+                .type(e.getType())
                 .build();
     }
 
     public static TipoFunc toEntity(TipoFuncDto dto) {
         if (dto == null) return null;
 
-        TipoFunc entity = new TipoFunc();
-        entity.setType(dto.getType());
-        return entity;
+        TipoFunc e = new TipoFunc();
+        e.setId(dto.getId());
+        e.setType(dto.getType());
+        return e;
     }
 }

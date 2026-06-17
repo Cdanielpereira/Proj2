@@ -1,14 +1,9 @@
 package goodstay_api.dtos.manutencaodto;
 
-import goodstay_api.model.Manutencao;
+import goodstay_api.model.*;
 
 public class ManutencaoMapper {
 
-    private ManutencaoMapper() {}
-
-    /**
-     * ENTITY -> DTO
-     */
     public static ManutencaoDto toDto(Manutencao entity) {
         if (entity == null) return null;
 
@@ -16,16 +11,12 @@ public class ManutencaoMapper {
 
         dto.setId(entity.getId());
         dto.setDescricao(entity.getDescricao());
-
         dto.setIdZona(entity.getIdZona() != null ? entity.getIdZona().getId() : null);
         dto.setIdiva(entity.getIdiva() != null ? entity.getIdiva().getId() : null);
 
         return dto;
     }
 
-    /**
-     * DTO -> ENTITY
-     */
     public static Manutencao toEntity(ManutencaoDto dto) {
         if (dto == null) return null;
 
@@ -33,6 +24,18 @@ public class ManutencaoMapper {
 
         entity.setId(dto.getId());
         entity.setDescricao(dto.getDescricao());
+
+        if (dto.getIdZona() != null) {
+            Zona z = new Zona();
+            z.setId(dto.getIdZona());
+            entity.setIdZona(z);
+        }
+
+        if (dto.getIdiva() != null) {
+            TipoIVA iva = new TipoIVA();
+            iva.setId(dto.getIdiva());
+            entity.setIdiva(iva);
+        }
 
         return entity;
     }

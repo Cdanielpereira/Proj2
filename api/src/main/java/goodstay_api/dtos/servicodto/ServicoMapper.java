@@ -1,10 +1,6 @@
 package goodstay_api.dtos.servicodto;
 
 import goodstay_api.model.*;
-import goodstay_api.model.Colaborador;
-import goodstay_api.model.EstadoServico;
-import goodstay_api.model.Funcionario;
-import goodstay_api.model.Servico;
 
 public class ServicoMapper {
 
@@ -28,12 +24,11 @@ public class ServicoMapper {
 
         Servico e = new Servico();
 
+        e.setId(dto.getId());
         e.setValorpagar(dto.getValorpagar());
         e.setDtMarc(dto.getDtMarc());
         e.setDtRea(dto.getDtRea());
-        e.setIdFaturap(dto.getIdFaturap());
 
-        // relações (apenas IDs)
         if (dto.getIdEstadoser() != null) {
             EstadoServico es = new EstadoServico();
             es.setId(dto.getIdEstadoser());
@@ -51,6 +46,9 @@ public class ServicoMapper {
             f.setId(dto.getIdFunc());
             e.setIdFunc(f);
         }
+
+        // FK como Integer (correto)
+        e.setIdFaturap(dto.getIdFaturap());
 
         return e;
     }

@@ -2,23 +2,25 @@ package goodstay_api.dtos.metodopagamentodto;
 
 import goodstay_api.model.MetodoPagamento;
 
-public class MetodoPagamentoMapper {
+public final class MetodoPagamentoMapper {
 
-    public static MetodoPagamentoDto toDto(MetodoPagamento entity) {
-        if (entity == null) return null;
+    private MetodoPagamentoMapper() {}
+
+    public static MetodoPagamentoDto toDto(MetodoPagamento e) {
+        if (e == null) return null;
 
         MetodoPagamentoDto dto = new MetodoPagamentoDto();
-        dto.setId(entity.getId());
-        dto.setMetodo(entity.getMetodo());
+        dto.setId(e.getId());
+        dto.setMetodo(e.getMetodo());
         return dto;
     }
 
     public static MetodoPagamento toEntity(MetodoPagamentoDto dto) {
         if (dto == null) return null;
 
-        MetodoPagamento entity = new MetodoPagamento();
-        entity.setMetodo(dto.getMetodo());
-
-        return entity;
+        MetodoPagamento e = new MetodoPagamento();
+        e.setId(dto.getId());
+        e.setMetodo(dto.getMetodo());
+        return e;
     }
 }

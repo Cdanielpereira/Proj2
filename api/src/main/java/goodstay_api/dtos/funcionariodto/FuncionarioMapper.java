@@ -1,6 +1,5 @@
 package goodstay_api.dtos.funcionariodto;
 
-import goodstay_api.model.*;
 import goodstay_api.model.Funcionario;
 
 public class FuncionarioMapper {
@@ -20,7 +19,11 @@ public class FuncionarioMapper {
                 .sexo(e.getSexo())
                 .nome(e.getNome())
                 .email(e.getEmail())
-                .codPostal(e.getCodPostal() != null ? e.getCodPostal().getCodPostal() != null ? null : null : null)
+                .codPostal(
+                        e.getCodPostal() != null
+                                ? e.getCodPostal().getCodPostal()
+                                : null
+                )
                 .idNacional(e.getIdNacional() != null ? e.getIdNacional().getId() : null)
                 .build();
     }
