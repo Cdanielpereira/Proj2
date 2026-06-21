@@ -1,0 +1,19 @@
+.login-root { -fx-background-color: #f4f6f8; }
+.login-card {
+    -fx-background-color: white;
+    -fx-background-radius: 12;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 12, 0, 0, 4);
+}
+.login-title { -fx-font-size: 22px; -fx-font-weight: bold; }
+.login-subtitle { -fx-text-fill: #666; }
+.field-label { -fx-font-size: 12px; -fx-text-fill: #444; }
+.login-input { -fx-pref-height: 36px; }
+.login-button {
+    -fx-background-color: #2563eb;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-pref-height: 38px;
+    -fx-background-radius: 6;
+}
+.login-error { -fx-text-fill: #c0392b; -fx-font-size: 12px; }
+.login-link { -fx-text-fill: #2563eb; }

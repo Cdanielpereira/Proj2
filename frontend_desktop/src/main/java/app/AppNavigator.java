@@ -1,24 +1,33 @@
-public class CateringApi {
-    private static final String BASE =
-            "http://localhost:8080/proj2/catering";
-    private final ObjectMapper mapper = new ObjectMapper();
+package app;
 
-    public List<CateringDto> getAll() throws Exception {
-        var client = HttpClient.newHttpClient();
-        var req = HttpRequest.newBuilder()
-                .uri(URI.create(BASE)).build();
-        var resp = client.send(req,
-                HttpResponse.BodyHandlers.ofString());
-        return mapper.readValue(resp.body(),
-                mapper.getTypeFactory().constructCollectionType(
-                        List.class, CateringDto.class));
+import auth.SessionManager;
+
+public class AppNavigator {
+
+    private final SceneManager sceneManager;
+
+    public AppNavigator(SceneManager sceneManager) {
+        this.sceneManager = sceneManager;
     }
 
-    public void delete(int id) throws Exception {
-        var client = HttpClient.newHttpClient();
-        var req = HttpRequest.newBuilder()
-                .uri(URI.create(BASE + "/" + id))
-                .DELETE().build();
-        client.send(req, HttpResponse.BodyHandlers.discarding());
+    public void goToHome() {
+        sceneManager.switchTo("/fxml/Home.fxml");
+    }
+
+    public void goToLogin() {
+        sceneManager.switchTo("/fxml/auth/Login.fxml");
+    }
+
+    public void goToRegister() {
+        sceneManager.switchTo("/fxml/auth/Register.fxml");
+    }
+
+    public void goToHomeAfterLogin() {
+        String role = SessionManager.getInstance().getUserRole();
+        if ("CLIENTE".equalsIgnoreCase(role)) {
+            sceneManager.switchTo("/fxml/home/HomeCliente.fxml");
+        } else {
+            sceneManager.switchTo("/fxml/home/HomeUser.fxml");
+        }
     }
 }

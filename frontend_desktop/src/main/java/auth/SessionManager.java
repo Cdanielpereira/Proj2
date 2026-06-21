@@ -1,24 +1,39 @@
-public class CateringApi {
-    private static final String BASE =
-            "http://localhost:8080/proj2/catering";
-    private final ObjectMapper mapper = new ObjectMapper();
+package auth;
 
-    public List<CateringDto> getAll() throws Exception {
-        var client = HttpClient.newHttpClient();
-        var req = HttpRequest.newBuilder()
-                .uri(URI.create(BASE)).build();
-        var resp = client.send(req,
-                HttpResponse.BodyHandlers.ofString());
-        return mapper.readValue(resp.body(),
-                mapper.getTypeFactory().constructCollectionType(
-                        List.class, CateringDto.class));
+public class SessionManager {
+
+    private static SessionManager instance;
+
+    private String username;
+    private String userRole;   // e.g. "CLIENTE" or "USER"
+    private String jwtToken;
+
+    private SessionManager() {}
+
+    public static SessionManager getInstance() {
+        if (instance == null) {
+            instance = new SessionManager();
+        }
+        return instance;
     }
 
-    public void delete(int id) throws Exception {
-        var client = HttpClient.newHttpClient();
-        var req = HttpRequest.newBuilder()
-                .uri(URI.create(BASE + "/" + id))
-                .DELETE().build();
-        client.send(req, HttpResponse.BodyHandlers.discarding());
+    public void login(String username, String userRole, String jwtToken) {
+        this.username = username;
+        this.userRole = userRole;
+        this.jwtToken = jwtToken;
     }
+
+    public void logout() {
+        this.username = null;
+        this.userRole = null;
+        this.jwtToken = null;
+    }
+
+    public boolean isLoggedIn() {
+        return jwtToken != null;
+    }
+
+    public String getUsername() { return username; }
+    public String getUserRole() { return userRole; }
+    public String getJwtToken() { return jwtToken; }
 }

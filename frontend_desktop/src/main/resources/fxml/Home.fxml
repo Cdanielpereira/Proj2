@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+
+<StackPane xmlns="http://javafx.com/javafx/21"
+           xmlns:fx="http://javafx.com/fxml/1"
+           fx:controller="ui.HomeController"
+           prefWidth="900" prefHeight="600">
+
+    <VBox alignment="CENTER" spacing="24">
+        <padding><Insets top="40" right="40" bottom="40" left="40"/></padding>
+
+        <Label text="GoodStay" style="-fx-font-size: 36px; -fx-font-weight: bold;"/>
+        <Label text="A sua plataforma de estadias" style="-fx-font-size: 16px; -fx-text-fill: #666;"/>
+
+        <HBox alignment="CENTER" spacing="16">
+            <Button text="Entrar"
+                    onAction="#handleGoToLogin"
+                    prefWidth="140" prefHeight="40"/>
+            <Button text="Registar"
+                    onAction="#handleGoToRegister"
+                    prefWidth="140" prefHeight="40"/>
+        </HBox>
+    </VBox>
+</StackPane>
