@@ -1,0 +1,99 @@
+Árvore do diretório frontend_browser (gerada: 2026-06-21)
+
+frontend_browser/
+- frontend-web/
+  - .gitignore
+  - eslint.config.js
+  - index.html
+  - node_modules/ (conteúdo não listado)
+  - package-lock.json
+  - package.json
+  - public/
+    - favicon.svg
+    - icons.svg
+  - README.md
+  - src/
+    - api/
+      - api.js
+      - auth.js
+      - catering.js
+      - cliente.js
+      - colaborador.js
+      - contrato.js
+      - cpostal.js
+      - encomenda.js
+      - estadoContract.js
+      - estadoMarcacao.js
+      - estadoServico.js
+      - faturaPagamento.js
+      - faturaRecibo.js
+      - funcionario.js
+      - limpeza.js
+      - linhaEnc.js
+      - linhaManu.js
+      - manutencao.js
+      - marcacao.js
+      - metodoPagamento.js
+      - nacionalidade.js
+      - piscina.js
+      - produto.js
+      - quarto.js
+      - reserva.js
+      - servico.js
+      - tipoColab.js
+      - tipoFunc.js
+      - tipoIVA.js
+      - tipoQuarto.js
+      - tipoZona.js
+      - user.js
+      - vencimento.js
+      - zona.js
+    - App.css
+    - App.jsx
+    - assets/
+      - hero.png
+      - logo.png
+      - react.svg
+      - vite.svg
+    - auth/
+      - roleService.js
+      - session.js
+    - components/
+      - AppLayout.jsx
+      - SecondaryBar.jsx
+      - Sidebar.jsx
+      - TopBar.jsx
+    - config/
+      - appConfig.js
+      - entityConfig.js
+      - roleConfig.js
+    - hooks/
+      - usePageTitle.js
+    - index.css
+    - main.jsx
+    - pages/
+      - auth/
+        - Login.jsx
+        - Register.jsx
+      - FormScreen.jsx
+      - Home.jsx
+      - HomeCliente.jsx
+      - HomeUser.jsx
+      - ListScreen.jsx
+    - routes/
+      - AppRoutes.jsx
+      - ProtectedRoute.jsx
+      - RoleRoute.jsx
+  - vite.config.js
+- package-lock.json
+
+
+Resumo:
+- Ficheiros/directórios listados: arquivos dentro de `frontend-web` e dos seus subdiretórios `src` e `public`.
+- Pastas não expandidas: `node_modules` (conteúdo não listado).
+
+Observações finais:
+- O ficheiro foi criado para refletir a estrutura atual encontrada em `frontend_browser`.
+- Posso também gerar a saída em outro formato (Markdown, JSON) ou incluir o conteúdo de `node_modules` mediante pedido.
+
+
