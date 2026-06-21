@@ -1,0 +1,53 @@
+Árvore do diretório frontend_desktop (gerada: 2026-06-21)
+
+frontend_desktop/
+- pom.xml
+- src/
+  - main/
+    - java/
+      - api/
+        - ApiClient.java
+        - AuthApi.java
+        - BaseCrudApi.java
+        - EntityApiFactory.java
+      - app/
+        - AppNavigator.java
+        - MainApp.java
+        - SceneManager.java
+      - auth/
+        - JwtStorage.java
+        - LoginController.java
+        - SessionManager.java
+      - config/
+        - EntityConfig.java
+        - EntityDefinition.java
+        - FieldDefinition.java
+        - RelationDefinition.java
+      - model/
+        - CateringDto.java
+      - services/
+        - AuthService.java
+        - EntityService.java
+      - ui/
+        - (pasta vazia)
+      - resources/
+        - images/
+          - (pasta vazia)
+      - util/
+        - HttpUtils.java
+        - JsonMapper.java
+        - ValidationUtils.java
+    - resources/
+      - fxml/
+        - Catering.fxml
+        - auth/
+          - Login.fxml
+
+Resumo:
+- Ficheiros detectados: ~23 ficheiros (listados acima)
+- Pastas vazias: `src/main/java/ui`, `src/main/java/resources/images`
+
+Observações:
+- O ficheiro foi gerado a partir do conteúdo atual do workspace.
+- Se desejar, posso criar ficheiros boilerplate nas pastas vazias ou exportar a árvore noutro formato.
+
