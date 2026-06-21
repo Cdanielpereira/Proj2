@@ -1,24 +1,38 @@
-public class CateringApi {
-    private static final String BASE =
-            "http://localhost:8080/proj2/catering";
-    private final ObjectMapper mapper = new ObjectMapper();
+package config;
 
-    public List<CateringDto> getAll() throws Exception {
-        var client = HttpClient.newHttpClient();
-        var req = HttpRequest.newBuilder()
-                .uri(URI.create(BASE)).build();
-        var resp = client.send(req,
-                HttpResponse.BodyHandlers.ofString());
-        return mapper.readValue(resp.body(),
-                mapper.getTypeFactory().constructCollectionType(
-                        List.class, CateringDto.class));
+public class EntityDefinition {
+
+    private String title;
+
+    private ColumnDefinition[] columns;
+    private FieldDefinition[] fields;
+    private RelationDefinition[] relations;
+
+    public EntityDefinition(
+            String title,
+            ColumnDefinition[] columns,
+            FieldDefinition[] fields,
+            RelationDefinition[] relations
+    ) {
+        this.title = title;
+        this.columns = columns;
+        this.fields = fields;
+        this.relations = relations;
     }
 
-    public void delete(int id) throws Exception {
-        var client = HttpClient.newHttpClient();
-        var req = HttpRequest.newBuilder()
-                .uri(URI.create(BASE + "/" + id))
-                .DELETE().build();
-        client.send(req, HttpResponse.BodyHandlers.discarding());
+    public String getTitle() {
+        return title;
+    }
+
+    public ColumnDefinition[] getColumns() {
+        return columns;
+    }
+
+    public FieldDefinition[] getFields() {
+        return fields;
+    }
+
+    public RelationDefinition[] getRelations() {
+        return relations;
     }
 }

@@ -1,24 +1,18 @@
-public class CateringApi {
-    private static final String BASE =
-            "http://localhost:8080/proj2/catering";
-    private final ObjectMapper mapper = new ObjectMapper();
+package services;
 
-    public List<CateringDto> getAll() throws Exception {
-        var client = HttpClient.newHttpClient();
-        var req = HttpRequest.newBuilder()
-                .uri(URI.create(BASE)).build();
-        var resp = client.send(req,
-                HttpResponse.BodyHandlers.ofString());
-        return mapper.readValue(resp.body(),
-                mapper.getTypeFactory().constructCollectionType(
-                        List.class, CateringDto.class));
-    }
+import model.GenericPageResponse;
 
-    public void delete(int id) throws Exception {
-        var client = HttpClient.newHttpClient();
-        var req = HttpRequest.newBuilder()
-                .uri(URI.create(BASE + "/" + id))
-                .DELETE().build();
-        client.send(req, HttpResponse.BodyHandlers.discarding());
-    }
+import java.util.Map;
+
+public interface EntityService {
+
+    GenericPageResponse<Map<String, Object>> getAll(String entity, int pageNo, int pageSize);
+
+    Map<String, Object> getById(String entity, Long id);
+
+    Map<String, Object> create(String entity, Object dto);
+
+    Map<String, Object> update(String entity, Long id, Object dto);
+
+    void delete(String entity, Long id);
 }

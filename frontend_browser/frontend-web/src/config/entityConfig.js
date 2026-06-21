@@ -29,7 +29,11 @@ const buildApi = (entityName) => {
 
         delete: Object.values(module).find(
             fn => typeof fn === "function" && fn.name.startsWith("delete")
-        )
+        ),
+
+        listByUser(userId) {
+            return api.get(`/marcacao/user/${userId}`);
+        }
     };
 };
 

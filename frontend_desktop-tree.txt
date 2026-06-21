@@ -6,48 +6,54 @@ frontend_desktop/
   - main/
     - java/
       - api/
-        - ApiClient.java
-        - AuthApi.java
-        - BaseCrudApi.java
-        - EntityApiFactory.java
+        - (pasta vazia)
       - app/
         - AppNavigator.java
-        - MainApp.java
+        - MainApp.Java
+        - NavigationAware.java
         - SceneManager.java
       - auth/
-        - JwtStorage.java
         - LoginController.java
+        - RegisterController.java
         - SessionManager.java
       - config/
-        - EntityConfig.java
-        - EntityDefinition.java
-        - FieldDefinition.java
-        - RelationDefinition.java
+        - (pasta vazia)
       - model/
-        - CateringDto.java
-      - services/
-        - AuthService.java
-        - EntityService.java
-      - ui/
         - (pasta vazia)
       - resources/
-        - images/
-          - (pasta vazia)
+        - (pasta vazia)
+      - services/
+        - (pasta vazia)
+      - ui/
+        - HomeClienteController.java
+        - HomeController.java
+        - HomeUserController.java
       - util/
-        - HttpUtils.java
-        - JsonMapper.java
-        - ValidationUtils.java
+        - (pasta vazia)
     - resources/
+      - css/
+        - app.css
       - fxml/
-        - Catering.fxml
+        - Home.fxml
+        - HomeCliente.fxml
+        - HomeUser.fxml
         - auth/
           - Login.fxml
+          - Register.fxml
+      - images/
+        - (pasta vazia)
+- target/
+  - classes/
+    - fxml/
+      - Catering.fxml
+      - auth/
+        - Login.fxml
 
 Resumo:
-- Ficheiros detectados: ~23 ficheiros (listados acima)
-- Pastas vazias: `src/main/java/ui`, `src/main/java/resources/images`
+- Ficheiros/directórios listados: arquivos e pastas dentro de `frontend_desktop` (excluindo conteúdos de `target` que não estejam em `classes/fxml`).
+- Pastas vazias: `src/main/java/api`, `src/main/java/config`, `src/main/java/model`, `src/main/java/resources`, `src/main/java/services`, `src/main/java/util`, `src/main/resources/images`
 
 Observações:
-- O ficheiro foi gerado a partir do conteúdo atual do workspace.
-- Se desejar, posso criar ficheiros boilerplate nas pastas vazias ou exportar a árvore noutro formato.
+- O ficheiro foi atualizado para refletir a estrutura atual do diretório `frontend_desktop`.
+- Se desejar, posso gerar novamente a árvore incluindo todos os ficheiros do `target` ou produzir a saída em outro formato (JSON, Markdown, etc.).
 

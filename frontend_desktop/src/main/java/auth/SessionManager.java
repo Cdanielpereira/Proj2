@@ -2,38 +2,58 @@ package auth;
 
 public class SessionManager {
 
-    private static SessionManager instance;
-
+    private Integer userId;
     private String username;
-    private String userRole;   // e.g. "CLIENTE" or "USER"
+    private String userRole;
     private String jwtToken;
 
     private SessionManager() {}
 
-    public static SessionManager getInstance() {
-        if (instance == null) {
-            instance = new SessionManager();
-        }
-        return instance;
+    private static class Holder {
+        private static final SessionManager INSTANCE =
+                new SessionManager();
     }
 
-    public void login(String username, String userRole, String jwtToken) {
+    public static SessionManager getInstance() {
+        return Holder.INSTANCE;
+    }
+
+    public void login(
+            Integer userId,
+            String username,
+            String userRole,
+            String jwtToken
+    ) {
+        this.userId = userId;
         this.username = username;
         this.userRole = userRole;
         this.jwtToken = jwtToken;
     }
 
     public void logout() {
-        this.username = null;
-        this.userRole = null;
-        this.jwtToken = null;
+        userId = null;
+        username = null;
+        userRole = null;
+        jwtToken = null;
     }
 
     public boolean isLoggedIn() {
-        return jwtToken != null;
+        return jwtToken != null && !jwtToken.isBlank();
     }
 
-    public String getUsername() { return username; }
-    public String getUserRole() { return userRole; }
-    public String getJwtToken() { return jwtToken; }
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public String getUserRole() {
+        return userRole;
+    }
+
+    public String getJwtToken() {
+        return jwtToken;
+    }
 }

@@ -1,24 +1,39 @@
-public class CateringApi {
-    private static final String BASE =
-            "http://localhost:8080/proj2/catering";
-    private final ObjectMapper mapper = new ObjectMapper();
+package config;
 
-    public List<CateringDto> getAll() throws Exception {
-        var client = HttpClient.newHttpClient();
-        var req = HttpRequest.newBuilder()
-                .uri(URI.create(BASE)).build();
-        var resp = client.send(req,
-                HttpResponse.BodyHandlers.ofString());
-        return mapper.readValue(resp.body(),
-                mapper.getTypeFactory().constructCollectionType(
-                        List.class, CateringDto.class));
+public class FieldDefinition {
+
+    private final String name;
+    private final String label;
+    private final String type;
+    private final boolean required;
+
+    public FieldDefinition(String name, String type, boolean required) {
+        this.name = name;
+        this.label = name; // fallback automático
+        this.type = type;
+        this.required = required;
     }
 
-    public void delete(int id) throws Exception {
-        var client = HttpClient.newHttpClient();
-        var req = HttpRequest.newBuilder()
-                .uri(URI.create(BASE + "/" + id))
-                .DELETE().build();
-        client.send(req, HttpResponse.BodyHandlers.discarding());
+    public FieldDefinition(String name, String label, String type, boolean required) {
+        this.name = name;
+        this.label = label;
+        this.type = type;
+        this.required = required;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getLabel() {
+        return label;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public boolean isRequired() {
+        return required;
     }
 }

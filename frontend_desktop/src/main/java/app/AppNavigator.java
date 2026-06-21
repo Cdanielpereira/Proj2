@@ -23,11 +23,13 @@ public class AppNavigator {
     }
 
     public void goToHomeAfterLogin() {
+
         String role = SessionManager.getInstance().getUserRole();
+
         if ("CLIENTE".equalsIgnoreCase(role)) {
-            sceneManager.switchTo("/fxml/home/HomeCliente.fxml");
+            sceneManager.switchTo("/fxml/HomeCliente.fxml");
         } else {
-            sceneManager.switchTo("/fxml/home/HomeUser.fxml");
+            sceneManager.switchTo("/fxml/HomeUser.fxml");
         }
     }
 }

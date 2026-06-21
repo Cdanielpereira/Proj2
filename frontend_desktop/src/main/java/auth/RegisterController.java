@@ -24,8 +24,7 @@ public class RegisterController implements NavigationAware {
 
     @FXML
     private void handleRegister() {
-        // TODO: validate and call backend API
-        // After successful registration, go to login:
+        // TODO: ligar ao backend
         navigator.goToLogin();
     }
 

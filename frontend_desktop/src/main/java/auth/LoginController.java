@@ -1,19 +1,37 @@
 package auth;
 
+import api.AuthApi;
 import app.AppNavigator;
 import app.NavigationAware;
 import app.SceneManager;
+import dto.LoginResponseDto;
 import javafx.fxml.FXML;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.ProgressIndicator;
+import javafx.scene.control.TextField;
 
 public class LoginController implements NavigationAware {
 
-    @FXML private TextField usernameField;
-    @FXML private PasswordField passwordField;
-    @FXML private CheckBox rememberCheck;
-    @FXML private Label errorLabel;
-    @FXML private Button loginButton;
-    @FXML private ProgressIndicator loadingIndicator;
+    @FXML
+    private TextField usernameField;
+
+    @FXML
+    private PasswordField passwordField;
+
+    @FXML
+    private CheckBox rememberCheck;
+
+    @FXML
+    private Label errorLabel;
+
+    @FXML
+    private Button loginButton;
+
+    @FXML
+    private ProgressIndicator loadingIndicator;
 
     private AppNavigator navigator;
 
@@ -24,23 +42,41 @@ public class LoginController implements NavigationAware {
 
     @FXML
     private void handleLogin() {
+
         String username = usernameField.getText();
         String password = passwordField.getText();
 
-        if (username.isBlank() || password.isBlank()) {
+        if (username == null || username.isBlank()
+                || password == null || password.isBlank()) {
+
             showError("Preencha utilizador e palavra-passe.");
             return;
         }
 
-        // TODO: replace this fake check with a real call to AuthService / AuthApi
-        String role = fakeLogin(username, password);
-        if (role == null) {
-            showError("Credenciais inválidas.");
-            return;
-        }
+        try {
+            setLoading(true);
+            errorLabel.setVisible(false);
 
-        SessionManager.getInstance().login(username, role, "fake-jwt-token");
-        navigator.goToHomeAfterLogin();
+            LoginResponseDto response =
+                    AuthApi.login(username, password);
+
+            SessionManager.getInstance().login(
+                    response.getUserId(),
+                    response.getUsername(),
+                    response.getRole(),
+                    response.getToken()
+            );
+
+            navigator.goToHomeAfterLogin();
+
+        } catch (Exception e) {
+
+            showError("Credenciais inválidas.");
+            e.printStackTrace();
+
+        } finally {
+            setLoading(false);
+        }
     }
 
     @FXML
@@ -54,10 +90,11 @@ public class LoginController implements NavigationAware {
         errorLabel.setManaged(true);
     }
 
-    /** Temporary stub. Replace with real authentication. */
-    private String fakeLogin(String username, String password) {
-        if ("cliente".equals(username) && "1234".equals(password)) return "CLIENTE";
-        if ("user".equals(username) && "1234".equals(password)) return "USER";
-        return null;
+    private void setLoading(boolean state) {
+        loginButton.setDisable(state);
+
+        if (loadingIndicator != null) {
+            loadingIndicator.setVisible(state);
+        }
     }
 }

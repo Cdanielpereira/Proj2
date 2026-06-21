@@ -7,11 +7,14 @@ public class MainApp extends Application {
 
     @Override
     public void start(Stage primaryStage) {
+
         primaryStage.setTitle("GoodStay");
         primaryStage.setMinWidth(800);
         primaryStage.setMinHeight(500);
 
         SceneManager sceneManager = new SceneManager(primaryStage);
+
+        // mostra primeira cena
         sceneManager.switchTo("/fxml/Home.fxml");
     }
 
